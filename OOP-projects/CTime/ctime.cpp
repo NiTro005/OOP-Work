@@ -4,6 +4,15 @@
 Status check();
 Status convert();
 void output();
+void assign(CTime& time);
+void set_values(int hours_, int minutes_, int seconds_);
+Status add_hours(int hours_);
+Status add_minutes(int minutes_);
+Status add_seconds(int minutes_);
+Status sub_hours(int hours_);
+Status sub_minutes(int minutes_);
+Status sub_seconds(int minutes_);
+int compare(const CTime& time);
 
 CTime::CTime(){
 	int hours = 0;
@@ -88,6 +97,85 @@ void CTime::output() {
 	std::cout << hours << ":"
 		<< minutes << ":"
 		<< seconds << std::endl;
+}
+
+void CTime::assign(CTime& time) {
+		time.hours = this->hours;
+		time.minutes = this->minutes;
+		time.seconds = this->seconds;
+
+}
+void CTime:: set_values(int hours_, int minutes_, int seconds_) {
+	Status state = SUCCESS;
+	hours = hours_;
+	minutes = minutes_;
+	seconds = seconds_;
+}
+
+Status CTime:: add_hours(int hours_) {
+	Status state = SUCCESS;
+	hours += hours_;
+	if (hours >= 24) { state = convert(); }
+	return state;
+}
+
+Status CTime::add_minutes(int minutes_) {
+	Status state = SUCCESS;
+	minutes += minutes_;
+	if (minutes >= 60) {
+		state = convert();
+	}
+	return state;
+}
+
+Status CTime::add_seconds(int seconds_) {
+	Status state = SUCCESS;
+	seconds += seconds_;
+	if (seconds >= 60) {
+		state = convert();
+	}
+	return state;
+}
+
+Status CTime::sub_hours(int hours_) {
+	Status state = SUCCESS;
+	hours -= hours_;
+	if (hours < 0) {
+		state = convert();
+	}
+	return state;
+}
+
+Status CTime::sub_minutes(int minutes_) {
+	Status state = SUCCESS;
+	minutes -= minutes_;
+	if (minutes < 0) {
+		state = convert();
+	}
+	return state;
+}
+
+Status CTime::sub_seconds(int seconds_) {
+	Status state = SUCCESS;
+	seconds -= seconds_;
+	if (seconds < 0) {
+		state = convert();
+	}
+	return state;
+}
+
+int CTime::compare(const CTime& time) {
+	if (hours == time.hours && minutes == time.minutes && seconds == time.seconds) return 0;
+
+	// time1 > time2
+	if (hours > time.hours) return 1;
+	if (minutes > time.minutes && time.hours <= hours) return 1;
+	if (seconds > time.seconds && time.minutes <= minutes && time.hours <= hours) return 1;
+
+	// time1 < time2
+	if (time.hours > hours) return -1;
+	if (time.minutes > minutes && hours <= time.hours) return -1;
+	if (time.seconds > seconds && minutes <= time.minutes && hours <= time.hours) return -1;
 }
 
 CTime::~CTime() {}
