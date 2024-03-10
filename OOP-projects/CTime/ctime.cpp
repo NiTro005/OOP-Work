@@ -1,4 +1,5 @@
 #include "ctime.h"
+
 CTime::CTime(){
 	int hours = 0;
 	int minutes = 0;
@@ -15,3 +16,4 @@ CTime::CTime(const CTime& time) {
 	minutes = time.minutes;
 	seconds = time.seconds;
 }
+CTime::~CTime() {}
