@@ -1,7 +1,6 @@
 #include "ctime.h"
 #include <iostream>
 
-
 CTime::CTime(){
 	int hours = 0;
 	int minutes = 0;
