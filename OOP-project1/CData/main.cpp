@@ -3,4 +3,6 @@ int main() {
 	CData d1;
 	CData d2(12, 12, 1978);
 	CData d3(d2);
+	d2.output();
+	d1.input();
 }
