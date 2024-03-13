@@ -36,16 +36,12 @@ Status CData::input() {
 
 Status CData::check() {
 	Status state = SUCCESS;
-	if (month > 12 || month < 1) {
-		state = ERROR;
-	}
-	else if (day > 31 || day < 1) {
-		if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30) {
-			state = ERROR;
-		}
+	if (month > 12 || month < 1) {state = ERROR;}
+	else if (day > 28 || day < 1) {
+		if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30) {state = ERROR;}
 		else if (month == 2 && day > 28) {
 			state = ERROR;
-			if ((year % 4 == 0) && day < 30) { state = SUCCESS; }
+			if (year % 4 == 0 && day == 29) { state = SUCCESS; }
 		}
 		else { state = ERROR; }
 	}
@@ -55,8 +51,8 @@ Status CData::check() {
 
 Status CData::convert() {
 	Status state = SUCCESS;
-	if (day > 31) {
-		if (month == 4 || month == 6 || month == 9 || month == 11) {
+	if (day > 28) {
+		if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30) {
 			month += 1;
 			day = day - 30;
 		}
@@ -65,7 +61,7 @@ Status CData::convert() {
 			day = day - 28;
 			if ((year % 4 == 0) && day < 30) { day--; }
 		}
-		else if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12){
+		else if((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) && day > 31){
 			month += 1;
 			day = day - 31;
 		}
@@ -97,5 +93,18 @@ void CData::output() {
 		<< month << "."
 		<< year << std::endl;
 }
+
+void CData::assign(CData& data) {
+	data.day = this->day;
+	data.month = this->month;
+	data.year = this->year;
+
+}
+void CData::set_values(int day_, int month_, int year_) {
+	day = day_;
+	month = month_;
+	year = year_;
+}
+
 
 CData::~CData() {}
