@@ -5,8 +5,19 @@ int main() {
     CString str_1;
     CString str_2(str_1);
     CString str_3("Hello");
+    CString str_4("Very cool text for example", 30);
+    CString str_5(5, '*');
+    CString str_6(str_4, 5, 9);
+
     str_3.print();
     std::cout << std::endl;
+    str_4.print();
+    std::cout << std::endl;
+    str_5.print();
+    std::cout << std::endl;
+    str_6.print();
+    std::cout << std::endl;
+
     std::cout << str_1.empty() << std::endl;
     std::cout << str_1.size() << std::endl;
     std::cout << str_1.compare(str_2) << std::endl;

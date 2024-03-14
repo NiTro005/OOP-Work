@@ -25,9 +25,24 @@ CString::CString(const CString& str) {
 }
 
 /// <summary>
-/// Деструктор.
+/// Конструктор инициализации.
 /// </summary>
+/// <param name="c_str"> - массив элементов, которые мы присваиваем строке _data </param>
+/// <param name="n"> - размер строки </param>
+CString::CString(const char* c_str, size_t n) {
+    _size = n;
+    _capacity = (n / STEP_CAPACITY) * STEP_CAPACITY + STEP_CAPACITY;
+    _data = new char[_capacity];
+    for (int i = 0; i < _size; i++) {
+        _data[i] = c_str[i];
+    }
+    _data[_size] = '\0';
+}
 
+/// <summary>
+/// Конструктор изменения типа
+/// </summary>
+/// <param name="c_str"> - строка элементов  </param> 
 CString::CString(const char* c_str) {
     _size = 0;
     while (c_str[_size] != '\0') {
@@ -41,10 +56,40 @@ CString::CString(const char* c_str) {
     _data[_size] = '\0';
 }
 
+/// <summary>
+/// Конструктор инициализирует строку содержащую n символов с.
+/// </summary>
+/// <param name="n"> - колличество символов строки</param>
+/// <param name="c"> - элемент строки </param>
+CString:: CString(size_t n, char c) {
+    _size = n;
+    _capacity = (n / STEP_CAPACITY) * STEP_CAPACITY + STEP_CAPACITY;
+    _data = new char[_capacity];
+    for (int i = 0; i < _size; i++) {
+        _data[i] = c;
+    }
+    _data[_size] = '\0';
+}
+
+CString::CString(const CString& str, size_t pos, size_t len) {
+    _size = len;
+    _capacity = (_size / STEP_CAPACITY) * STEP_CAPACITY + STEP_CAPACITY;
+    _data = new char[_capacity];
+    for (int i = pos; i < pos + len; i++) {
+        _data[i - pos] = str._data[i];
+    }
+    _data[_size] = '\0';
+}
+
+/// <summary>
+/// Деструктор.
+/// </summary>
 CString::~CString() {
     delete[] _data;
     _data = nullptr;
 }
+
+
 
 /// <summary>
 /// Проверка строки на пустоту.
@@ -146,6 +191,10 @@ size_t CString::find_first_of(const CString& str, size_t pos) const {
     }
     return -1;
 }
+
+/// <summary>
+/// Вывод строки в консоль
+/// </summary>
 void CString::print() const noexcept {
     for (int i = 0; i < _size; i++) {
         std::cout << _data[i];
