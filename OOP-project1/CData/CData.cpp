@@ -70,7 +70,7 @@ Status CData::convert() {
 		year += 1;
 		month = month - 12;
 	}
-	if (day < 0) {
+	if (day < 1) {
 		month -= 1;
 		day = day + 31;
 	}
@@ -106,5 +106,53 @@ void CData::set_values(int day_, int month_, int year_) {
 	year = year_;
 }
 
+Status CData::add_day(int day_) {
+	Status state = SUCCESS;
+	day += day_;
+	if (day > 28)  state = convert();
+	return state;
+}
+
+
+Status CData::add_month(int month_) {
+	Status state = SUCCESS;
+	month += month_;
+	if (month > 12) {
+		state = convert();
+	}
+	return state;
+
+}
+Status CData::add_year(int year_) {
+	Status state = SUCCESS;
+	year += year_;
+	return state;
+}
+Status CData::sub_day(int day_) {
+	Status state = SUCCESS;
+	day -= day_;
+	if (day < 1) {
+		state = convert();
+	}
+	return state;
+}
+
+Status CData::sub_month(int month_) {
+	Status state = SUCCESS;
+	month -= month_;
+	if (month < 1) {
+		state = convert();
+	}
+	return state;
+
+}
+Status CData::sub_year(int year_) {
+	Status state = SUCCESS;
+	year -= year_;
+	if (year < 0) {
+		state = convert();
+	}
+	return state;
+}
 
 CData::~CData() {}

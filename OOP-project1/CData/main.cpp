@@ -9,5 +9,8 @@ int main() {
 	d4.output();
 	d1.assign(d3);
 	d3.output();
-	
+	d3.add_day(28);
+	d3.output();
+	d3.sub_month(13);
+	d3.output();
 }
