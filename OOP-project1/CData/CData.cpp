@@ -155,4 +155,18 @@ Status CData::sub_year(int year_) {
 	return state;
 }
 
+int CData::compare(const CData& data) {
+	if (day == data.day && month == data.month && year == data.year) return 0;
+
+	// data1 > data2
+	if (year > data.year) return 1;
+	if (month > data.month && data.year <= year) return 1;
+	if (day > data.day && data.month <= month && data.year <= year) return 1;
+
+	// data1 < data2
+	if (data.year > year) return -1;
+	if (data.month > month && year <= data.year) return -1;
+	if (data.day > day && month <= data.month && year <= data.year) return -1;
+}
+
 CData::~CData() {}

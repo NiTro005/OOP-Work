@@ -11,6 +11,8 @@ int main() {
 	d3.output();
 	d3.add_day(28);
 	d3.output();
-	d3.sub_month(13);
-	d3.output();
+	d1.sub_month(13);
+	d1.output();
+	int res = d1.compare(d3);
+	std::cout << res;
 }
