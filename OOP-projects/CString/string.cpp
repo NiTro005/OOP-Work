@@ -71,6 +71,12 @@ CString:: CString(size_t n, char c) {
     _data[_size] = '\0';
 }
 
+/// <summary>
+/// Конструктор вычленения подстроки
+/// </summary>
+/// <param name="str"> - строка </param>
+/// <param name="pos"> - позиция первого элемента строки </param>
+/// <param name="len"> - количество символов</param>
 CString::CString(const CString& str, size_t pos, size_t len) {
     _size = len;
     _capacity = (_size / STEP_CAPACITY) * STEP_CAPACITY + STEP_CAPACITY;
@@ -103,12 +109,60 @@ bool CString::empty() const noexcept {
 }
 
 /// <summary>
+/// Проверка заполнения строки до максимальной длины
+/// </summary>
+/// <returns>
+/// true - если строка пуста,
+/// false - иначе.
+/// </returns>
+bool CString::full() const noexcept {
+    return _size == _capacity;
+}
+
+/// <summary>
 /// Геттер для размера строки.
 /// </summary>
 /// <returns>размер (длина) строки</returns>
 size_t CString::size() const noexcept {
     return _size;
 }
+
+/// <summary>
+/// Геттер для размера массива
+/// </summary>
+/// <returns> - размер массива</returns>
+size_t CString::capacity() const noexcept {
+    return _capacity;
+}
+
+/// <summary>
+/// Геттер строки
+/// </summary>
+/// <returns> - возвращает строку </returns>
+const char* CString::data() const{
+    return _data;
+}
+
+/// <summary>
+/// Метод перестановки
+/// </summary>
+/// <param name="str"> -  строка</param>
+void CString::swap(CString& str) {
+    char* temp = this->_data;
+    this->_data = str._data;
+    str._data = temp;
+}
+
+size_t CString::copy(char* buf, size_t len, size_t pos) const {
+    if (pos >= _size) {
+        return 0;
+    }
+
+    size_t chars_to_copy = std::min(len, _size - pos);
+    std::memcpy(buf, _data + pos, chars_to_copy);
+    return chars_to_copy;
+}
+
 /// <summary>
 /// Функция сравнения (лексикографического).
 /// </summary>

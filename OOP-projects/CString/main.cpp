@@ -21,6 +21,23 @@ int main() {
     std::cout << str_1.empty() << std::endl;
     std::cout << str_1.size() << std::endl;
     std::cout << str_1.compare(str_2) << std::endl;
+
+    std::cout << "str_1.empty();\n" <<
+        (str_1.empty() ? "true" : "false") << std::endl;
+    std::cout << "str_4.size();\n" <<
+        str_4.size() << std::endl;
+    std::cout << "str_4.capacity();\n" <<
+        str_4.capacity() << std::endl;
+    std::cout << "str_4.data();\n" <<
+        str_4.data() << std::endl;
+
+    char buf[20];
+    size_t length = str_4.copy(buf, 6, 9);
+    buf[length] = '\0';
+    std::cout << "size_t length = str_4.copy(buf, 2, 9);\nbuf: " << buf;
+    std::cout << std::endl;
+
+
     return 0;
 }
 
