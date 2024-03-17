@@ -69,7 +69,7 @@ public:
     //int compare(size_t pos, size_t len, const char* s, size_t n) const;
 
     void clear() noexcept;                    // очистка строки
-    //void resize(size_t n, char c = '\0');     // изменение длины строки
+    void resize(size_t n, char c = '\0');     // изменение длины строки
     //void reserve(size_t n = 0);               // увеличение хранилища
 
     //void push_back(char c);                   // вставка символа (в конец)

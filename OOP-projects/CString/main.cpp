@@ -53,6 +53,7 @@ int main() {
     std::cout << "str_4.clear();\n";
     str_4.assign(str_3);
     str_4.print();
+    str_5.resize(15);
     return 0;
 }
 

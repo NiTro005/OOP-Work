@@ -229,12 +229,36 @@ int CString::compare(const CString& str) const noexcept {
     else return 0;
 }
 
-
+/// <summary>
+/// Очистка строки
+/// </summary>
 void CString:: clear() noexcept {
     delete[] _data;
     _size = 0;
     _capacity = 0;
     _data[_size] = '\0';
+}
+
+
+void CString::resize(size_t n, char c) {
+    if (n <= _size) {
+        _data[n] = '\0';
+        _size = n;
+    }
+    else {
+        if (n > _capacity) {
+            _capacity = (n / STEP_CAPACITY) * STEP_CAPACITY + STEP_CAPACITY;
+            char* new_data = new char[_capacity];
+            std::memcpy(new_data, _data, _size);
+            delete[] _data;
+            _data = new_data;
+        }
+        for (size_t i = _size; i < n; ++i) {
+            _data[i] = c;
+        }
+        _data[n] = '\0';
+        _size = n;
+    }
 }
 
 /*
