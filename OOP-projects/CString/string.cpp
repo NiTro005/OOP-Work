@@ -153,6 +153,13 @@ void CString::swap(CString& str) {
     str._data = temp;
 }
 
+/// <summary>
+/// Копирование строки
+/// </summary>
+/// <param name="buf"> - буфер для хранения символов</param>
+/// <param name="len"> - длина копируемой строки</param>
+/// <param name="pos"> - начальная позиция копируемой строки </param>
+/// <returns>  количество скопируемых символов</returns>
 size_t CString::copy(char* buf, size_t len, size_t pos) const {
     if (pos >= _size) {
         return 0;
@@ -161,6 +168,21 @@ size_t CString::copy(char* buf, size_t len, size_t pos) const {
     size_t chars_to_copy = std::min(len, _size - pos);
     std::memcpy(buf, _data + pos, chars_to_copy);
     return chars_to_copy;
+}
+
+
+CString CString:: substr(size_t pos, size_t len) const {
+    if (pos >= _size) {
+        return CString("");
+    }
+
+    len = std::min(len, _size - pos);  // Ограничиваем длину подстроки
+
+    char* substr_data = new char[len + 1];  // +1 для нулевого символа
+    memcpy(substr_data, _data + pos, len);
+    substr_data[len] = '\0';
+
+    return CString(substr_data);
 }
 
 /// <summary>

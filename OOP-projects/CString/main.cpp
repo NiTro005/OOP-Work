@@ -34,8 +34,14 @@ int main() {
     char buf[20];
     size_t length = str_4.copy(buf, 6, 9);
     buf[length] = '\0';
-    std::cout << "size_t length = str_4.copy(buf, 2, 9);\nbuf: " << buf;
+    std::cout << "size_t length = str_4.copy(buf, 6, 9);\nbuf: " << buf;
     std::cout << std::endl;
+
+    CString str_7 = str_4.substr(5, 4);
+    std::cout << "CString str_7 = str_4.substr(5, 4);\n";
+    str_7.print();
+    std::cout << std::endl;
+
 
 
     return 0;
