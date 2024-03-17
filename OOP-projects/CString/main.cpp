@@ -42,8 +42,17 @@ int main() {
     str_7.print();
     std::cout << std::endl;
 
+    str_2.assign(str_5);
+    std::cout << "str_2.assign(str_5);\nstr_2: ";
+    str_2.print();
+    std::cout << "\nstr_5: ";
+    str_5.print();
+    std::cout << std::endl;
 
-
+    str_4.clear();
+    std::cout << "str_4.clear();\n";
+    str_4.assign(str_3);
+    str_4.print();
     return 0;
 }
 

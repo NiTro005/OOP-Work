@@ -170,19 +170,40 @@ size_t CString::copy(char* buf, size_t len, size_t pos) const {
     return chars_to_copy;
 }
 
-
+/// <summary>
+/// Вычленение подстроки
+/// </summary>
+/// <param name="pos"> - позиция первого элемента подстроки</param>
+/// <param name="len"> - количеесво символов</param>
+/// <returns> - возвращает подстроку, не изменяя исходник</returns>
 CString CString:: substr(size_t pos, size_t len) const {
     if (pos >= _size) {
         return CString("");
     }
 
-    len = std::min(len, _size - pos);  // Ограничиваем длину подстроки
+    len = std::min(len, _size - pos); 
 
-    char* substr_data = new char[len + 1];  // +1 для нулевого символа
+    char* substr_data = new char[len + 1];
     memcpy(substr_data, _data + pos, len);
     substr_data[len] = '\0';
 
     return CString(substr_data);
+}
+
+/// <summary>
+/// Присваивает значения одной строки другой
+/// </summary>
+/// <param name="str"> - строка</param>
+/// <returns> возвращает измененную строку</returns>
+CString& CString:: assign(const CString& str) {
+    _size = str._size;
+    _capacity = str._capacity;
+    _data = new char[_capacity];
+    for (int i = 0; i < _size; i++) {
+        _data[i] = str._data[i];
+    }
+    _data[_size] = '\0';
+    return *this;
 }
 
 /// <summary>
@@ -206,6 +227,14 @@ int CString::compare(const CString& str) const noexcept {
     if (this->_size > str._size) return 1;
     else if (this->_size < str._size) return -1;
     else return 0;
+}
+
+
+void CString:: clear() noexcept {
+    delete[] _data;
+    _size = 0;
+    _capacity = 0;
+    _data[_size] = '\0';
 }
 
 /*
