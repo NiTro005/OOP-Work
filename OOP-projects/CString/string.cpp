@@ -165,7 +165,7 @@ size_t CString::copy(char* buf, size_t len, size_t pos) const {
         return 0;
     }
 
-    size_t chars_to_copy = std::min(len, _size - pos);
+    size_t chars_to_copy = algorithms::min(len, _size - pos);
     std::memcpy(buf, _data + pos, chars_to_copy);
     return chars_to_copy;
 }
@@ -239,7 +239,11 @@ void CString:: clear() noexcept {
     _data[_size] = '\0';
 }
 
-
+/// <summary>
+/// Изменение длины строки
+/// </summary>
+/// <param name="n"> - новая длина</param>
+/// <param name="c"> - заполнение пустых элементов</param>
 void CString::resize(size_t n, char c) {
     if (n <= _size) {
         _data[n] = '\0';
@@ -261,8 +265,22 @@ void CString::resize(size_t n, char c) {
     }
 }
 
+
+void CString::reserve(size_t n) {
+    if (n <= _capacity) {
+        return;
+    }
+    _capacity += (n / STEP_CAPACITY) * STEP_CAPACITY + STEP_CAPACITY;
+    char* newData = new char[_capacity];
+    std::memcpy(newData, _data, _size);
+    delete[] _data;
+    _data = newData;
+
+}
+
+
 /*
-/// <summary>
+/// < CSsummary>
 /// Вставка символа в конец строки.
 /// </summary>
 /// <param name="c"> - символ для вставки</param>

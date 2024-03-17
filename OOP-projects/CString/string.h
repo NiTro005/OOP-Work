@@ -70,7 +70,7 @@ public:
 
     void clear() noexcept;                    // очистка строки
     void resize(size_t n, char c = '\0');     // изменение длины строки
-    //void reserve(size_t n = 0);               // увеличение хранилища
+    void reserve(size_t n = 0);               // увеличение хранилища
 
     //void push_back(char c);                   // вставка символа (в конец)
     void pop_back();                          // удаление символа (из конца)
