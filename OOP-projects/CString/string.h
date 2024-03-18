@@ -54,7 +54,6 @@ public:
     void swap(CString& str);
     size_t copy(char* buf, size_t len, size_t pos = 0) const;
     CString substr(size_t pos, size_t len) const;
-
     CString& assign(const CString& str);
     //CString& assign(const CString& str, size_t pos, size_t len);
     //CString& assign(const char* s);
@@ -72,10 +71,10 @@ public:
     void resize(size_t n, char c = '\0');     // изменение длины строки
     void reserve(size_t n = 0);               // увеличение хранилища
 
-    //void push_back(char c);                   // вставка символа (в конец)
+    void push_back(char c);                   // вставка символа (в конец)
     void pop_back();                          // удаление символа (из конца)
 
-    //CString& erase(size_t pos, size_t len);    // удаление участка
+    CString& erase(size_t pos, size_t len);    // удаление участка
 
     // вставка строки (в конец)
     //CString& append(const CString& str);

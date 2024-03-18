@@ -10,6 +10,8 @@ CString::CString() {
     _data[0] = '\0';
 }
 
+
+
 /// <summary>
 /// Конструктор копирования.
 /// </summary>
@@ -259,7 +261,10 @@ void CString::resize(size_t n, char c) {
     }
 }
 
-
+/// <summary>
+/// Расширение хранилище
+/// </summary>
+/// <param name="n"> - длина </param>
 void CString::reserve(size_t n) {
     if (n < _capacity) {
         return;
@@ -269,11 +274,9 @@ void CString::reserve(size_t n) {
     std::memcpy(newData, _data, _size);
     delete[] _data;
     _data = newData;
-
 }
 
 
-/*
 /// < CSsummary>
 /// Вставка символа в конец строки.
 /// </summary>
@@ -285,7 +288,7 @@ void CString::push_back(char c) {
 
     _data[_size] = c;
     _data[++_size] = '\0';
-}*/
+}
 
 /// <summary>
 /// Удаление символа из конца строки.
@@ -298,6 +301,25 @@ void CString::pop_back() {
     }
     _data[--_size] = '\0';
 }
+
+
+CString& CString::erase(size_t pos, size_t len) {
+    if (pos >= _size) {
+        return *this; // ничего не делаем, если позиция находится за пределами длины строки
+    }
+
+    len = std::min(len, _size - pos); // ограничиваем длину удаления
+
+    if (len > 0) {
+        size_t new_len = _size - len;
+        memmove(_data + pos, _data + pos + len, new_len - pos); // сдвигаем символы влево
+        _size = new_len;
+        _data[_size] = '\0'; // устанавливаем новый конец строки
+    }
+
+    return *this;
+}
+
 
 /*
 // лишь пример реализации
