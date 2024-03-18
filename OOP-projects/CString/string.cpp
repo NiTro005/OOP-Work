@@ -250,13 +250,7 @@ void CString::resize(size_t n, char c) {
         _size = n;
     }
     else {
-        if (n > _capacity) {
-            _capacity = (n / STEP_CAPACITY) * STEP_CAPACITY + STEP_CAPACITY;
-            char* new_data = new char[_capacity];
-            std::memcpy(new_data, _data, _size);
-            delete[] _data;
-            _data = new_data;
-        }
+        reserve(n);
         for (size_t i = _size; i < n; ++i) {
             _data[i] = c;
         }
@@ -267,10 +261,10 @@ void CString::resize(size_t n, char c) {
 
 
 void CString::reserve(size_t n) {
-    if (n <= _capacity) {
+    if (n < _capacity) {
         return;
     }
-    _capacity += (n / STEP_CAPACITY) * STEP_CAPACITY + STEP_CAPACITY;
+    _capacity = (n / STEP_CAPACITY) * STEP_CAPACITY + STEP_CAPACITY;
     char* newData = new char[_capacity];
     std::memcpy(newData, _data, _size);
     delete[] _data;
