@@ -61,7 +61,9 @@ int main() {
     str_5.erase(5, 10);
     str_5.print();
     std::cout << std::endl;
-    
+    str_5.append(str_2);
+    str_5.print();
+    std::cout << std::endl;
     return 0;
 }
 

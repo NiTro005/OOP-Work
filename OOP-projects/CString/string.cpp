@@ -302,24 +302,37 @@ void CString::pop_back() {
     _data[--_size] = '\0';
 }
 
-
+/// <summary>
+/// Удаление участка строки
+/// </summary>
+/// <param name="pos"> - первый удаляемый элемент</param>
+/// <param name="len"> - количество удаляемых символов</param>
+/// <returns> - возвращает строку </returns>
 CString& CString::erase(size_t pos, size_t len) {
     if (pos >= _size) {
-        return *this; // ничего не делаем, если позиция находится за пределами длины строки
+        return *this;
     }
-
-    len = std::min(len, _size - pos); // ограничиваем длину удаления
-
+    len = std::min(len, _size - pos); 
     if (len > 0) {
         size_t new_len = _size - len;
         memmove(_data + pos, _data + pos + len, new_len - pos); // сдвигаем символы влево
         _size = new_len;
-        _data[_size] = '\0'; // устанавливаем новый конец строки
+        _data[_size] = '\0';
     }
 
     return *this;
 }
 
+CString& CString::append(const CString& str) {
+    if ((_capacity - _size) <= str._size) {
+        reserve(_size + str._size);
+    }
+    for (int i = 0; i < str._size; ++i) {
+        _data[_size + i] = str._data[i];
+    }
+    _size += str._size;
+    return *this;
+}
 
 /*
 // лишь пример реализации
