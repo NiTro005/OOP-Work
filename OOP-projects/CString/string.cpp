@@ -118,7 +118,7 @@ bool CString::empty() const noexcept {
 /// false - иначе.
 /// </returns>
 bool CString::full() const noexcept {
-    return _size == _capacity;
+    return _size + 1 == _capacity;
 }
 
 /// <summary>

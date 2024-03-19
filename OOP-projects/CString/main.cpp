@@ -54,7 +54,7 @@ int main() {
     str_4.assign(str_3);
     str_4.print();
     std::cout << std::endl;
-    str_5.resize(15, '+');
+    str_5.resize(14, '+');
     str_5.push_back('T');
     str_5.print();
     std::cout << std::endl;
