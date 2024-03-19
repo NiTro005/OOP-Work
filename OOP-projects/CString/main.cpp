@@ -64,6 +64,11 @@ int main() {
     str_5.append(str_2);
     str_5.print();
     std::cout << std::endl;
+
+    CString str_8("Hello");
+    CString str_9(", My Dear Dear Dear Friend!");
+    str_8.append(str_9);
+    str_8.print();
     return 0;
 }
 

@@ -323,6 +323,11 @@ CString& CString::erase(size_t pos, size_t len) {
     return *this;
 }
 
+/// <summary>
+/// ¬ставка строки(в конец)
+/// </summary>
+/// <param name="str"> - вставл€ема€ строка</param>
+/// <returns> - возвращает новую строку</returns>
 CString& CString::append(const CString& str) {
     if ((_capacity - _size) <= str._size) {
         reserve(_size + str._size);
@@ -334,8 +339,7 @@ CString& CString::append(const CString& str) {
     return *this;
 }
 
-/*
-// лишь пример реализации
+
 /// <summary>
 /// ¬ставка строки после заданной позиции в исходной.
 /// </summary>
@@ -349,7 +353,7 @@ CString& CString::insert(size_t pos, const CString& str) {
     begin.append(end);
     this->swap(begin);
     return *this;
-}*/
+}
 
 /// <summary>
 /// ѕоиск первого совпадени€ в исходной строке с одним из символов заданной строки.

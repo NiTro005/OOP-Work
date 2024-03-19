@@ -84,7 +84,7 @@ public:
     //CString& append(size_t n, char c);
 
     // вставка строки (после указанной позиции)
-    //CString& insert(size_t pos, const CString& str);
+    CString& insert(size_t pos, const CString& str);
     //CString& insert(size_t pos, const CString& str, size_t subpos, size_t sublen);
     //CString& insert(size_t pos, const char* s);
     //CString& insert(size_t pos, const char* s, size_t n);
