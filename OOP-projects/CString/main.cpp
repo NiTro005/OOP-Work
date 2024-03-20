@@ -81,6 +81,10 @@ int main() {
 
     std::cout << "str_7.find_first_of(\"aeiouy\");\n" <<
         str_7.find_first_of("aeiouy") << std::endl;
+    std::cout << "str_7.find_first_not_of(\"ABCDEFGHIKLMNOPQRSTVXYZabcdefghiklmnopqrstvxyz ., \");\n" <<
+        str_8.find_first_not_of("ABCDEFGHIKLMNOPQRSTVXYZabcdefghiklmnopqrstvxyz .,") << std::endl;
+
+    system("pause");
     return 0;
 }
 

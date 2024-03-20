@@ -383,20 +383,13 @@ size_t CString::find(const CString& str, size_t pos) const {
     if (pos >= _size) {
         throw std::logic_error("Error in function \ Position > size");
     }
-
     for (size_t i = pos; i <= _size - str._size; i++) {
-        bool found = true;
         for (size_t j = 0; j < str._size; j++) {
-            if (_data[i + j] != str._data[j]) {
-                found = false;
-                break;
+            if (_data[i + j] == str._data[j]) {
+                return i;
             }
         }
-        if (found) {
-            return i;
-        }
     }
-
     return -1;
 }
 
@@ -412,6 +405,28 @@ size_t CString::find_first_of(const CString& str, size_t pos) const {
             if (_data[i] == str._data[j]) {
                 return i;
             }
+        }
+    }
+    return -1;
+}
+
+/// <summary>
+/// поиск одного НЕ из перечисленных символов в строке начиная с некоторой позиции
+/// </summary>
+/// <param name="str"> - строка</param>
+/// <param name="pos"> - начальная позиция</param>
+/// <returns> индекс подходящего элемента</returns>
+size_t CString::find_first_not_of(const CString& str, size_t pos) const {
+    for (size_t i = pos; i < _size; i++) {
+        bool found = false;
+        for (size_t j = 0; j < str._size; j++) {
+            if (_data[i] == str._data[j]) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            return i;
         }
     }
     return -1;
