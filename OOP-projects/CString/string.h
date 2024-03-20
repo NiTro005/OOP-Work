@@ -42,7 +42,7 @@ public:
 
     ~CString();
 
-    void print(size_t pos = 0) const noexcept; 
+    void print(size_t pos = 0, size_t len = 0) const noexcept; 
 
     bool empty() const noexcept;
     bool full() const noexcept;

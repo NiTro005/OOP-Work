@@ -420,8 +420,8 @@ size_t CString::find_first_of(const CString& str, size_t pos) const {
 /// <summary>
 /// Вывод строки в консоль
 /// </summary>
-void CString::print(size_t pos) const noexcept {
-    for (int i = pos; i < _size; i++) {
+void CString::print(size_t pos, size_t len) const noexcept {
+    for (int i = pos; i < _size - pos + len; i++) {
         std::cout << _data[i];
     }
 }
