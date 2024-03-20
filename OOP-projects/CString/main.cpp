@@ -76,8 +76,7 @@ int main() {
     str_8.print();
     std::cout << std::endl;
     size_t index = str_8.find("Cool", 15);
-    size_t size = str_10.size();
-    str_8.print(index, size);
+    str_8.print(index, 3);
     std::cout << std::endl;
 
     return 0;
