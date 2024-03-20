@@ -79,6 +79,8 @@ int main() {
     str_8.print(index, 3);
     std::cout << std::endl;
 
+    std::cout << "str_7.find_first_of(\"aeiouy\");\n" <<
+        str_7.find_first_of("aeiouy") << std::endl;
     return 0;
 }
 
