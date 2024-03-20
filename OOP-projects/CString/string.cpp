@@ -355,7 +355,13 @@ CString& CString::insert(size_t pos, const CString& str) {
     return *this;
 }
 
-
+/// <summary>
+/// Замена участка строки
+/// </summary>
+/// <param name="pos"> - начальная позиция</param>
+/// <param name="len"> - длина </param>
+/// <param name="str"> - строка</param>
+/// <returns> - возвращает строку с замененным участком </returns>
 CString& CString::replace(size_t pos, size_t len, const CString& str) {
     len = std::min(len, _size - pos);
     for (size_t i = pos; i < pos + len; i++) {
@@ -365,6 +371,33 @@ CString& CString::replace(size_t pos, size_t len, const CString& str) {
         _data[i] = str._data[i - pos];
     }
     return *this;
+}
+
+/// <summary>
+/// Поиск подстроки
+/// </summary>
+/// <param name="str"> - подстрока</param>
+/// <param name="pos"> - начальная позиция</param>
+/// <returns> индекс найденной подстроки</returns>
+size_t CString::find(const CString& str, size_t pos) const {
+    if (pos >= _size) {
+        throw std::logic_error("Error in function \ Position > size");
+    }
+
+    for (size_t i = pos; i <= _size - str._size; i++) {
+        bool found = true;
+        for (size_t j = 0; j < str._size; j++) {
+            if (_data[i + j] != str._data[j]) {
+                found = false;
+                break;
+            }
+        }
+        if (found) {
+            return i;
+        }
+    }
+
+    return -1;
 }
 
 /// <summary>
@@ -387,8 +420,8 @@ size_t CString::find_first_of(const CString& str, size_t pos) const {
 /// <summary>
 /// Вывод строки в консоль
 /// </summary>
-void CString::print() const noexcept {
-    for (int i = 0; i < _size; i++) {
+void CString::print(size_t pos) const noexcept {
+    for (int i = pos; i < _size; i++) {
         std::cout << _data[i];
     }
 }

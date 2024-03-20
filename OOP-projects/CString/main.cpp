@@ -75,8 +75,8 @@ int main() {
     str_8.replace(10, 30, str_10);
     str_8.print();
     std::cout << std::endl;
-
-
+    size_t index = str_8.find("Cool", 23);
+    str_8.print(index);
     return 0;
 }
 

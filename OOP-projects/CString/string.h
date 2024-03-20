@@ -42,7 +42,7 @@ public:
 
     ~CString();
 
-    void print() const noexcept; 
+    void print(size_t pos = 0) const noexcept; 
 
     bool empty() const noexcept;
     bool full() const noexcept;
@@ -97,7 +97,7 @@ public:
     //CString& replace(size_t pos, size_t len, size_t n, char c);
 
     // поиск подстроки в строке начиная с некоторой позиции
-    //size_t find(const CString& str, size_t pos = 0) const;
+    size_t find(const CString& str, size_t pos = 0) const;
     //size_t find(const char* s, size_t pos = 0) const;
     //size_t find(const char* s, size_t pos, size_t n) const;
     //size_t find(char c, size_t pos = 0) const;
