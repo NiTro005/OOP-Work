@@ -355,6 +355,18 @@ CString& CString::insert(size_t pos, const CString& str) {
     return *this;
 }
 
+
+CString& CString::replace(size_t pos, size_t len, const CString& str) {
+    len = std::min(len, _size - pos);
+    for (size_t i = pos; i < pos + len; i++) {
+        if (str._data[i - pos] == '\0') {
+            break;
+        }
+        _data[i] = str._data[i - pos];
+    }
+    return *this;
+}
+
 /// <summary>
 /// ѕоиск первого совпадени€ в исходной строке с одним из символов заданной строки.
 /// </summary>

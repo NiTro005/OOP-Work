@@ -91,7 +91,7 @@ public:
     //CString& insert(size_t pos, size_t n, char c);
 
     // замена участка заданной строкой
-    //CString& replace(size_t pos, size_t len, const CString& str);
+    CString& replace(size_t pos, size_t len, const CString& str);
     //CString& replace(size_t pos, size_t len, const CString& str, size_t subpos, size_t sublen);
     //CString& replace(size_t pos, size_t len, const char* s, size_t n);
     //CString& replace(size_t pos, size_t len, size_t n, char c);

@@ -69,6 +69,14 @@ int main() {
     CString str_9(", My Dear Dear Dear Friend!");
     str_8.append(str_9);
     str_8.print();
+    std::cout << std::endl;
+
+    CString str_10("Cool Cool Cool");
+    str_8.replace(10, 30, str_10);
+    str_8.print();
+    std::cout << std::endl;
+
+
     return 0;
 }
 
