@@ -41,6 +41,7 @@ public:
             this->denominator = frac.denominator;
             this->numerator = frac.numerator;
         }
+        simplify();
         return *this;
     }
     Fraction operator+=(const Fraction& frac) {
@@ -67,6 +68,18 @@ public:
         simplify();
         return *this;
     }
+    friend std::ostream& operator<<(std::ostream& out, const Fraction& frac)
+    {
+        out << frac.numerator << '/' << frac.denominator;
+        return out;
+    }
+    friend std::istream& operator>>(std::istream& in, Fraction& frac)
+    {
+        char colon;
+        in >> frac.numerator >> colon >> frac.denominator;
+        frac.simplify();
+        return in;
+    }
 
 private:
     int gcd(int a, int b) {
@@ -83,8 +96,10 @@ private:
 };
 
 int main() {
-    Fraction fr_1, fr_2(3, 4), fr_3(5, 6), fr_4(fr_2);
+    Fraction fr_1, fr_2(3, 4), fr_3(5, 6), fr_4(fr_2), fr_5;
     fr_1 = fr_2 + fr_3;
-
+    std::cout << fr_1 << std::endl;
+    std::cin >> fr_5;
+    std::cout << fr_5 << std::endl;
     return 0;
 }
