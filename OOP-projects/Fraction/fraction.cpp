@@ -21,6 +21,26 @@ public:
         }
         return *this;
     }
+    Fraction operator+=(const Fraction& frac) {
+        this->denominator = this->numerator * frac.denominator + frac.numerator * this->denominator;
+        this->numerator = this->denominator * frac.denominator;
+        return *this;
+    }
+    Fraction operator-=(const Fraction& frac) {
+        this->denominator = this->numerator * frac.denominator - frac.numerator * this->denominator;
+        this->numerator = this->denominator * frac.denominator;
+        return *this;
+    }
+    Fraction operator*=(const Fraction& frac) {
+        this->denominator = this->numerator * frac.numerator;
+        this->numerator = this->denominator * frac.denominator;
+        return *this;
+    }
+    Fraction operator/=(const Fraction& frac) {
+        this->denominator = this->numerator * frac.denominator;
+        this->numerator = this->denominator * frac.numerator;
+        return *this;
+    }
 
 private:
     void simplify();
@@ -29,6 +49,6 @@ private:
 int main() {
     Fraction fr_1, fr_2(3, 4), fr_3(5, 6), fr_4(fr_2);
     fr_1 = fr_2 + fr_3;
-    std::cout << "check";
+
     return 0;
 }
