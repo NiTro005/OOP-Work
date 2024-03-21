@@ -29,5 +29,6 @@ private:
 int main() {
     Fraction fr_1, fr_2(3, 4), fr_3(5, 6), fr_4(fr_2);
     fr_1 = fr_2 + fr_3;
+    std::cout << "check";
     return 0;
 }
