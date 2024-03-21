@@ -12,6 +12,28 @@ public:
         Fraction res(*this);
         res.numerator = this->numerator * frac.denominator + frac.numerator * this->denominator;
         res.denominator = this->denominator * frac.denominator;
+        simplify();
+        return res;
+    }
+    Fraction operator-(const Fraction& frac) {
+        Fraction res(*this);
+        res.numerator = this->numerator * frac.denominator - frac.numerator * this->denominator;
+        res.denominator = this->denominator * frac.denominator;
+        simplify();
+        return res;
+    }
+    Fraction operator*(const Fraction& frac) {
+        Fraction res(*this);
+        res.numerator = this->numerator * frac.numerator;
+        res.denominator = this->denominator * frac.denominator;
+        simplify();
+        return res;
+    }
+    Fraction operator/(const Fraction& frac) {
+        Fraction res(*this);
+        res.numerator = this->numerator * frac.denominator;
+        res.denominator = this->denominator * frac.numerator;
+        simplify();
         return res;
     }
     Fraction operator=(const Fraction& frac) {
@@ -24,26 +46,40 @@ public:
     Fraction operator+=(const Fraction& frac) {
         this->denominator = this->numerator * frac.denominator + frac.numerator * this->denominator;
         this->numerator = this->denominator * frac.denominator;
+        simplify();
         return *this;
     }
     Fraction operator-=(const Fraction& frac) {
         this->denominator = this->numerator * frac.denominator - frac.numerator * this->denominator;
         this->numerator = this->denominator * frac.denominator;
+        simplify();
         return *this;
     }
     Fraction operator*=(const Fraction& frac) {
         this->denominator = this->numerator * frac.numerator;
         this->numerator = this->denominator * frac.denominator;
+        simplify();
         return *this;
     }
     Fraction operator/=(const Fraction& frac) {
         this->denominator = this->numerator * frac.denominator;
         this->numerator = this->denominator * frac.numerator;
+        simplify();
         return *this;
     }
 
 private:
-    void simplify();
+    int gcd(int a, int b) {
+        if (b == 0) {
+            return a;
+        }
+        return gcd(b, a % b);
+    }
+    void simplify() {
+        int del = this->gcd(numerator, denominator);
+        numerator /= del;
+        denominator /= del;
+    }
 };
 
 int main() {
