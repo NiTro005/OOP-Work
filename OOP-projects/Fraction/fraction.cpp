@@ -68,22 +68,144 @@ public:
         simplify();
         return *this;
     }
-    bool operator==(const Fraction& frac) {
-        if (this->numerator == frac.numerator &&
-            this->denominator == frac.denominator) {
-            return true;
-        }
-        return false;
+    bool operator==(const Fraction& frac) const {
+        return (numerator == frac.numerator) && (denominator == frac.denominator);
     }
-    bool operator>=(const Fraction& frac) {
-        if (this->numerator >= frac.numerator &&
-            this->denominator >= frac.denominator) {
-            return true;
-        }
-        return false;
+    bool operator!=(const Fraction& frac) const {
+        return (numerator != frac.numerator) || (denominator != frac.denominator);
+    }
+    bool operator>=(const Fraction& frac) const {
+        return (numerator * frac.denominator >= frac.numerator * denominator);
+    }
+    bool operator<=(const Fraction& frac) const {
+        return (numerator * frac.denominator <= frac.numerator * denominator);
+    }
+    bool operator>(const Fraction& frac) const {
+        return (numerator * frac.denominator > frac.numerator * denominator);
+    }
+    bool operator<(const Fraction& frac) const {
+        return (numerator * frac.denominator < frac.numerator * denominator);
     }
 
+    friend Fraction operator+(Fraction& frac, int value) {
+        frac.numerator = frac.numerator + value * frac.denominator;
+        frac.simplify();
+        return frac;
+    }
+    friend Fraction operator+(int value, Fraction& frac) {
+        frac.numerator = frac.numerator + value * frac.denominator;
+        frac.simplify();
+        return frac;
+    }
+    friend Fraction operator-(Fraction& frac, int value) {
+        frac.numerator = frac.numerator - value * frac.denominator;
+        frac.simplify();
+        return frac;
+    }
+    friend Fraction operator-(int value, Fraction& frac) {
+        frac.numerator = frac.numerator - value * frac.denominator;
+        frac.simplify();
+        return frac;
+    }
+    friend Fraction operator*(Fraction& frac, int value) {
+        frac.numerator = frac.numerator * value;
+        frac.simplify();
+        return frac;
+    }
+    friend Fraction operator*(int value, Fraction& frac) {
+        frac.numerator = frac.numerator * value;
+        frac.simplify();
+        return frac;
+    }
+    friend Fraction operator/(Fraction& frac, int value) {
+        frac.denominator = frac.denominator * value;
+        frac.simplify();
+        return frac;
+    }
+    friend Fraction operator/(int value, Fraction& frac) {
+        frac.denominator = frac.denominator * value;
+        frac.simplify();
+        return frac;
+    }
+    friend Fraction operator+=(Fraction& frac, int value) {
+        frac.numerator += value * frac.denominator;
+        frac.simplify();
+        return frac;
+    }
+    friend Fraction operator+=(int value, Fraction& frac) {
+        frac.numerator += value * frac.denominator;
+        frac.simplify();
+        return frac;
+    }
+    friend Fraction operator-=(Fraction& frac, int value) {
+        frac.numerator -= value * frac.denominator;
+        frac.simplify();
+        return frac;
+    }
+    friend Fraction operator-=(int value, Fraction& frac) {
+        frac.numerator -= value * frac.denominator;
+        frac.simplify();
+        return frac;
+    }
+    friend Fraction operator*=(Fraction& frac, int value) {
+        frac.numerator *= value;
+        frac.simplify();
+        return frac;
+    }
+    friend Fraction operator*=(int value, Fraction& frac) {
+        frac.numerator *= value;
+        frac.simplify();
+        return frac;
+    }
+    friend Fraction operator/=(Fraction& frac, int value) {
+        frac.denominator *= value;
+        frac.simplify();
+        return frac;
+    }
+    friend Fraction operator/=(int value, Fraction& frac) {
+        frac.denominator *= value;
+        frac.simplify();
+        return frac;
+    }
 
+    friend bool operator==(const Fraction& frac, int value) {
+        return frac.numerator == value * frac.denominator;
+    }
+    friend bool operator==(int value, const Fraction& frac) {
+        return frac.numerator == value * frac.denominator;
+    }
+    friend bool operator!=(const Fraction& frac, int value) {
+        return frac.numerator != value * frac.denominator;
+    }
+    friend bool operator!=(int value, const Fraction& frac) {
+        return frac.numerator != value * frac.denominator;
+    }
+    friend bool operator>=(const Fraction& frac, int value) {
+        return frac.numerator >= value * frac.denominator;
+    }
+    friend bool operator>=(int value, const Fraction& frac) {
+        return frac.numerator >= value * frac.denominator;
+    }
+    friend bool operator<=(const Fraction& frac, int value) {
+        return frac.numerator <= value * frac.denominator;
+    }
+    friend bool operator<=(int value, const Fraction& frac) {
+        return frac.numerator <= value * frac.denominator;
+    }
+    friend bool operator>(const Fraction& frac, int value) {
+        return frac.numerator > value * frac.denominator;
+    }
+    friend bool operator>(int value, const Fraction& frac) {
+        return frac.numerator > value * frac.denominator;
+    }
+    friend bool operator<(const Fraction& frac, int value) {
+        return frac.numerator < value * frac.denominator;
+    }
+    friend bool operator<(int value, const Fraction& frac) {
+        return frac.numerator < value * frac.denominator;
+    }
+
+    
 
     friend std::ostream& operator<<(std::ostream& out, const Fraction& frac)
     {
@@ -117,9 +239,16 @@ int main() {
     fr_1 = fr_2 + fr_3;
     std::cout << fr_1 << std::endl;
     std::cin >> fr_5;
+    fr_5 /= 3;
     std::cout << fr_5 << std::endl;
     if (fr_2 == fr_4) {
         std::cout << "TRUE" << std::endl;
     }
+    else{ std::cout << "FALSE" << std::endl; }
+
+    if (fr_2 > 1) {
+        std::cout << "TRUE" << std::endl;
+    }
+    else { std::cout << "FALSE" << std::endl; }
     return 0;
 }
