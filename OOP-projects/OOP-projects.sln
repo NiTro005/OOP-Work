@@ -13,6 +13,7 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+
 		{E4390CEF-A723-4E29-A0B8-15CAEB23311B}.Debug|x64.ActiveCfg = Debug|x64
 		{E4390CEF-A723-4E29-A0B8-15CAEB23311B}.Debug|x64.Build.0 = Debug|x64
 		{E4390CEF-A723-4E29-A0B8-15CAEB23311B}.Debug|x86.ActiveCfg = Debug|Win32
