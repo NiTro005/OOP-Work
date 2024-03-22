@@ -68,6 +68,23 @@ public:
         simplify();
         return *this;
     }
+    bool operator==(const Fraction& frac) {
+        if (this->numerator == frac.numerator &&
+            this->denominator == frac.denominator) {
+            return true;
+        }
+        return false;
+    }
+    bool operator>=(const Fraction& frac) {
+        if (this->numerator >= frac.numerator &&
+            this->denominator >= frac.denominator) {
+            return true;
+        }
+        return false;
+    }
+
+
+
     friend std::ostream& operator<<(std::ostream& out, const Fraction& frac)
     {
         out << frac.numerator << '/' << frac.denominator;
@@ -101,5 +118,8 @@ int main() {
     std::cout << fr_1 << std::endl;
     std::cin >> fr_5;
     std::cout << fr_5 << std::endl;
+    if (fr_2 == fr_4) {
+        std::cout << "TRUE" << std::endl;
+    }
     return 0;
 }
