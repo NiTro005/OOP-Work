@@ -1,13 +1,14 @@
-#include <iostream>
+
 #include "archive.h"
 #include "utilities.h"
 
 enum Actions { EXIT, INSERT, FIND, REMOVE, CLEAN };
 
 int main() {
-    TArchive<int> archive;
+    TArchive<char> archive;
+    archive.data();
     size_t n, pos;
-    int* values = nullptr;
+    char* values = nullptr;
     int user;
 
     std::exception err;
@@ -26,7 +27,7 @@ int main() {
             break;
         case Actions::INSERT:
             if (values != nullptr) { delete[] values; values = nullptr; }
-            values = InputSystem::insert<int>(n, pos, mode);
+            values = InputSystem::insert<char>(n, pos, mode);
             success = false;
             if (mode == InputSystem::InsertMode::OneValue) {
                 try {

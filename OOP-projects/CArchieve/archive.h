@@ -1,5 +1,6 @@
 #pragma once
-#define STEP_CAPACITY 15
+#include <iostream>
+#define STEP_CAPACITY 3
 
 enum State { empty, busy, deleted };
 
@@ -33,17 +34,17 @@ public:
     inline bool empty() const noexcept;
     inline bool full() const noexcept;
 
-    //size_t size();
-    //size_t capacity();
-    //const T* data();
+    size_t size();
+    size_t capacity();
+    const T* data();
 
-    //void swap(TArchive& archive);
+    void swap(TArchive& archive);
 
-    //TArchive& assign(const TArchive& archive);
+    TArchive& assign(const TArchive& archive);
 
-    //void clear();
-    //void resize(size_t n, T value);
-    //void reserve(size_t n);
+    void clear();
+    void resize(size_t n, T value);
+    void reserve(size_t n = 15);
 
     //void push_back(T value);             // вставка элемента (в конец)
     //void pop_back();                     // удаление элемента (из конца)
@@ -78,6 +79,82 @@ TArchive<T>::TArchive() {
         _states[i] = State::empty;
     }
 }
+template <typename T>
+size_t TArchive<T>::size() {
+    return _size;
+}
+template <typename T>
+size_t TArchive<T>::capacity() {
+    return _capacity;
+}
+
+template <typename T>
+const T* TArchive<T> ::data() {
+    return _data;
+}
+
+template <typename T>
+void TArchive <T>::swap(TArchive& archive) {
+    algorithms::swap(_size, archive._size);
+    algorithms::swap(_capacity, archive._capacity);
+    algorithms::swap(_data, archive._data);
+    algorithms::swap(_states, archive._states);
+}
+
+template <typename T>
+TArchive<T>& TArchive <T>::assign(const TArchive& archive) {
+    _size = archive._size;
+    _capacity = archive._capacity;
+    _data = new T[_capacity];
+    _states = new T[_capacity];
+    for (int i = 0; i < _size; i++) {
+        _data[i] = archive._data[i];
+        _states[i] = archive.data[i];
+    }
+    return *this;
+}
+
+template <typename T>
+void TArchive<T>::clear() {
+    delete[] _data;
+    delete[] _states;
+    _size = 0;
+    _capacity = 0;
+}
+
+template <typename T>
+void TArchive <T>::resize(size_t n, T value) {
+    if (n <= _size) {
+        for (size_t i = _size; i >= n; i--) {
+            _states[i] = State::empty;
+        }
+        _size = n;
+    }
+    else {
+        reserve(n);
+        for (size_t i = _size; i < n; ++i) {
+            _data[i] = value;
+            _states[i] = State::busy;
+        }
+        _size = n;
+    }
+}
+
+template <typename T>
+void TArchive <T>::reserve(size_t n) {
+    if (n < _capacity) {
+        return;
+    }
+    _capacity = (n / STEP_CAPACITY) * STEP_CAPACITY + STEP_CAPACITY;
+    if (_capacity >= 45) {
+        throw std::logic_error("Error in function \
+\"void TArchive <T>::reserve(size_t n)\": complete max size of capacity.");
+    }
+    char* newData = new char[_capacity];
+    std::memcpy(newData, _data, _size);
+    delete[] _data;
+    _data = newData;
+}
 
 template <typename T>
 TArchive<T>::~TArchive() {
@@ -101,14 +178,10 @@ TArchive<T>& TArchive<T>::insert(T value, size_t pos) {
         throw std::logic_error("Error in function \
 \"TArchive<T>& insert(T value, size_t pos)\": wrong position value.");
     }
-    /*
-    // действия при переполнении
+    
     if (this->full()) {
-        this->reserve(size_t n);
-        // + внутри reserve() исключение, если достигнем масимально
-        // возможного значения _capacity
+        this->reserve();
     }
-    */
     for (size_t i = _size; i > pos; i--) {
         _data[i] = _data[i - 1];
     }
