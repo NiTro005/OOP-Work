@@ -38,6 +38,15 @@ int main() {
                     std::cerr << err.what() << std::endl;
                 }
             }
+            else if (mode = InputSystem::InsertMode::SeveralValues) {
+                try {
+                    archive.insert(values,n, pos);
+                    success = true;
+                }
+                catch (std::exception err) {
+                    std::cerr << err.what() << std::endl;
+                }
+            }
             else {
                 std::cout << "TBD" << std::endl;
             }
