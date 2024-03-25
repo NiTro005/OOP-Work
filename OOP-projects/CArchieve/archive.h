@@ -54,7 +54,7 @@ public:
     TArchive& insert(const T* arr, size_t n, size_t pos);
     TArchive& insert(T value, size_t pos);
 
-    //TArchive& replace(size_t pos, T new_value);
+    TArchive& replace(size_t pos, T new_value);
 
     //TArchive& erase(size_t pos, size_t n);
     //TArchive& remove_all(T value);
@@ -180,7 +180,10 @@ TArchive<T>& TArchive<T>::insert(T value, size_t pos) {
     }
     
     if (this->full()) {
-        this->reserve();
+        if (_capacity < 45) {
+            this->reserve();
+        }
+        else { replace(pos, value); }
     }
     for (size_t i = _size; i > pos; i--) {
         _data[i] = _data[i - 1];
@@ -209,6 +212,12 @@ TArchive<T>& TArchive<T>::insert(const T* arr, size_t n, size_t pos) {
         _states[pos + i] = State::busy;
     }
     _size += n;
+    return *this;
+}
+
+template <typename T>
+TArchive<T>& TArchive<T>::replace(size_t pos, T new_value) {
+    _data[pos] = new_value;
     return *this;
 }
 
