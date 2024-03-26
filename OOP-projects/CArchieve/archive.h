@@ -46,9 +46,9 @@ public:
     void resize(size_t n, T value);
     void reserve(size_t n = 15);
 
-    //void push_back(T value);             // вставка элемента (в конец)
+    void push_back(T value);             // вставка элемента (в конец)
     //void pop_back();                     // удаление элемента (из конца)
-    //void push_front(T value);            // вставка элемента (в начало)
+    void push_front(T value);            // вставка элемента (в начало)
     //void pop_front();                    // удаление элемента (из начала)
 
     TArchive& insert(const T* arr, size_t n, size_t pos);
@@ -146,7 +146,7 @@ void TArchive <T>::reserve(size_t n) {
         return;
     }
     _capacity = (n / STEP_CAPACITY) * STEP_CAPACITY + STEP_CAPACITY;
-    if (_capacity >= 45) {
+    if (_capacity > 45) {
         throw std::logic_error("Error in function \
 \"void TArchive <T>::reserve(size_t n)\": complete max size of capacity.");
     }
@@ -183,7 +183,10 @@ TArchive<T>& TArchive<T>::insert(T value, size_t pos) {
         if (_capacity < 45) {
             this->reserve();
         }
-        else { replace(pos, value); }
+        else { 
+            replace(pos, value); 
+            return *this;
+        }
     }
     for (size_t i = _size; i > pos; i--) {
         _data[i] = _data[i - 1];
@@ -213,6 +216,42 @@ TArchive<T>& TArchive<T>::insert(const T* arr, size_t n, size_t pos) {
     }
     _size += n;
     return *this;
+}
+
+template <typename T>
+void TArchive<T>::push_back(T value) {
+    if (this->full()) {
+        if (_capacity < 45) {
+            this->reserve();
+        }
+        else {
+            replace(_size, value);
+            return;
+        }
+    }
+    _data[_size] = value;
+    _states[_size] = State::busy;
+    _size++;
+}
+
+template <typename T>
+void TArchive<T>::push_front(T value) {
+    if (this->full()) {
+        if (_capacity < 45) {
+            this->reserve();
+        }
+        else {
+            replace(0, value);
+            return;
+        }
+    }
+    for (size_t i = _size; i > 0; i--) {
+        _data[i] = _data[i - 1];
+        _states[i - 1] = State::busy;
+    }
+    _data[0] = value;
+    _states[0] = State::busy;
+    _size++;
 }
 
 template <typename T>

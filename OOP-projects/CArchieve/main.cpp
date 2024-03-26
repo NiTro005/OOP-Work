@@ -38,7 +38,7 @@ int main() {
                     std::cerr << err.what() << std::endl;
                 }
             }
-            else if (mode = InputSystem::InsertMode::SeveralValues) {
+            else if (mode == InputSystem::InsertMode::SeveralValues) {
                 try {
                     archive.insert(values,n, pos);
                     success = true;
@@ -47,8 +47,23 @@ int main() {
                     std::cerr << err.what() << std::endl;
                 }
             }
+            else if (mode == InputSystem::InsertMode::Back) {
+                try {
+                    archive.push_back(values[0]);
+                    success = true;
+                }
+                catch (std::exception err) {
+                    std::cerr << err.what() << std::endl;
+                }
+            }
             else {
-                std::cout << "TBD" << std::endl;
+                try {
+                    archive.push_front(values[0]);
+                    success = true;
+                }
+                catch (std::exception err) {
+                    std::cerr << err.what() << std::endl;
+                }
             }
             if (success) {
                 OutputSystem::insert();
