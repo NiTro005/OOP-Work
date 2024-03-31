@@ -247,7 +247,7 @@ void TArchive<T>::push_front(T value) {
     }
     for (size_t i = _size; i > 0; i--) {
         _data[i] = _data[i - 1];
-        _states[i - 1] = State::busy;
+        _states[i + 1] = State::busy;
     }
     _data[0] = value;
     _states[0] = State::busy;

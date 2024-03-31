@@ -79,7 +79,7 @@ int main() {
             system("pause");
             break;
         case Actions::CLEAN:
-            std::cout << "TBD" << std::endl;
+            archive.clear();
             break;
         }
     }
