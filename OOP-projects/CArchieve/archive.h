@@ -190,6 +190,7 @@ TArchive<T>& TArchive<T>::insert(T value, size_t pos) {
     }
     for (size_t i = _size; i > pos; i--) {
         _data[i] = _data[i - 1];
+        _states[i + 1] = State::busy;
     }
     _data[pos] = value;
     _states[pos] = State::busy;
@@ -256,13 +257,14 @@ void TArchive<T>::push_front(T value) {
 
 template <typename T>
 void TArchive<T>::pop_back() {
-    _states[_size - 1] = State::deleted;
+    _states[_size - 1] = State::empty;
     --_size;
 }
 
 template <typename T>
 TArchive<T>& TArchive<T>::replace(size_t pos, T new_value) {
     _data[pos] = new_value;
+    _states[pos] = State::busy;
     return *this;
 }
 
