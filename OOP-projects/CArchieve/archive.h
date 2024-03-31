@@ -45,6 +45,7 @@ public:
     void clear();
     void resize(size_t n, T value);
     void reserve(size_t n = 15);
+    void repacking();
 
     void push_back(T value);             // вставка элемента (в конец)
     void pop_back();                     // удаление элемента (из конца)
@@ -154,6 +155,25 @@ void TArchive <T>::reserve(size_t n) {
     std::memcpy(newData, _data, _size);
     delete[] _data;
     _data = newData;
+}
+
+template <typename T>
+void TArchive <T>::repacking() {
+    int count = _deleted;
+    for (size_t i = 0; i < _size; i++) {
+        if (_states[i] == State::deleted) {
+            for (size_t j = 0; j < _size - _deleted; j++) {
+                _data[j] = _data[j + 1];
+                _states[j] = _states[j + 1];
+            }
+            _states[_size - _deleted] = State::deleted;
+            
+            _deleted--;
+        }
+    }
+    for (int i = 0; i < count; i++) {
+        delete _data[_size - 1];
+    }
 }
 
 template <typename T>
