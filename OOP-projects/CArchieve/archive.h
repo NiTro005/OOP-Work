@@ -50,18 +50,18 @@ public:
     void push_back(T value);             // вставка элемента (в конец)
     void pop_back();                     // удаление элемента (из конца)
     void push_front(T value);            // вставка элемента (в начало)
-    //void pop_front();                    // удаление элемента (из начала)
+    void pop_front();                    // удаление элемента (из начала)
 
     TArchive& insert(const T* arr, size_t n, size_t pos);
     TArchive& insert(T value, size_t pos);
 
     TArchive& replace(size_t pos, T new_value);
 
-    //TArchive& erase(size_t pos, size_t n);
+    TArchive& erase(size_t pos, size_t n);
     //TArchive& remove_all(T value);
     //TArchive& remove_first(T value);
     //TArchive& remove_last(T value);
-    //TArchive& remove_by_index(size_t pos);
+    TArchive& remove_by_index(size_t pos);
 
     //size_t* find_all(T value) const noexcept;
     //size_t find_first(T value);
@@ -143,7 +143,8 @@ void TArchive <T>::resize(size_t n, T value) {
 
 template <typename T>
 void TArchive <T>::reserve(size_t n) {
-    if (n < _capacity) {
+    repacking();
+    if (n < _capacity || _size < _capacity) {
         return;
     }
     _capacity = (n / STEP_CAPACITY) * STEP_CAPACITY + STEP_CAPACITY;
@@ -151,10 +152,14 @@ void TArchive <T>::reserve(size_t n) {
         throw std::logic_error("Error in function \
 \"void TArchive <T>::reserve(size_t n)\": complete max size of capacity.");
     }
-    char* newData = new char[_capacity];
+    T* newData = new T[_capacity];
     std::memcpy(newData, _data, _size);
     delete[] _data;
     _data = newData;
+    State* newDat = new State[_capacity];
+    std::memcpy(newDat, _states, _size);
+    delete[] _states;
+    _states = newDat;
 }
 
 template <typename T>
@@ -162,18 +167,19 @@ void TArchive <T>::repacking() {
     int count = _deleted;
     for (size_t i = 0; i < _size; i++) {
         if (_states[i] == State::deleted) {
-            for (size_t j = 0; j < _size - _deleted; j++) {
+            for (size_t j = i; j < _size - _deleted; j++) {
                 _data[j] = _data[j + 1];
                 _states[j] = _states[j + 1];
             }
             _states[_size - _deleted] = State::deleted;
-            
             _deleted--;
         }
     }
-    for (int i = 0; i < count; i++) {
-        delete _data[_size - 1];
-    }
+    _size -= count;
+    T* new_data = new T[_capacity];
+    std::memcpy(new_data, _data, _size);
+    delete[] _data;
+    _data = new_data;
 }
 
 template <typename T>
@@ -276,9 +282,40 @@ void TArchive<T>::push_front(T value) {
 }
 
 template <typename T>
+void TArchive<T>::pop_front() {
+    if (_size <= 0) {
+        throw std::logic_error("Error in function \
+\"void TArchive<T>::pop_back()\": archive clear");
+    }
+    for (size_t i = 1; i < _size; i++) {
+        _data[i - 1] = _data[i];
+        _states[i - 1] = _states[i];
+    }
+    _states[_size - 1] = State::deleted;
+    _deleted++;
+    _size--;
+
+}
+
+template <typename T>
 void TArchive<T>::pop_back() {
+    if (_size <= 0) {
+        throw std::logic_error("Error in function \
+\"void TArchive<T>::pop_back()\": archive clear");
+    }
     _states[_size - 1] = State::empty;
     --_size;
+}
+
+template <typename T>
+TArchive<T>& TArchive<T> ::remove_by_index(size_t pos) {
+    if (_size <= pos || pos < 0) {
+        throw std::logic_error("Error in function \
+\"TArchive<T>& TArchive<T> ::remove_by_index(size_t pos)\": wrong position value.");
+    }
+    _states[pos] = State::deleted;
+    _deleted++;
+    return *this;
 }
 
 template <typename T>

@@ -64,7 +64,12 @@ int main() {
             try {
                 if (mode1 == InputSystem::RemoveMode::Back1) {
                     archive.pop_back();
-                    
+                }
+                else if (mode1 == InputSystem::RemoveMode::Front1) {
+                    archive.pop_front();
+                }
+                else if (mode1 == InputSystem::RemoveMode::OneValue1) {
+                    archive.remove_by_index(pos);
                 }
                 success = true;
             }
