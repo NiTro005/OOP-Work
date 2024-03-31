@@ -47,7 +47,7 @@ public:
     void reserve(size_t n = 15);
 
     void push_back(T value);             // вставка элемента (в конец)
-    //void pop_back();                     // удаление элемента (из конца)
+    void pop_back();                     // удаление элемента (из конца)
     void push_front(T value);            // вставка элемента (в начало)
     //void pop_front();                    // удаление элемента (из начала)
 

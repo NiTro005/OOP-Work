@@ -15,6 +15,7 @@ int main() {
     bool exit = false;
     bool success;
     InputSystem::InsertMode mode;
+    InputSystem::RemoveMode mode1;
 
     while (!exit) {
         system("cls");
@@ -29,54 +30,37 @@ int main() {
             if (values != nullptr) { delete[] values; values = nullptr; }
             values = InputSystem::insert<char>(n, pos, mode);
             success = false;
-            if (mode == InputSystem::InsertMode::OneValue) {
-                try {
+            try {
+                if (mode == InputSystem::InsertMode::OneValue) {
                     archive.insert(values[0], pos);
-                    success = true;
                 }
-                catch (std::exception err) {
-                    std::cerr << err.what() << std::endl;
+                else if (mode == InputSystem::InsertMode::SeveralValues) {
+                    archive.insert(values, n, pos);
                 }
-            }
-            else if (mode == InputSystem::InsertMode::SeveralValues) {
-                try {
-                    archive.insert(values,n, pos);
-                    success = true;
-                }
-                catch (std::exception err) {
-                    std::cerr << err.what() << std::endl;
-                }
-            }
-            else if (mode == InputSystem::InsertMode::Back) {
-                try {
+                else if (mode == InputSystem::InsertMode::Back) {
                     archive.push_back(values[0]);
-                    success = true;
                 }
-                catch (std::exception err) {
-                    std::cerr << err.what() << std::endl;
-                }
-            }
-            else {
-                try {
+                else {
                     archive.push_front(values[0]);
-                    success = true;
                 }
-                catch (std::exception err) {
-                    std::cerr << err.what() << std::endl;
-                }
+                success = true;
+            }
+            catch (std::exception& err) {
+                std::cerr << err.what() << std::endl;
             }
             if (success) {
                 OutputSystem::insert();
             }
-            system("pause");
+            system("pause>nul");
             break;
         case Actions::FIND:
             std::cout << "TBD" << std::endl;
             system("pause");
             break;
         case Actions::REMOVE:
-            std::cout << "TBD" << std::endl;
-            system("pause");
+            if (values != nullptr) { delete[] values; values = nullptr; }
+            values = InputSystem::remove<char>(n, pos, mode1);
+            success = false;
             break;
         case Actions::CLEAN:
             archive.clear();

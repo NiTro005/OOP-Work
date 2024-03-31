@@ -7,6 +7,58 @@
 
 namespace InputSystem {
     enum InsertMode {Back, Front, OneValue, SeveralValues};
+    enum RemoveMode{Back1, Front1, All, First, Last, OneValue1, SeveralValues1};
+
+    template <typename T>
+    T* remove(size_t& n, size_t& pos, InputSystem::RemoveMode& mode) noexcept {
+        T* value = nullptr;
+        mode = Back1;
+        int user;
+        std::cout << "Choose remove mode:\n";
+        std::cout << "1 - back,\n";
+        std::cout << "2 - front,\n";
+        std::cout << "3 - by value,\n";
+        std::cout << "4 - at given position.\n";
+        std::cout << "Your choose: ";
+        std::cin >> user;
+        if (user == 1) { mode = Back1; }
+        if (user == 2) { mode = Front1; }
+        if (user == 3) {
+            std::cout << "Remove by value:\n";
+            std::cout << "1 - first coincidence,\n";
+            std::cout << "2 - last coincidence,\n";
+            std::cout << "3 - all coincidence.\n";
+            std::cout << "Your choose: ";
+            std::cin >> user;
+            if (user == 1) { mode = First; }
+            if (user == 2) { mode = Last; }
+            if (user == 2) { mode = All; }
+        }
+        if (user == 4) {
+            std::cout << "How many values need to be removed:\n";
+            std::cout << "1 - one value,\n";
+            std::cout << "2 - several values.\n";
+            std::cout << "Your choose: ";
+            std::cin >> user;
+            if (user == 1) { mode = OneValue1; }
+            if (user == 2) { mode = SeveralValues1; }
+        }
+        if (mode == First || mode == Last || mode == All) {
+            n = 1;
+            value = new T[n];
+            std::cout << "Input value for remove: ";
+            std::cin >> value[0];
+        }
+        if (mode == SeveralValues1) {
+            std::cout << "Input number of values for remove: ";
+            std::cin >> n;
+        }
+        if (mode == OneValue1 || mode == SeveralValues1) {
+            std::cout << "Input position for insert: ";
+            std::cin >> pos;
+        }
+        return value;
+    }
 
     template <typename T>
     T* insert(size_t& n, size_t& pos, InputSystem::InsertMode& mode) noexcept {
@@ -78,6 +130,9 @@ namespace OutputSystem {
     }
 
     static void insert() noexcept {
+        std::cout << "Done." << std::endl;
+    }
+    static void remove() noexcept {
         std::cout << "Done." << std::endl;
     }
 
