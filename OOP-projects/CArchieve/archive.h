@@ -255,6 +255,12 @@ void TArchive<T>::push_front(T value) {
 }
 
 template <typename T>
+void TArchive<T>::pop_back() {
+    _states[_size - 1] = State::deleted;
+    --_size;
+}
+
+template <typename T>
 TArchive<T>& TArchive<T>::replace(size_t pos, T new_value) {
     _data[pos] = new_value;
     return *this;

@@ -61,6 +61,20 @@ int main() {
             if (values != nullptr) { delete[] values; values = nullptr; }
             values = InputSystem::remove<char>(n, pos, mode1);
             success = false;
+            try {
+                if (mode1 == InputSystem::RemoveMode::Back1) {
+                    archive.pop_back();
+                    
+                }
+                success = true;
+            }
+            catch (std::exception& err) {
+                std::cerr << err.what() << std::endl;
+            }
+            if (success) {
+                OutputSystem::remove();
+            }
+            system("pause>nul");
             break;
         case Actions::CLEAN:
             archive.clear();
