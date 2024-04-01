@@ -74,6 +74,13 @@ int main() {
                 else if (mode1 == InputSystem::RemoveMode::SeveralValues1) {
                     archive.erase(pos, n);
                 }
+                else if (mode1 == InputSystem::RemoveMode::All) {
+                    archive.remove_all(values[0]);
+                }
+                else if (mode1 == InputSystem::RemoveMode::First) {
+                    archive.remove_first(values[0]);
+                }
+                else{ archive.remove_last(values[0]); }
                 success = true;
             }
             catch (std::exception& err) {

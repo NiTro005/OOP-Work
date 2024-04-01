@@ -58,9 +58,9 @@ public:
     TArchive& replace(size_t pos, T new_value);
 
     TArchive& erase(size_t pos, size_t n);
-    //TArchive& remove_all(T value);
-    //TArchive& remove_first(T value);
-    //TArchive& remove_last(T value);
+    TArchive& remove_all(T value);
+    TArchive& remove_first(T value);
+    TArchive& remove_last(T value);
     TArchive& remove_by_index(size_t pos);
 
     //size_t* find_all(T value) const noexcept;
@@ -163,7 +163,7 @@ void TArchive <T>::reserve(size_t n) {
 }
 
 template <typename T>
-void TArchive<T>::repacking() {
+void TArchive <T>::repacking() {
     int count = _deleted;
     for (size_t i = 0; i < _size; i++) {
         if (_states[i] == State::deleted) {
@@ -177,11 +177,7 @@ void TArchive<T>::repacking() {
     }
     _size -= count;
     T* new_data = new T[_capacity];
-    for (size_t i = 0, j = 0; i < _size; i++) {
-        if (_states[i] != State::deleted) {
-            new_data[j++] = _data[i];
-        }
-    }
+    std::memcpy(new_data, _data, _size);
     delete[] _data;
     _data = new_data;
 }
@@ -332,6 +328,50 @@ TArchive<T>& TArchive<T>::erase(size_t pos, size_t n) {
         _states[i] = State::deleted;
     }
     _deleted = n;
+}
+
+template <typename T>
+TArchive<T>& TArchive<T>::remove_all(T value) {
+    if (_size <= 0) {
+        throw std::logic_error("Error in function \
+\"TArchive<T>& TArchive<T>::remove_all(T value)\": archive clear");
+    }
+    for (size_t i = 0; i < _size; i++) {
+        if (_data[i] == value) {
+            _states[i] = State::deleted;
+            _deleted++;
+        }
+    }
+}
+
+template <typename T>
+TArchive<T>& TArchive<T>::remove_first(T value) {
+    if (_size <= 0) {
+        throw std::logic_error("Error in function \
+\"TArchive<T>& TArchive<T>::remove_first(T value)\": archive clear");
+    }
+    for (size_t i = 0; i < _size; i++) {
+        if (_data[i] == value) {
+            _states[i] = State::deleted;
+            break;
+        }
+    }
+    _deleted++;
+}
+
+template <typename T>
+TArchive<T>& TArchive<T>::remove_last(T value) {
+    if (_size <= 0) {
+        throw std::logic_error("Error in function \
+\"TArchive<T>& TArchive<T>::remove_last(T value)\": archive clear");
+    }
+    for (size_t i = _size; i > 0; i--) {
+        if (_data[i] == value) {
+            _states[i] = State::deleted;
+            break;
+        }
+    }
+    _deleted++;
 }
 
 template <typename T>

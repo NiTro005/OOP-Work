@@ -32,7 +32,7 @@ namespace InputSystem {
             std::cin >> user;
             if (user == 1) { mode = First; }
             if (user == 2) { mode = Last; }
-            if (user == 2) { mode = All; }
+            if (user == 3) { mode = All; }
         }
         if (user == 4) {
             std::cout << "How many values need to be removed:\n";
@@ -54,7 +54,7 @@ namespace InputSystem {
             std::cin >> n;
         }
         if (mode == OneValue1 || mode == SeveralValues1) {
-            std::cout << "Input position for insert: ";
+            std::cout << "Input position for remove: ";
             std::cin >> pos;
         }
         return value;
