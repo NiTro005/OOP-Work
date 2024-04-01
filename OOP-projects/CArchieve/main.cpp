@@ -71,6 +71,9 @@ int main() {
                 else if (mode1 == InputSystem::RemoveMode::OneValue1) {
                     archive.remove_by_index(pos);
                 }
+                else if (mode1 == InputSystem::RemoveMode::SeveralValues1) {
+                    archive.erase(pos, n);
+                }
                 success = true;
             }
             catch (std::exception& err) {
