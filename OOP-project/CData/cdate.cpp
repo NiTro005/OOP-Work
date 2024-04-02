@@ -1,4 +1,4 @@
-#include "cdata.h"
+#include "cdate.h"
 
 CDate::CDate() {
 	int day = 0;

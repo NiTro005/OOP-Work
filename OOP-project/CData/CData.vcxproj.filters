@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cdata.cpp">
+    <ClCompile Include="cdate.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -23,7 +23,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cdata.h">
+    <ClInclude Include="cdate.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

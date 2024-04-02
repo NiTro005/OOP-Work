@@ -1,4 +1,4 @@
-#include "cdata.h"
+#include "cdate.h"
 int main() {
 	CDate d1, d4;
 	CDate d2(12, 12, 1978);
