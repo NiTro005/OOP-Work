@@ -87,10 +87,10 @@ void CTime::output() {
 		<< seconds << std::endl;
 }
 
-void CTime::assign(CTime& time) {
-		time.hours = this->hours;
-		time.minutes = this->minutes;
-		time.seconds = this->seconds;
+void CTime::assign(const CTime& time) {
+		this->hours = time.hours;
+		this->minutes = time.minutes;
+		this->seconds = time.seconds;
 
 }
 void CTime:: set_values(int hours_, int minutes_, int seconds_) {

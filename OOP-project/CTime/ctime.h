@@ -13,7 +13,7 @@ public:
 	Status check();
 	void output();
 	Status convert();
-	void assign(CTime& time);
+	void assign( const CTime& time);
 	void set_values(int hours_, int minutes_, int seconds_);
 	Status add_hours(int hours_);
 	Status add_minutes(int minutes_);
