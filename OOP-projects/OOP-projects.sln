@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CTime", "CTime\CTime.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CFraction", "CFraction\CFraction.vcxproj", "{C10A87F9-1A7B-4F82-B302-337B0AB64648}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CString", "CString\CString.vcxproj", "{E4390CEF-A723-4E29-A0B8-15CAEB23311B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,14 @@ Global
 		{C10A87F9-1A7B-4F82-B302-337B0AB64648}.Release|x64.Build.0 = Release|x64
 		{C10A87F9-1A7B-4F82-B302-337B0AB64648}.Release|x86.ActiveCfg = Release|Win32
 		{C10A87F9-1A7B-4F82-B302-337B0AB64648}.Release|x86.Build.0 = Release|Win32
+		{E4390CEF-A723-4E29-A0B8-15CAEB23311B}.Debug|x64.ActiveCfg = Debug|x64
+		{E4390CEF-A723-4E29-A0B8-15CAEB23311B}.Debug|x64.Build.0 = Debug|x64
+		{E4390CEF-A723-4E29-A0B8-15CAEB23311B}.Debug|x86.ActiveCfg = Debug|Win32
+		{E4390CEF-A723-4E29-A0B8-15CAEB23311B}.Debug|x86.Build.0 = Debug|Win32
+		{E4390CEF-A723-4E29-A0B8-15CAEB23311B}.Release|x64.ActiveCfg = Release|x64
+		{E4390CEF-A723-4E29-A0B8-15CAEB23311B}.Release|x64.Build.0 = Release|x64
+		{E4390CEF-A723-4E29-A0B8-15CAEB23311B}.Release|x86.ActiveCfg = Release|Win32
+		{E4390CEF-A723-4E29-A0B8-15CAEB23311B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
