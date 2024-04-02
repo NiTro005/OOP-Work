@@ -1,23 +1,23 @@
 #include "cdata.h"
 
-CData::CData() {
+CDate::CDate() {
 	int day = 0;
 	int month = 0;
 	int year = 0;
 }
-CData::CData(int day_, int month_, int year_)
+CDate::CDate(int day_, int month_, int year_)
 {
 	day = day_;
 	month = month_;
 	year = year_;
 }
-CData::CData(const CData& data) {
+CDate::CDate(const CDate& data) {
 	day = data.day;
 	month = data.month;
 	year = data.year;
 }
 
-Status CData::input() {
+Status CDate::input() {
 	Status state = SUCCESS;
 	char colon;
 	std::cin >> day >> colon
@@ -34,7 +34,7 @@ Status CData::input() {
 	return state;
 }
 
-Status CData::check() {
+Status CDate::check() {
 	Status state = SUCCESS;
 	if (month > 12 || month < 1) {state = ERROR;}
 	else if (day > 28 || day < 1) {
@@ -49,7 +49,7 @@ Status CData::check() {
 }
 
 
-Status CData::convert() {
+Status CDate::convert() {
 	Status state = SUCCESS;
 	if (day > 28) {
 		if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30) {
@@ -88,25 +88,25 @@ Status CData::convert() {
 }
 
 
-void CData::output() {
+void CDate::output() {
 	std::cout << day << "."
 		<< month << "."
 		<< year << std::endl;
 }
 
-void CData::assign(CData& data) {
-	data.day = this->day;
-	data.month = this->month;
-	data.year = this->year;
+void CDate::assign(const CDate& data) {
+	this->day = data.day;
+	this->month = data.month;
+	this->year = data.year;
 
 }
-void CData::set_values(int day_, int month_, int year_) {
+void CDate::set_values(int day_, int month_, int year_) {
 	day = day_;
 	month = month_;
 	year = year_;
 }
 
-Status CData::add_day(int day_) {
+Status CDate::add_day(int day_) {
 	Status state = SUCCESS;
 	day += day_;
 	if (day > 28)  state = convert();
@@ -114,7 +114,7 @@ Status CData::add_day(int day_) {
 }
 
 
-Status CData::add_month(int month_) {
+Status CDate::add_month(int month_) {
 	Status state = SUCCESS;
 	month += month_;
 	if (month > 12) {
@@ -123,12 +123,12 @@ Status CData::add_month(int month_) {
 	return state;
 
 }
-Status CData::add_year(int year_) {
+Status CDate::add_year(int year_) {
 	Status state = SUCCESS;
 	year += year_;
 	return state;
 }
-Status CData::sub_day(int day_) {
+Status CDate::sub_day(int day_) {
 	Status state = SUCCESS;
 	day -= day_;
 	if (day < 1) {
@@ -137,7 +137,7 @@ Status CData::sub_day(int day_) {
 	return state;
 }
 
-Status CData::sub_month(int month_) {
+Status CDate::sub_month(int month_) {
 	Status state = SUCCESS;
 	month -= month_;
 	if (month < 1) {
@@ -146,7 +146,7 @@ Status CData::sub_month(int month_) {
 	return state;
 
 }
-Status CData::sub_year(int year_) {
+Status CDate::sub_year(int year_) {
 	Status state = SUCCESS;
 	year -= year_;
 	if (year < 0) {
@@ -155,7 +155,7 @@ Status CData::sub_year(int year_) {
 	return state;
 }
 
-int CData::compare(const CData& data) {
+int CDate::compare(const CDate& data) {
 	if (day == data.day && month == data.month && year == data.year) return 0;
 
 	// data1 > data2
@@ -169,4 +169,4 @@ int CData::compare(const CData& data) {
 	if (data.day > day && month <= data.month && year <= data.year) return -1;
 }
 
-CData::~CData() {}
+CDate::~CDate() {}

@@ -1,8 +1,8 @@
 #include "cdata.h"
 int main() {
-	CData d1, d4;
-	CData d2(12, 12, 1978);
-	CData d3(d2);
+	CDate d1, d4;
+	CDate d2(12, 12, 1978);
+	CDate d3(d2);
 	d2.output();
 	d1.input();
 	d4.set_values(23,2,1933);
