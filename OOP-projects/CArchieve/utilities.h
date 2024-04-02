@@ -8,6 +8,7 @@
 namespace InputSystem {
     enum InsertMode {Back, Front, OneValue, SeveralValues};
     enum RemoveMode{Back1, Front1, All, First, Last, OneValue1, SeveralValues1};
+    enum FindMode{FAll, FFirst, FLast};
 
     template <typename T>
     T* remove(size_t& n, size_t& pos, InputSystem::RemoveMode& mode) noexcept {
@@ -100,6 +101,39 @@ namespace InputSystem {
         if (mode == OneValue || mode == SeveralValues) {
             std::cout << "Input position for insert: ";
             std::cin >> pos;
+        }
+        return value;
+    }
+
+    template <typename T>
+    T* find(InputSystem::FindMode& mode) noexcept {
+        T* value = nullptr;
+        mode = FFirst;
+        int user;
+        std::cout << "Choose find mode:\n";
+        std::cout << "1 - find all,\n";
+        std::cout << "2 - find first,\n";
+        std::cout << "3 - find last.\n";
+        std::cout << "Your choose: ";
+        std::cin >> user;
+        if (user == 1) { mode = FAll; }
+        if (user == 2) { mode = FFirst; }
+        if (user == 3) { mode = FLast; }
+        if (mode == FFirst || mode == FLast) {
+            value = new T;
+            std::cout << "Input value for find: ";
+            std::cin >> value[0];
+        }
+        if (mode == FAll) {
+            value = new T[5];
+            std::cout << "Input values for find(max 5): ";
+            for (size_t i = 0;i < 5; i++) {
+                if (std::cin.peek() == '\n') {
+                    std::cin.ignore();
+                    break;
+                }
+                std::cin >> value[i];
+            }
         }
         return value;
     }

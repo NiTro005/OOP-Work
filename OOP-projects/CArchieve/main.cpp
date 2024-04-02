@@ -16,6 +16,7 @@ int main() {
     bool success;
     InputSystem::InsertMode mode;
     InputSystem::RemoveMode mode1;
+    InputSystem::FindMode mode2;
 
     while (!exit) {
         system("cls");
@@ -54,7 +55,16 @@ int main() {
             system("pause>nul");
             break;
         case Actions::FIND:
-            std::cout << "TBD" << std::endl;
+            if (values != nullptr) { delete[] values; values = nullptr; }
+            values = InputSystem::find<char>(mode2);
+            success = false;
+            try {
+                if (mode2 == InputSystem::FindMode::FFirst) {
+                }
+            }
+            catch (std::exception& err) {
+                std::cerr << err.what() << std::endl;
+            }
             system("pause");
             break;
         case Actions::REMOVE:
