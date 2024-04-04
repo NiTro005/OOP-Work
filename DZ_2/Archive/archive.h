@@ -63,9 +63,9 @@ public:
     TArchive& remove_last(T value);
     TArchive& remove_by_index(size_t pos);
 
-    //size_t* find_all(T value) const noexcept;
-    //size_t find_first(T value);
-    //size_t find_last(T value);
+    size_t* find_all(T value, size_t &n) const noexcept;
+    size_t find_first(T value) const;
+    size_t find_last(T value) const;
 private:
     //size_t count_value(T value);
 };
@@ -372,6 +372,41 @@ TArchive<T>& TArchive<T>::remove_last(T value) {
         }
     }
     _deleted++;
+}
+
+template <typename T>
+size_t TArchive<T>::find_first(T value) const{
+    for (size_t i = 0; i < _size; i++) {
+        if (_data[i] == value) {
+            return i;
+        }
+    }
+    throw std::logic_error("Error in function \
+\"size_t TArchive<T>::find_first(T value)\":No mathes");
+}
+
+
+template <typename T>
+size_t TArchive<T>::find_last(T value) const {
+    for (size_t i = _size; i > 0; i--) {
+        if (_data[i] == value) {
+            return i;
+        }
+    }
+    throw std::logic_error("Error in function \
+\"size_t TArchive<T>::find_first(T value)\":No mathes");
+}
+
+template <typename T>
+size_t* TArchive<T>::find_all(T value, size_t &n) const noexcept {
+   size_t* mass = new size_t[_size];
+   n = 0;
+   for (size_t j = 0; j < _size; j++) {
+       if (_data[j] == value) {
+           mass[n++] = j;
+       }
+   }
+   return mass;
 }
 
 template <typename T>

@@ -127,12 +127,11 @@ namespace InputSystem {
         if (mode == FAll) {
             value = new T[5];
             std::cout << "Input values for find(max 5): ";
-            for (size_t i = 0;i < 5; i++) {
-                if (std::cin.peek() == '\n') {
-                    std::cin.ignore();
+            for (size_t i = 0; i < 5; i++) {
+                std::cin >> value[i];
+                if (value[i] == '.') {
                     break;
                 }
-                std::cin >> value[i];
             }
         }
         return value;

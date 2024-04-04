@@ -8,9 +8,11 @@ int main() {
     TArchive<char> archive;
     archive.data();
     size_t n, pos;
+    size_t count = 0;
     char* values = nullptr;
     int user;
-
+    size_t* result = new size_t[archive.capacity()];
+    size_t* new_result = new size_t[archive.capacity()];
     std::exception err;
     bool exit = false;
     bool success;
@@ -57,9 +59,21 @@ int main() {
         case Actions::FIND:
             if (values != nullptr) { delete[] values; values = nullptr; }
             values = InputSystem::find<char>(mode2);
-            success = false;
             try {
                 if (mode2 == InputSystem::FindMode::FFirst) {
+                    result[0] = archive.find_first(values[0]);
+                }
+                else if (mode2 == InputSystem::FindMode::FLast) {
+                    result[0] = archive.find_last(values[0]);
+                }
+                else {
+                    for (size_t i = 0; i < 5; i++) {
+                        result = archive.find_all(values[i], n);
+                        for (size_t j = 0; j < n; j++) {
+                            new_result[count++] = result[j];
+                        }
+                        delete[] result;
+                    }
                 }
             }
             catch (std::exception& err) {
