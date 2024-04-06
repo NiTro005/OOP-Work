@@ -36,7 +36,7 @@ public:
 
     size_t size();
     size_t capacity();
-    const T* data();
+    const T* data() const;
 
     void swap(TArchive& archive);
 
@@ -66,6 +66,7 @@ public:
     size_t* find_all(T value, size_t &n) const noexcept;
     size_t find_first(T value) const;
     size_t find_last(T value) const;
+
 private:
     //size_t count_value(T value);
 };
@@ -90,7 +91,7 @@ size_t TArchive<T>::capacity() {
 }
 
 template <typename T>
-const T* TArchive<T> ::data() {
+const T* TArchive<T> ::data() const{
     return _data;
 }
 
@@ -398,15 +399,20 @@ size_t TArchive<T>::find_last(T value) const {
 }
 
 template <typename T>
-size_t* TArchive<T>::find_all(T value, size_t &n) const noexcept {
-   size_t* mass = new size_t[_size];
-   n = 0;
-   for (size_t j = 0; j < _size; j++) {
-       if (_data[j] == value) {
-           mass[n++] = j;
-       }
-   }
-   return mass;
+size_t* TArchive<T>::find_all(T value, size_t& n) const noexcept {
+    size_t* mass = new size_t[_size];
+    n = 0;
+    for (size_t j = 0; j < _size; j++) {
+        if (_data[j] == value) {
+            if(_states[j] != State::deleted)
+            mass[n++] = j;
+        }
+    }
+    size_t* new_mass = new size_t[n];
+    std::copy(mass, mass + n, new_mass);
+    delete[] mass;
+
+    return new_mass;
 }
 
 template <typename T>
@@ -424,6 +430,7 @@ void TArchive<T>::print() const noexcept {
         }
     }
 }
+
 
 /*
 // пример реализации с возвратом массива найденных позиций

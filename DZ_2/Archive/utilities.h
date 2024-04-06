@@ -126,7 +126,7 @@ namespace InputSystem {
         }
         if (mode == FAll) {
             value = new T[5];
-            std::cout << "Input values for find(max 5): ";
+            std::cout << "Input values for find(max 5) ('.' for exit): ";
             for (size_t i = 0; i < 5; i++) {
                 std::cin >> value[i];
                 if (value[i] == '.') {
@@ -167,6 +167,26 @@ namespace OutputSystem {
     }
     static void remove() noexcept {
         std::cout << "Done." << std::endl;
+    }
+
+    template <typename T>
+    static void find(size_t* values, InputSystem::FindMode mode, const TArchive<T>& archive, size_t count) noexcept {
+        system("cls");
+        const auto& data = archive.data();
+        std::cout << "Matches found: ";
+        for (size_t i = 0; i < count; i++) {
+            std::cout << values[i] << " ";
+        }
+        std::cout << std::endl;
+        archive.print();
+        std::cout << std::endl;
+        for (int i = 0; i < count; i++) {
+            std::cout << data[values[i]];
+            if (i < count - 1) {
+                std::cout << ", ";
+            }
+        }
+
     }
 
     template <typename T>

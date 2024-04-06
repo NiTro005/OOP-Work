@@ -59,25 +59,37 @@ int main() {
         case Actions::FIND:
             if (values != nullptr) { delete[] values; values = nullptr; }
             values = InputSystem::find<char>(mode2);
+            success = false;
             try {
                 if (mode2 == InputSystem::FindMode::FFirst) {
                     result[0] = archive.find_first(values[0]);
+                    count = 1;
                 }
                 else if (mode2 == InputSystem::FindMode::FLast) {
                     result[0] = archive.find_last(values[0]);
+                    count = 1;
                 }
                 else {
                     for (size_t i = 0; i < 5; i++) {
-                        result = archive.find_all(values[i], n);
+                        if (values[i] == '.') { break; }
+                        size_t* temp_result = archive.find_all(values[i], n);
                         for (size_t j = 0; j < n; j++) {
-                            new_result[count++] = result[j];
+                            new_result[count++] = temp_result[j];
                         }
-                        delete[] result;
+                        delete[] temp_result;
                     }
+                    result = new size_t[count];
+                    std::copy(new_result, new_result + count, result);
+                    delete[] new_result;
                 }
+                success = true;
             }
             catch (std::exception& err) {
                 std::cerr << err.what() << std::endl;
+            }
+            if (success) {
+                OutputSystem::find(result, mode2, archive, count);
+                count = 0;
             }
             system("pause");
             break;
