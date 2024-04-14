@@ -63,12 +63,12 @@ public:
     TArchive& remove_last(T value);
     TArchive& remove_by_index(size_t pos);
 
-    size_t* find_all(T value, size_t &n) const noexcept;
+    size_t* find_all(T value) const noexcept;
     size_t find_first(T value) const;
     size_t find_last(T value) const;
 
 private:
-    //size_t count_value(T value);
+    size_t count_value(T value)  const noexcept;
 };
 
 template <typename T>
@@ -276,7 +276,7 @@ void TArchive<T>::push_front(T value) {
     }
     for (size_t i = _size; i > 0; i--) {
         _data[i] = _data[i - 1];
-        _states[i + 1] = State::busy;
+        _states[i] = _states[i - 1];
     }
     _data[0] = value;
     _states[0] = State::busy;
@@ -400,20 +400,20 @@ size_t TArchive<T>::find_last(T value) const {
 }
 
 template <typename T>
-size_t* TArchive<T>::find_all(T value, size_t& n) const noexcept {
-    size_t* mass = new size_t[_size];
-    n = 0;
-    for (size_t j = 0; j < _size; j++) {
-        if (_data[j] == value) {
-            if(_states[j] != State::deleted)
-            mass[n++] = j;
+size_t* TArchive<T>::find_all(T value) const noexcept {
+    size_t count = this->count_value(value);
+    if (count == 0) { return nullptr; }
+    size_t* found_positions = new size_t[count + 1];
+    found_positions[0] = count;
+    size_t found_count = 0;
+
+    for (size_t i = 0; i < _size; ++i) {
+        if (_data[i] == value && _states[i] != State::deleted) {
+            found_positions[++found_count] = i;
         }
     }
-    size_t* new_mass = new size_t[n];
-    std::copy(mass, mass + n, new_mass);
-    delete[] mass;
 
-    return new_mass;
+    return found_positions;
 }
 
 template <typename T>
@@ -432,18 +432,13 @@ void TArchive<T>::print() const noexcept {
     }
 }
 
-
-/*
-// пример реализации с возвратом массива найденных позиций
 template <typename T>
-size_t* TArchive<T>::find_all (T value) const noexcept {
-    size_t count = this->count_value(value);
-    if (count == 0) { return nullptr; }
-    int* found_positions = new int[count + 1];
-    found_positions[0] = count;
-
-    // TBD
-
-    return found_positions;
+size_t TArchive<T>::count_value(T value) const noexcept {
+    size_t count = 0;
+    for (size_t i = 0; i < _size; i++) {
+        if (_data[i] == value) {
+            count++;
+        }
+    }
+    return count;
 }
-*/

@@ -11,8 +11,7 @@ int main() {
     size_t count = 0;
     char* values = nullptr;
     int user;
-    size_t* result = new size_t[archive.capacity()];
-    size_t* new_result = new size_t[archive.capacity()];
+    size_t* result = nullptr;
     std::exception err;
     bool exit = false;
     bool success;
@@ -59,6 +58,7 @@ int main() {
         case Actions::FIND:
             if (values != nullptr) { delete[] values; values = nullptr; }
             values = InputSystem::find<char>(mode2);
+            result = new size_t[archive.size()];
             success = false;
             try {
                 if (mode2 == InputSystem::FindMode::FFirst) {
@@ -70,17 +70,15 @@ int main() {
                     count = 1;
                 }
                 else {
-                    for (size_t i = 0; i < 5; i++) {
+                    for (size_t i = 0; i < n; i++) {
                         if (values[i] == '.') { break; }
-                        size_t* temp_result = archive.find_all(values[i], n);
-                        for (size_t j = 0; j < n; j++) {
-                            new_result[count++] = temp_result[j];
+                        size_t*  new_result = archive.find_all(values[i]);
+                        size_t found_count = new_result[0];
+                        for (size_t j = 0; j < found_count; j++) {
+                            result[j + count] = new_result[j + 1];
                         }
-                        delete[] temp_result;
+                        count += found_count;
                     }
-                    result = new size_t[count];
-                    std::copy(new_result, new_result + count, result);
-                    delete[] new_result;
                 }
                 success = true;
             }
