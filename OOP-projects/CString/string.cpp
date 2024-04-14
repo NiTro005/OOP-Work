@@ -11,7 +11,6 @@ CString::CString() {
 }
 
 
-
 /// <summary>
 /// Конструктор копирования.
 /// </summary>
@@ -439,4 +438,86 @@ void CString::print(size_t pos, size_t len) const noexcept {
     for (int i = pos; i < _size - pos + len; i++) {
         std::cout << _data[i];
     }
+}
+
+
+/// <summary>
+/// Метод добавления подстроки str, начиная с позиции subpos и длиной sublen
+/// </summary>
+/// <param name="str"> - строка</param>
+/// <param name="subpos"> - начальная позиция</param>
+/// <param name="sublen"> - длина</param>
+/// <returns> строку</returns>
+CString& CString::append(const CString& str, size_t subpos, size_t sublen) {
+    if (subpos >= str._size) return *this;
+
+    size_t new_size = _size + sublen;
+    reserve(new_size);
+
+    for (size_t i = 0; i < sublen; ++i) {
+        _data[_size++] = str._data[subpos + i];
+    }
+
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+/// Метод добавления строки s
+/// </summary>
+/// <param name="s"> - строка</param>
+/// <returns> измененная строка</returns>
+CString& CString::append(const char* s) {
+    if (s == nullptr) return *this;
+
+    size_t len = strlen(s);
+    size_t new_size = _size + len;
+    reserve(new_size);
+
+    for (size_t i = 0; i < len; ++i) {
+        _data[_size++] = s[i];
+    }
+
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+///  Метод добавления первых n символов из строки s
+/// </summary>
+/// <param name="s"> - строка</param>
+/// <param name="n"> - первые символы из этой строки</param>
+/// <returns> измененная строка</returns>
+CString& CString::append(const char* s, size_t n) {
+    if (s == nullptr) return *this;
+
+    size_t len = strlen(s);
+    size_t actual_len = std::min(len, n);
+    size_t new_size = _size + actual_len;
+    reserve(new_size);
+
+    for (size_t i = 0; i < actual_len; ++i) {
+        _data[_size++] = s[i];
+    }
+
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+/// Метод добавления символа c n раз
+/// </summary>
+/// <param name="n"> - число повторений</param>
+/// <param name="c"> - символ</param>
+/// <returns> измененная строка</returns>
+CString& CString::append(size_t n, char c) {
+    size_t new_size = _size + n;
+    reserve(new_size);
+
+    for (size_t i = 0; i < n; ++i) {
+        _data[_size++] = c;
+    }
+
+    _data[_size] = '\0';
+    return *this;
 }
