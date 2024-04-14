@@ -22,10 +22,10 @@ class TArchive {
     size_t _deleted;           // количество "удалённых" позиций
 public:
     TArchive();
-    //TArchive(const TArchive& archive);
-    //TArchive(const T* arr, size_t n);
-    //TArchive(size_t n, T value);
-    //TArchive(const TArchive& archive, size_t pos, size_t n);
+    TArchive(const TArchive& archive);
+    TArchive(const T* arr, size_t n);
+    TArchive(size_t n, T value);
+    TArchive(const TArchive& archive, size_t pos, size_t n);
 
     ~TArchive();
 
@@ -81,6 +81,76 @@ TArchive<T>::TArchive() {
         _states[i] = State::empty;
     }
 }
+
+template <typename T>
+TArchive<T>::TArchive(const TArchive& archive) {
+    _capacity = archive._capacity;
+    _size = archive._size;
+    _deleted = archive._deleted;
+
+    _data = new T[_capacity];
+    _states = new State[_capacity];
+
+    for (size_t i = 0; i < _size; i++) {
+        _data[i] = archive._data[i];
+        _states[i] = archive._states[i];
+    }
+}
+
+// Конструктор инициализации массивом
+template <typename T>
+TArchive<T>::TArchive(const T* arr, size_t n) {
+    _capacity = n;
+    _size = n;
+    _deleted = 0;
+
+    _data = new T[_capacity];
+    _states = new State[_capacity];
+
+    for (size_t i = 0; i < _size; i++) {
+        _data[i] = arr[i];
+        _states[i] = State::occupied;
+    }
+}
+
+// Конструктор инициализации значениями
+template <typename T>
+TArchive<T>::TArchive(size_t n, T value) {
+    _capacity = n;
+    _size = n;
+    _deleted = 0;
+
+    _data = new T[_capacity];
+    _states = new State[_capacity];
+
+    for (size_t i = 0; i < _size; i++) {
+        _data[i] = value;
+        _states[i] = State::occupied;
+    }
+}
+
+// Конструктор копирования с учетом позиции и количества элементов
+template <typename T>
+TArchive<T>::TArchive(const TArchive& archive, size_t pos, size_t n) {
+    _capacity = n;
+    _size = n;
+    _deleted = 0;
+
+    _data = new T[_capacity];
+    _states = new State[_capacity];
+
+    for (size_t i = 0; i < n; i++) {
+        if (pos + i < archive._size) {
+            _data[i] = archive._data[pos + i];
+            _states[i] = archive._states[pos + i];
+        }
+        else {
+            _data[i] = T();
+            _states[i] = State::empty;
+        }
+    }
+}
+
 template <typename T>
 size_t TArchive<T>::size() {
     return _size;
