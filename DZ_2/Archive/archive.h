@@ -45,7 +45,6 @@ public:
     void clear();
     void resize(size_t n, T value);
     void reserve(size_t n = 15);
-    void repacking();
 
     void push_back(T value);             // вставка элемента (в конец)
     void pop_back();                     // удаление элемента (из конца)
@@ -69,6 +68,7 @@ public:
 
 private:
     size_t count_value(T value)  const noexcept;
+    void repacking();
 };
 
 template <typename T>
@@ -164,23 +164,23 @@ void TArchive <T>::reserve(size_t n) {
 }
 
 template <typename T>
-void TArchive <T>::repacking() {
-    int count = _deleted;
-    for (size_t i = 0; i < _size; i++) {
+void TArchive<T>::repacking() {
+    int step = 0; 
+    int newSize = 0; 
+    for (int i = 0; i < _size; i++) {
         if (_states[i] == State::deleted) {
-            for (size_t j = i; j < _size - _deleted; j++) {
-                _data[j] = _data[j + 1];
-                _states[j] = _states[j + 1];
-            }
-            _states[_size - _deleted] = State::deleted;
-            _deleted--;
+            step++;
+        }
+        else {
+            _data[i - step] = _data[i];
+            _states[i - step] = _states[i];
         }
     }
-    _size -= count;
-    T* new_data = new T[_capacity];
-    std::memcpy(new_data, _data, _size);
-    delete[] _data;
-    _data = new_data;
+    newSize = _size - step;
+    for (int i = newSize; i < _size; i++) {
+        _states[i] = State::empty;
+    }
+    _size = newSize;
 }
 
 template <typename T>
@@ -217,7 +217,7 @@ TArchive<T>& TArchive<T>::insert(T value, size_t pos) {
     }
     for (size_t i = _size; i > pos; i--) {
         _data[i] = _data[i - 1];
-        _states[i + 1] = State::busy;
+        _states[i] = _states[i - 1];
     }
     _data[pos] = value;
     _states[pos] = State::busy;
