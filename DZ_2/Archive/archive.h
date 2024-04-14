@@ -237,8 +237,9 @@ TArchive<T>& TArchive<T>::insert(const T* arr, size_t n, size_t pos) {
     }
     for (size_t i = _size; i > pos; i--) {
         _data[i + n - 1] = _data[i - 1];
+        _states[i + n - 1] = _states[i - 1];
     }
-    for (int i = 0; i < n; ++i) {
+    for (size_t i = 0; i < n; ++i) {
         _data[pos + i] = arr[i];
         _states[pos + i] = State::busy;
     }
@@ -378,7 +379,7 @@ TArchive<T>& TArchive<T>::remove_last(T value) {
 template <typename T>
 size_t TArchive<T>::find_first(T value) const{
     for (size_t i = 0; i < _size; i++) {
-        if (_data[i] == value) {
+        if (_data[i] == value && _states[i] != State::deleted) {
             return i;
         }
     }
@@ -390,7 +391,7 @@ size_t TArchive<T>::find_first(T value) const{
 template <typename T>
 size_t TArchive<T>::find_last(T value) const {
     for (size_t i = _size; i > 0; i--) {
-        if (_data[i] == value) {
+        if (_data[i] == value && _states[i] != State::deleted ) {
             return i;
         }
     }
