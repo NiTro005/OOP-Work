@@ -521,3 +521,371 @@ CString& CString::append(size_t n, char c) {
     _data[_size] = '\0';
     return *this;
 }
+
+
+/// <summary>
+///  Метод вставки подстроки str, начиная с позиции subpos и длиной sublen, в позицию pos
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="str"></param>
+/// <param name="subpos"></param>
+/// <param name="sublen"></param>
+/// <returns></returns>
+CString& CString::insert(size_t pos, const CString& str, size_t subpos, size_t sublen) {
+    if (pos > _size || subpos >= str._size) return *this;
+
+    size_t new_size = _size + sublen;
+    reserve(new_size);
+
+    // Сдвигаем часть строки после позиции вставки
+    for (size_t i = _size; i > pos; --i) {
+        _data[i + sublen - 1] = _data[i - 1];
+    }
+
+    // Вставляем подстроку
+    for (size_t i = 0; i < sublen; ++i) {
+        _data[pos + i] = str._data[subpos + i];
+    }
+
+    _size = new_size;
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+/// Метод вставки строки s в позицию pos
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="s"></param>
+/// <returns></returns>
+CString& CString::insert(size_t pos, const char* s) {
+    if (pos > _size || s == nullptr) return *this;
+
+    size_t len = strlen(s);
+    size_t new_size = _size + len;
+    reserve(new_size);
+
+    // Сдвигаем часть строки после позиции вставки
+    for (size_t i = _size; i > pos; --i) {
+        _data[i + len - 1] = _data[i - 1];
+    }
+
+    // Вставляем строку s
+    for (size_t i = 0; i < len; ++i) {
+        _data[pos + i] = s[i];
+    }
+
+    _size = new_size;
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+/// Метод вставки первых n символов из строки s в позицию pos
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="s"></param>
+/// <param name="n"></param>
+/// <returns></returns>
+CString& CString::insert(size_t pos, const char* s, size_t n) {
+    if (pos > _size || s == nullptr) return *this;
+
+    size_t len = strlen(s);
+    size_t actual_len = std::min(len, n);
+    size_t new_size = _size + actual_len;
+    reserve(new_size);
+
+    // Сдвигаем часть строки после позиции вставки
+    for (size_t i = _size; i > pos; --i) {
+        _data[i + actual_len - 1] = _data[i - 1];
+    }
+
+    // Вставляем первые n символов из строки s
+    for (size_t i = 0; i < actual_len; ++i) {
+        _data[pos + i] = s[i];
+    }
+
+    _size = new_size;
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+///Метод вставки символа c n раз в позицию pos
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="n"></param>
+/// <param name="c"></param>
+/// <returns></returns>
+CString& CString::insert(size_t pos, size_t n, char c) {
+    if (pos > _size) return *this;
+
+    size_t new_size = _size + n;
+    reserve(new_size);
+
+    // Сдвигаем часть строки после позиции вставки
+    for (size_t i = _size; i > pos; --i) {
+        _data[i + n - 1] = _data[i - 1];
+    }
+
+    // Вставляем символ c n раз
+    for (size_t i = 0; i < n; ++i) {
+        _data[pos + i] = c;
+    }
+
+    _size = new_size;
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+/// Метод замены len символов, начиная с позиции pos, на подстроку str, начиная с позиции subpos и длиной sublen
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="len"></param>
+/// <param name="str"></param>
+/// <param name="subpos"></param>
+/// <param name="sublen"></param>
+/// <returns></returns>
+CString& CString::replace(size_t pos, size_t len, const CString& str, size_t subpos, size_t sublen) {
+    if (pos >= _size) return *this;
+
+    size_t new_size = _size - len + sublen;
+    reserve(new_size);
+
+    // Сдвигаем часть строки после позиции замены
+    for (size_t i = pos + len; i < _size; ++i) {
+        _data[i + sublen - len] = _data[i];
+    }
+
+    // Вставляем подстроку str
+    for (size_t i = 0; i < sublen; ++i) {
+        _data[pos + i] = str._data[subpos + i];
+    }
+
+    _size = new_size;
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+/// Метод замены len символов, начиная с позиции pos, на строку s длиной n
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="len"></param>
+/// <param name="s"></param>
+/// <param name="n"></param>
+/// <returns></returns>
+CString& CString::replace(size_t pos, size_t len, const char* s, size_t n) {
+    if (pos >= _size) return *this;
+
+    size_t new_size = _size - len + n;
+    reserve(new_size);
+
+    // Сдвигаем часть строки после позиции замены
+    for (size_t i = pos + len; i < _size; ++i) {
+        _data[i + n - len] = _data[i];
+    }
+
+    // Вставляем строку s
+    for (size_t i = 0; i < n; ++i) {
+        _data[pos + i] = s[i];
+    }
+
+    _size = new_size;
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+/// Метод замены len символов, начиная с позиции pos, на символ c повторенный n раз
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="len"></param>
+/// <param name="n"></param>
+/// <param name="c"></param>
+/// <returns></returns>
+CString& CString::replace(size_t pos, size_t len, size_t n, char c) {
+    if (pos >= _size) return *this;
+
+    size_t new_size = _size - len + n;
+    reserve(new_size);
+
+    // Сдвигаем часть строки после позиции замены
+    for (size_t i = pos + len; i < _size; ++i) {
+        _data[i + n - len] = _data[i];
+    }
+
+    // Вставляем символ c повторенный n раз
+    for (size_t i = 0; i < n; ++i) {
+        _data[pos + i] = c;
+    }
+
+    _size = new_size;
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+/// Метод поиска подстроки s, начиная с позиции pos
+/// </summary>
+/// <param name="s"></param>
+/// <param name="pos"></param>
+/// <returns></returns>
+size_t CString::find(const char* s, size_t pos) const {
+    if (s == nullptr || pos >= _size) return std::string::npos;
+
+    char* found = strstr(_data + pos, s);
+    if (found == nullptr) return std::string::npos;
+
+    return found - _data;
+}
+
+/// <summary>
+/// Метод поиска подстроки s длиной n, начиная с позиции pos
+/// </summary>
+/// <param name="s"></param>
+/// <param name="pos"></param>
+/// <param name="n"></param>
+/// <returns></returns>
+size_t CString::find(const char* s, size_t pos, size_t n) const {
+    if (s == nullptr || pos >= _size) return std::string::npos;
+
+    char* found = nullptr;
+    for (size_t i = pos; i <= _size - n; ++i) {
+        if (strncmp(_data + i, s, n) == 0) {
+            found = _data + i;
+            break;
+        }
+    }
+
+    if (found == nullptr) return std::string::npos;
+    return found - _data;
+}
+
+/// <summary>
+/// Метод поиска символа c, начиная с позиции pos
+/// </summary>
+/// <param name="c"></param>
+/// <param name="pos"></param>
+/// <returns></returns>
+size_t CString::find(char c, size_t pos) const {
+    if (pos >= _size) return std::string::npos;
+
+    char* found = strchr(_data + pos, c);
+    if (found == nullptr) return std::string::npos;
+
+    return found - _data;
+}
+
+
+/// <summary>
+/// Метод поиска первого вхождения любого символа из строки s, начиная с позиции pos
+/// </summary>
+/// <param name="s"></param>
+/// <param name="pos"></param>
+/// <returns></returns>
+size_t CString::find_first_of(const char* s, size_t pos) const {
+    if (s == nullptr || pos >= _size) return std::string::npos;
+
+    char* found = strpbrk(_data + pos, s);
+    if (found == nullptr) return std::string::npos;
+
+    return found - _data;
+}
+
+/// <summary>
+/// Метод поиска первого вхождения любого символа из строки s длиной n, начиная с позиции pos
+/// </summary>
+/// <param name="s"></param>
+/// <param name="pos"></param>
+/// <param name="n"></param>
+/// <returns></returns>
+size_t CString::find_first_of(const char* s, size_t pos, size_t n) const {
+    if (s == nullptr || pos >= _size) return std::string::npos;
+
+    for (size_t i = pos; i < _size; ++i) {
+        for (size_t j = 0; j < n; ++j) {
+            if (_data[i] == s[j]) {
+                return i;
+            }
+        }
+    }
+
+    return std::string::npos;
+}
+
+/// <summary>
+/// Метод поиска первого вхождения символа c, начиная с позиции pos
+/// </summary>
+/// <param name="c"></param>
+/// <param name="pos"></param>
+/// <returns></returns>
+size_t CString::find_first_of(char c, size_t pos) const {
+    if (pos >= _size) return std::string::npos;
+
+    char* found = strchr(_data + pos, c);
+    if (found == nullptr) return std::string::npos;
+
+    return found - _data;
+}
+
+/// <summary>
+/// Метод поиска первого вхождения символов не из строки s, начиная с позиции pos
+/// </summary>
+/// <param name="s"></param>
+/// <param name="pos"></param>
+/// <returns></returns>
+size_t CString::find_first_not_of(const char* s, size_t pos) const {
+    if (s == nullptr || pos >= _size) return std::string::npos;
+
+    for (size_t i = pos; i < _size; ++i) {
+        if (strchr(s, _data[i]) == nullptr) {
+            return i;
+        }
+    }
+
+    return std::string::npos;
+}
+
+/// <summary>
+/// Метод поиска первого вхождения символов не из строки s длиной n, начиная с позиции pos
+/// </summary>
+/// <param name="s"></param>
+/// <param name="pos"></param>
+/// <param name="n"></param>
+/// <returns></returns>
+size_t CString::find_first_not_of(const char* s, size_t pos, size_t n) const {
+    if (s == nullptr || pos >= _size) return std::string::npos;
+
+    for (size_t i = pos; i < _size; ++i) {
+        bool found = false;
+        for (size_t j = 0; j < n; ++j) {
+            if (_data[i] == s[j]) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) return i;
+    }
+
+    return std::string::npos;
+}
+
+/// <summary>
+/// Метод поиска первого вхождения символа не равного c, начиная с позиции pos
+/// </summary>
+/// <param name="c"></param>
+/// <param name="pos"></param>
+/// <returns></returns>
+size_t CString::find_first_not_of(char c, size_t pos) const {
+    if (pos >= _size) return std::string::npos;
+
+    for (size_t i = pos; i < _size; ++i) {
+        if (_data[i] != c) {
+            return i;
+        }
+    }
+
+    return std::string::npos;
+}
