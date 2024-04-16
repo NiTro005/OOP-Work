@@ -1,7 +1,13 @@
 #include "character.h"
+
+int Character::count = 0;
+int Character::history_count = 1;
+
 int main(){
-	Character p1, p2("Bob", 120, 10, 30);
-	p2.attack(p1);
-	std::cout << p1.count << " " << Character::count;
+	Warrior p1("Bob", 120, 10, 30, true), p2("Stiv", 120, 10, 30, true);
+	p2.defence(p1, p1.attack(p2));
+	p2.defence(p1, p1.attack(p2));
+	p2.defence(p1, p1.attack(p2));
+	p2.defence(p1, p1.attack(p2));
 	return 0;
 }
