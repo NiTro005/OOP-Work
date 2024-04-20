@@ -23,5 +23,11 @@ void Warrior::defence(Character& c, int damage) {
 				this->_hp += this->_armor; this->_armor = 0;
 			}
 		}
+		else { _hp -= damage; }
 	}
+	spikes(c);
+}
+
+void Warrior::spikes(Character& c) {
+	c.set_hp(c.get_hp() - c.get_power() / 10);
 }

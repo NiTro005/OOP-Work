@@ -12,4 +12,30 @@ _armor(c._armor), _power(c._power) {
 	history_count++; count++;
 }
 
+
+int Character::get_hp() {
+	return _hp;
+}
+
+void Character::set_hp(int newhp) {
+	_hp = newhp;
+}
+
+int Character::get_power() {
+	return _power;
+}
+
+void Character::set_power(int newpower) {
+	_power = newpower;
+}
+
+int Character::get_armor() {
+	return _armor;
+}
+
+void Character::set_armor(int newarmor) {
+	_armor = newarmor;
+}
+
+
 Character::~Character() { count--; }
