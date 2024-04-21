@@ -13,7 +13,7 @@ class FIO {
 
 class Person {
 	FIO full_name;
-	
+	TArchive <char> archive;
 };
 
 
