@@ -104,13 +104,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Sourse\github\OOP-Work\OOP-projects\CData;C:\Sourse\github\OOP-Work\DZ_2\Archive;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Sourse\github\OOP-Work\OOP-projects\CTime;C:\Sourse\github\OOP-Work\OOP-projects\CData;C:\Sourse\github\OOP-Work\DZ_2\Archive;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Sourse\github\OOP-Work\OOP-projects\CData;C:\Sourse\github\OOP-Work\DZ_2\Archive;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Sourse\github\OOP-Work\OOP-projects\CTime;C:\Sourse\github\OOP-Work\OOP-projects\CData;C:\Sourse\github\OOP-Work\DZ_2\Archive;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

@@ -2,7 +2,8 @@
 
 #include <string>
 #include <archive.h>
-
+#include <cdate.h>
+#include <ctime.h>
 
 class FIO {
 	std::string sourname;
@@ -13,7 +14,8 @@ class FIO {
 
 class Person {
 	FIO full_name;
-	TArchive <char> archive;
+	TArchive <int> archive;
+	
 };
 
 
