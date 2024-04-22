@@ -3,7 +3,9 @@
 #include <string>
 #include <archive.h>
 #include <ctime.h>
+#include <cdate.h>
 
+enum Gender { Male, Female };
 
 class FIO {
 	std::string sourname;
@@ -11,12 +13,14 @@ class FIO {
 	std::string patronymic;
 };
 
+class Adress {
+
+};
 
 class Person {
 	FIO full_name;
-	TArchive <int> archive;
-	CTime time;
-	
+	CDate birthday;
+	Gender gender;
 };
 
 
