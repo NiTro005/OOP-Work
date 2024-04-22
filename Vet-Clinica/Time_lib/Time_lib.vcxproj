@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{253aa355-2d81-4da3-ac4c-368bc7ab0da9}</ProjectGuid>
-    <RootNamespace>VetClinica</RootNamespace>
+    <ProjectGuid>{7bd61531-5d54-48e6-9daf-cbd1fd1d501a}</ProjectGuid>
+    <RootNamespace>Timelib</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -40,7 +40,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -104,13 +104,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Sourse\github\OOP-Work\Vet-Clinica\Time_lib;C:\Sourse\github\OOP-Work\DZ_2\Archive;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Sourse\github\OOP-Work\Vet-Clinica\Time_lib;C:\Sourse\github\OOP-Work\DZ_2\Archive;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -130,15 +127,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="clinic.h" />
+    <ClInclude Include="ctime.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="clinic.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Time_lib\Time_lib.vcxproj">
-      <Project>{7bd61531-5d54-48e6-9daf-cbd1fd1d501a}</Project>
-    </ProjectReference>
+    <ClCompile Include="ctime.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

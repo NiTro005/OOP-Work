@@ -2,6 +2,7 @@
 
 #include <string>
 #include <archive.h>
+#include <ctime.h>
 
 
 class FIO {
@@ -14,6 +15,7 @@ class FIO {
 class Person {
 	FIO full_name;
 	TArchive <int> archive;
+	CTime time;
 	
 };
 
