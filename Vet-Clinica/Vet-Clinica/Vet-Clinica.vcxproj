@@ -139,6 +139,9 @@
     <ProjectReference Include="..\Date_lib\Date_lib.vcxproj">
       <Project>{83be3733-a631-4906-9b98-3ef05e002d4d}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\String_lib\String_lib.vcxproj">
+      <Project>{fe1db4de-16e2-4ef0-9839-e370e30748da}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Time_lib\Time_lib.vcxproj">
       <Project>{7bd61531-5d54-48e6-9daf-cbd1fd1d501a}</Project>
     </ProjectReference>
