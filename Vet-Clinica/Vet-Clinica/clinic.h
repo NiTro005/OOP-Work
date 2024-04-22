@@ -17,6 +17,7 @@ class FIO {
 };
 
 class Person {
+protected:
 	FIO full_name;
 	CDate birthday;
 	Gender gender;
@@ -49,6 +50,12 @@ class OpenHours {
 	CTime dinner;
 };
 
+class Ilness {
+	IlnessTip ilness;
+	CString treatment;
+	CString symptoms;
+};
+
 class Doctor : Person {
 	Specialize job;
 	int StageOfWork;
@@ -66,11 +73,6 @@ class Pet {
 	Ilness ilness;
 };
 
-class Ilness {
-	IlnessTip ilness;
-	CString treatment;
-	CString symptoms;
-};
 
 class Visit {
 	bool followUpNeeded;
@@ -84,6 +86,6 @@ public:
 class Story_visits : Visit {
 	TArchive <Visit> visits;
 public:
-	void add_visits_history(Visit& v);
+	void add_visits_history(const Visit& v);
 	const TArchive <Visit> getVisit();
 };
