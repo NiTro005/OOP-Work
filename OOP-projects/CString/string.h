@@ -55,17 +55,17 @@ public:
     size_t copy(char* buf, size_t len, size_t pos = 0) const;
     CString substr(size_t pos, size_t len) const;
     CString& assign(const CString& str);
-    //CString& assign(const CString& str, size_t pos, size_t len);
-    //CString& assign(const char* s);
-    //CString& assign(const char* s, size_t n);
-    //CString& assign(size_t n, char c);
+    CString& assign(const CString& str, size_t pos, size_t len);
+    CString& assign(const char* s);
+    CString& assign(const char* s, size_t n);
+    CString& assign(size_t n, char c);
 
     int compare(const CString& str) const noexcept;
-    //int compare(size_t pos, size_t len, const CString& str) const;
-    //int compare(size_t pos, size_t len, const CString& str, size_t subpos, size_t sublen) const;
-    //int compare(const char* s) const;
-    //int compare(size_t pos, size_t len, const char* s) const;
-    //int compare(size_t pos, size_t len, const char* s, size_t n) const;
+    int compare(size_t pos, size_t len, const CString& str) const;
+    int compare(size_t pos, size_t len, const CString& str, size_t subpos, size_t sublen) const;
+    int compare(const char* s) const;
+    int compare(size_t pos, size_t len, const char* s) const;
+    int compare(size_t pos, size_t len, const char* s, size_t n) const;
 
     void clear() noexcept;                    // очистка строки
     void resize(size_t n, char c = '\0');     // изменение длины строки

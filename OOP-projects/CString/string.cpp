@@ -889,3 +889,191 @@ size_t CString::find_first_not_of(char c, size_t pos) const {
 
     return std::string::npos;
 }
+
+/// <summary>
+/// Присваивает подстроку len символов из строки str, начиная с позиции pos, текущей строке
+/// </summary>
+/// <param name="str"></param>
+/// <param name="pos"></param>
+/// <param name="len"></param>
+/// <returns></returns>
+CString& CString::assign(const CString& str, size_t pos, size_t len) {
+    if (pos >= str.size()) {
+        throw std::out_of_range("Position out of range");
+    }
+
+    if (len == 0) {
+        clear();
+        return *this;
+    }
+
+    if (pos + len > str.size()) {
+        len = str.size() - pos;
+    }
+
+    if (len > _max_capacity) {
+        throw std::length_error("Length exceeds maximum capacity");
+    }
+
+    if (_data) {
+        delete[] _data;
+    }
+
+    _size = len;
+    _capacity = len + 1;
+    _data = new char[_capacity];
+
+    std::memcpy(_data, str._data + pos, len);
+    _data[len] = '\0';
+
+    return *this;
+}
+
+/// <summary>
+/// Присваивает значение s текущей строке
+/// </summary>
+/// <param name="s"></param>
+/// <returns></returns>
+CString& CString::assign(const char* s) {
+    size_t len = std::strlen(s);
+
+    if (len > _max_capacity) {
+        throw std::length_error("Length exceeds maximum capacity");
+    }
+
+    if (_data) {
+        delete[] _data;
+    }
+
+    _size = len;
+    _capacity = len + 1;
+    _data = new char[_capacity];
+
+    std::memcpy(_data, s, len);
+    _data[len] = '\0';
+
+    return *this;
+}
+
+/// <summary>
+/// присваивает первые n символов из строки s текущей строке.
+/// </summary>
+/// <param name="s"></param>
+/// <param name="n"></param>
+/// <returns></returns>
+CString& CString::assign(const char* s, size_t n) {
+    if (n > _max_capacity) {
+        throw std::length_error("Length exceeds maximum capacity");
+    }
+
+    if (_data) {
+        delete[] _data;
+    }
+
+    _size = n;
+    _capacity = n + 1;
+    _data = new char[_capacity];
+
+    std::memcpy(_data, s, n);
+    _data[n] = '\0';
+
+    return *this;
+}
+
+/// <summary>
+/// присваивает строку, состоящую из n повторений символа c
+/// </summary>
+/// <param name="n"></param>
+/// <param name="c"></param>
+/// <returns></returns>
+CString& CString::assign(size_t n, char c) {
+    if (n > _max_capacity) {
+        throw std::length_error("Length exceeds maximum capacity");
+    }
+
+    if (_data) {
+        delete[] _data;
+    }
+
+    _size = n;
+    _capacity = n + 1;
+    _data = new char[_capacity];
+
+    std::memset(_data, c, n);
+    _data[n] = '\0';
+
+    return *this;
+}
+
+
+/// <summary>
+/// Сравнение части строки с другой строкой str, начиная с позиции pos и длиной len
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="len"></param>
+/// <param name="str"></param>
+/// <returns></returns>
+int CString::compare(size_t pos, size_t len, const CString& str) const {
+    if (pos >= _size || pos + len > _size) {
+        throw std::out_of_range("Position and length are out of range");
+    }
+
+    return std::strncmp(_data + pos, str._data, len);
+}
+
+/// <summary>
+/// Сравнение части строки с другой строкой str, начиная с позиции pos и длиной len, и с частью строки str, начиная с позиции subpos и длиной sublen
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="len"></param>
+/// <param name="str"></param>
+/// <param name="subpos"></param>
+/// <param name="sublen"></param>
+/// <returns></returns>
+int CString::compare(size_t pos, size_t len, const CString& str, size_t subpos, size_t sublen) const {
+    if (pos >= _size || pos + len > _size || subpos >= str._size || subpos + sublen > str._size) {
+        throw std::out_of_range("Position and length are out of range");
+    }
+
+    return std::strncmp(_data + pos, str._data + subpos, std::min(len, sublen));
+}
+
+/// <summary>
+///  Сравнение строки с нуль-терминированной строкой s
+/// </summary>
+/// <param name="s"></param>
+/// <returns></returns>
+int CString::compare(const char* s) const {
+    return std::strcmp(_data, s);
+}
+
+/// <summary>
+/// Сравнение части строки с нуль-терминированной строкой s, начиная с позиции pos и длиной len
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="len"></param>
+/// <param name="s"></param>
+/// <returns></returns>
+int CString::compare(size_t pos, size_t len, const char* s) const {
+    if (pos >= _size || pos + len > _size) {
+        throw std::out_of_range("Position and length are out of range");
+    }
+
+    return std::strncmp(_data + pos, s, len);
+}
+
+/// <summary>
+/// Сравнение части строки с первыми n символами нуль-терминированной строки s,начиная с позиции pos и длиной len
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="len"></param>
+/// <param name="s"></param>
+/// <param name="n"></param>
+/// <returns></returns>
+int CString::compare(size_t pos, size_t len, const char* s, size_t n) const {
+    if (pos >= _size || pos + len > _size) {
+        throw std::out_of_range("Position and length are out of range");
+    }
+
+    return std::strncmp(_data + pos, s, std::min(len, n));
+}

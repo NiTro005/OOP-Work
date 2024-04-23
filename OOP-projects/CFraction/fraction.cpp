@@ -29,7 +29,7 @@
         simplify();
         return res;
     }
-    Fraction Fraction::operator=(const Fraction& frac) {
+    Fraction& Fraction::operator=(const Fraction& frac) {
         if (this != &frac) {
             this->denominator = frac.denominator;
             this->numerator = frac.numerator;
@@ -37,25 +37,25 @@
         simplify();
         return *this;
     }
-    Fraction Fraction::operator+=(const Fraction& frac) {
+    Fraction& Fraction::operator+=(const Fraction& frac) {
         this->denominator = this->numerator * frac.denominator + frac.numerator * this->denominator;
         this->numerator = this->denominator * frac.denominator;
         simplify();
         return *this;
     }
-    Fraction Fraction::operator-=(const Fraction& frac) {
+    Fraction& Fraction::operator-=(const Fraction& frac) {
         this->denominator = this->numerator * frac.denominator - frac.numerator * this->denominator;
         this->numerator = this->denominator * frac.denominator;
         simplify();
         return *this;
     }
-    Fraction Fraction::operator*=(const Fraction& frac) {
+    Fraction& Fraction::operator*=(const Fraction& frac) {
         this->denominator = this->numerator * frac.numerator;
         this->numerator = this->denominator * frac.denominator;
         simplify();
         return *this;
     }
-    Fraction Fraction::operator/=(const Fraction& frac) {
+    Fraction& Fraction::operator/=(const Fraction& frac) {
         this->denominator = this->numerator * frac.denominator;
         this->numerator = this->denominator * frac.numerator;
         simplify();
@@ -120,45 +120,27 @@
         frac.simplify();
         return frac;
     }
-    Fraction operator+=(Fraction& frac, int value) {
-        frac.numerator += value * frac.denominator;
-        frac.simplify();
-        return frac;
+
+    Fraction& Fraction::operator+=(int value) {
+        numerator += value * denominator;
+        simplify();
+        return *this;
     }
-    Fraction operator+=(int value, Fraction& frac) {
-        frac.numerator += value * frac.denominator;
-        frac.simplify();
-        return frac;
+
+    Fraction& Fraction:: operator-=(int value) {
+        numerator -= value * denominator;
+        simplify();
+        return *this;
     }
-    Fraction operator-=(Fraction& frac, int value) {
-        frac.numerator -= value * frac.denominator;
-        frac.simplify();
-        return frac;
+    Fraction& Fraction::operator*=(int value) {
+        numerator *= value;
+        simplify();
+        return *this;
     }
-    Fraction operator-=(int value, Fraction& frac) {
-        frac.numerator -= value * frac.denominator;
-        frac.simplify();
-        return frac;
-    }
-    Fraction operator*=(Fraction& frac, int value) {
-        frac.numerator *= value;
-        frac.simplify();
-        return frac;
-    }
-    Fraction operator*=(int value, Fraction& frac) {
-        frac.numerator *= value;
-        frac.simplify();
-        return frac;
-    }
-    Fraction operator/=(Fraction& frac, int value) {
-        frac.denominator *= value;
-        frac.simplify();
-        return frac;
-    }
-    Fraction operator/=(int value, Fraction& frac) {
-        frac.denominator *= value;
-        frac.simplify();
-        return frac;
+    Fraction& Fraction::operator/=(int value) {
+        denominator *= value;
+        simplify();
+        return *this;
     }
 
     bool operator==(const Fraction& frac, int value) {

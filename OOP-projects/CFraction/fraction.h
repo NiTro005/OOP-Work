@@ -12,11 +12,17 @@ public:
     Fraction operator-(const Fraction& frac);
     Fraction operator*(const Fraction& frac);
     Fraction operator/(const Fraction& frac);
-    Fraction operator+=(const Fraction& frac);
-    Fraction operator-=(const Fraction& frac);
-    Fraction operator*=(const Fraction& frac);
-    Fraction operator/=(const Fraction& frac);
-    Fraction operator=(const Fraction& frac);
+    Fraction& operator+=(const Fraction& frac);
+    Fraction& operator-=(const Fraction& frac);
+    Fraction& operator*=(const Fraction& frac);
+    Fraction& operator/=(const Fraction& frac);
+    Fraction& operator=(const Fraction& frac);
+
+    Fraction& operator+=(int value);
+    Fraction& operator-=(int value);
+    Fraction& operator*=(int value);
+    Fraction& operator/=(int value);
+
 
     bool operator==(const Fraction& frac) const;
     bool operator>=(const Fraction& frac) const;
@@ -29,18 +35,10 @@ public:
     friend Fraction operator-(Fraction& frac, int value);
     friend Fraction operator*(Fraction& frac, int value);
     friend Fraction operator/(Fraction& frac, int value);
-    friend Fraction operator+=(Fraction& frac, int value);
-    friend Fraction operator-=(Fraction& frac, int value);
-    friend Fraction operator*=(Fraction& frac, int value);
-    friend Fraction operator/=(Fraction& frac, int value);
     friend Fraction operator+(int value, Fraction& frac);
     friend Fraction operator-(int value, Fraction& frac);
     friend Fraction operator*(int value, Fraction& frac);
     friend Fraction operator/(int value, Fraction& frac);
-    friend Fraction operator+=(int value, Fraction& frac);
-    friend Fraction operator-=(int value, Fraction& frac);
-    friend Fraction operator*=(int value, Fraction& frac);
-    friend Fraction operator/=(int value, Fraction& frac);
 
     friend bool operator==(const Fraction& frac, int value);
     friend bool operator==(int value, const Fraction& frac);
