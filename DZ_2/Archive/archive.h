@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #define STEP_CAPACITY 15
+#define MAX_CAPACITY 100000
 
 enum State { empty, busy, deleted };
 
@@ -219,7 +220,7 @@ void TArchive <T>::reserve(size_t n) {
         return;
     }
     _capacity = (n / STEP_CAPACITY) * STEP_CAPACITY + STEP_CAPACITY;
-    if (_capacity > 45) {
+    if (_capacity > MAX_CAPACITY) {
         throw std::logic_error("Error in function \
 \"void TArchive <T>::reserve(size_t n)\": complete max size of capacity.");
     }
@@ -314,13 +315,7 @@ TArchive<T>& TArchive<T>::insert(const T* arr, size_t n, size_t pos) {
 template <typename T>
 void TArchive<T>::push_back(T value) {
     if (this->full()) {
-        if (_capacity < 45) {
-            this->reserve();
-        }
-        else {
-            replace(_size, value);
-            return;
-        }
+        this->reserve();
     }
     _data[_size] = value;
     _states[_size] = State::busy;
@@ -330,13 +325,8 @@ void TArchive<T>::push_back(T value) {
 template <typename T>
 void TArchive<T>::push_front(T value) {
     if (this->full()) {
-        if (_capacity < 45) {
-            this->reserve();
-        }
-        else {
-            replace(0, value);
-            return;
-        }
+        this->reserve();
+
     }
     for (size_t i = _size; i > 0; i--) {
         _data[i] = _data[i - 1];
