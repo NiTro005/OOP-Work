@@ -52,5 +52,18 @@ private:
 	int _bow_magic(Character& c);
 };
 
+class Vizzard : public Character {
+	enum Magic{empty, poison, fire, heal, mana_bust, lighting, shield } magical;
+	bool mana;
+	int amount_of_mana;
+public:
+	Vizzard(const Vizzard&);
+	Vizzard(std::string name, int hp = 75, int power = 25, int armor = 30, int amount_of_mana = 100);
+	int attack(Character& c);
+	void defence(Character& c, int damage);
+private:
+	int UseMagic(Character& c, Magic magic);
+};
+
 
 
