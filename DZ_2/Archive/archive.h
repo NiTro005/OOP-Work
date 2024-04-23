@@ -277,14 +277,8 @@ TArchive<T>& TArchive<T>::insert(T value, size_t pos) {
     }
     
     if (this->full()) {
-        if (_capacity < 45) {
-            this->reserve();
-        }
-        else { 
-            replace(pos, value); 
-            return *this;
-        }
-    }
+        this->reserve();
+      }
     for (size_t i = _size; i > pos; i--) {
         _data[i] = _data[i - 1];
         _states[i] = _states[i - 1];
@@ -488,6 +482,11 @@ size_t* TArchive<T>::find_all(T value) const noexcept {
 
 template <typename T>
 TArchive<T>& TArchive<T>::replace(size_t pos, T new_value) {
+    if (_data[pos] != State::busy) {
+        throw std::logic_error("Error in function \
+\"TArchive<T>& replace(size_t pos, T new_value)\":No mathes");
+    }
+    if(_data[pos] )
     _data[pos] = new_value;
     _states[pos] = State::busy;
     return *this;
