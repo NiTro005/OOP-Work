@@ -7,14 +7,15 @@ Vizzard::Vizzard(const Vizzard& c) : Character(c._name, c._hp, c._power, c._armo
 int Vizzard::attack(Character& c) {
 	int damage = _power;
 	srand(time(NULL));
-	magical = (Magic)rand() % 7;
+	int random = rand() % 7;
+	magical = (Magic)random;
 	damage += UseMagic(c, magical);
-	mana += 10;
+	amount_of_mana += 10;
 	return damage;
 }
 
 void Vizzard::defence(Character& c, int damage) {
-	if (magical = Magic::shield) {
+	if (magical == Magic::shield) {
 		return;
 	}
 	if (_armor > 0) {
@@ -28,7 +29,7 @@ void Vizzard::defence(Character& c, int damage) {
 
 int Vizzard::UseMagic(Character& c, Magic magic) {
 	int damage = 0;
-	if (mana > 25) {
+	if (amount_of_mana > 25) {
 		if (magic == Magic::fire) {
 			damage = _power * 2;
 		}
@@ -37,10 +38,10 @@ int Vizzard::UseMagic(Character& c, Magic magic) {
 		}
 		if (magic == Magic::lighting) {
 			damage = 10;
-			c.set_power(0);
+			c.set_armor(0);
 		}
 		if (magic == Magic::mana_bust) {
-			mana += 60;
+			amount_of_mana += 60;
 		}
 		if (magic == Magic::poison) {
 			damage = 10;
@@ -48,7 +49,7 @@ int Vizzard::UseMagic(Character& c, Magic magic) {
 				c.set_power(c.get_power() - 2);
 			}
 		}
+		if (magic != Magic::empty) { amount_of_mana -= 25; }
 	}
-	else { magic == Magic::empty; }
 	return damage;
 }
