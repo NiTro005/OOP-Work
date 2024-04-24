@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include <string>
+#include<string>
 class Character {
 protected:
 	std::string _name;
