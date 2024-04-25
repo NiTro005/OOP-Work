@@ -1,6 +1,6 @@
 #include "character.h"
 
-Archer::Archer(std::string name, int hp, int power, int armor, bool _bow) : Character(name, hp, power, armor), _bow(_bow), _arrows(true), _protection_bow(7){};
+Archer::Archer(CString name, int hp, int power, int armor, bool _bow) : Character(name, hp, power, armor), _bow(_bow), _arrows(true), _protection_bow(7){};
 Archer::Archer(const Archer& c) : Character(c._name, c._hp, c._power, c._armor), _bow(c._bow), _arrows(c._arrows), _protection_bow(c._protection_bow) {};
 
 int Archer::attack(Character& c) {

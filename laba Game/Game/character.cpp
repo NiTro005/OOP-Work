@@ -1,8 +1,12 @@
 #include "character.h"
 
-Character:: Character(std::string name, int hp , int power , int armor) : _hp(hp), _power(power), _armor(armor) {
-	if (name == "") { _name = "Character" + std::to_string(history_count); }
-	else { name = _name; }
+Character:: Character(CString name, int hp , int power , int armor) : _hp(hp), _power(power), _armor(armor) {
+	CString n;
+	if (name.empty()) { 
+		_name = "Character";
+		n.ToString(history_count);
+		name.append(n); }
+	else { _name = name; }
 	count++;
 	history_count++;
 }

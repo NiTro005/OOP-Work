@@ -1,9 +1,10 @@
 #pragma once
 #include <iostream>
-#include<string>
+#include <ñstring.h>
+
 class Character {
 protected:
-	std::string _name;
+	CString _name;
 	int _hp;
 	int _power;
 	int _armor;
@@ -19,7 +20,7 @@ public:
 	int get_armor();
 	void set_armor(int newarmor);
 
-	Character(std::string name = "", int hp = 100, int power = 10, int armor = 20);
+	Character(CString name, int hp = 100, int power = 10, int armor = 20);
 	Character(const Character& c);
 	virtual int attack(Character& c) = 0;
 	virtual void defence(Character& c, int damage) = 0;
@@ -31,7 +32,7 @@ class Warrior : public Character {
 	int _protection_shield;
 public:
 	Warrior(const Warrior& c);
-	Warrior(std::string name, int hp = 100, int power = 5, int armor = 50, bool shield = true);
+	Warrior(CString name, int hp = 100, int power = 5, int armor = 50, bool shield = true);
 	int attack(Character& c);
 	void defence(Character& c, int damage);
 private:
@@ -45,7 +46,7 @@ class Archer : public Character {
 
 public:
 	Archer(const Archer& c);
-	Archer(std::string name, int hp = 75, int power = 25, int armor = 35, bool _bow = true);
+	Archer(CString name, int hp = 75, int power = 25, int armor = 35, bool _bow = true);
 	int attack(Character& c);
 	void defence(Character& c, int damage);
 private:
@@ -58,12 +59,11 @@ class Vizzard : public Character {
 	int amount_of_mana;
 public:
 	Vizzard(const Vizzard&);
-	Vizzard(std::string name, int hp = 75, int power = 25, int armor = 30, int amount_of_mana = 100);
+	Vizzard(CString name, int hp = 75, int power = 25, int armor = 30, int amount_of_mana = 100);
 	int attack(Character& c);
 	void defence(Character& c, int damage);
 private:
 	int UseMagic(Character& c, Magic magic);
 };
-
 
 
