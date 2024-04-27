@@ -5,7 +5,7 @@
 
 enum State { empty, busy, deleted };
 
-namespace algorithms {
+namespace algorithm {
     template<typename T>
     inline void swap(T& val_1, T& val_2) noexcept {
         T tmp = val_1;
@@ -168,10 +168,10 @@ const T* TArchive<T> ::data() const{
 
 template <typename T>
 void TArchive <T>::swap(TArchive& archive) {
-    algorithms::swap(_size, archive._size);
-    algorithms::swap(_capacity, archive._capacity);
-    algorithms::swap(_data, archive._data);
-    algorithms::swap(_states, archive._states);
+    algorithm::swap(_size, archive._size);
+    algorithm::swap(_capacity, archive._capacity);
+    algorithm::swap(_data, archive._data);
+    algorithm::swap(_states, archive._states);
 }
 
 template <typename T>

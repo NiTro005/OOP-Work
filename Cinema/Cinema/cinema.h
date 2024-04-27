@@ -1,8 +1,9 @@
 #pragma once
-#include <cstring.h>
+#include <ñstring.h>
 #include <archive.h>
+#include <cdate.h>
+#include <ctime.h>
 
-class Pet {
-	CString ret;
-	TArchive <int> t;
+class Cinema{
+
 };

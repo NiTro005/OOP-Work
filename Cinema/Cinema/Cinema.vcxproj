@@ -104,12 +104,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Sourse\github\OOP-Work\Cinema\String;C:\Sourse\github\OOP-Work\Cinema\Archive;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Sourse\github\OOP-Work\Cinema\Time;C:\Sourse\github\OOP-Work\Cinema\Date;C:\Sourse\github\OOP-Work\Cinema\String;C:\Sourse\github\OOP-Work\Cinema\Archive;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Sourse\github\OOP-Work\Cinema\Cinema;C:\Sourse\github\OOP-Work\Cinema\Archive;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Sourse\github\OOP-Work\Cinema\Time;C:\Sourse\github\OOP-Work\Cinema\Date;C:\Sourse\github\OOP-Work\Cinema\String;C:\Sourse\github\OOP-Work\Cinema\Archive;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -137,6 +137,15 @@
   <ItemGroup>
     <ProjectReference Include="..\Archive\Archive.vcxproj">
       <Project>{2c24c8ac-e9df-4dff-9d09-a8a0e0822f16}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Date\Date.vcxproj">
+      <Project>{b60f1392-8960-4be7-a236-110791e677f5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\String\String.vcxproj">
+      <Project>{dc2d7bde-f633-4c04-badd-dc6e22fda219}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Time\Time.vcxproj">
+      <Project>{acf0a34c-1a72-431a-b785-8be0b098b280}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
