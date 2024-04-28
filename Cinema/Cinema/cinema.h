@@ -60,6 +60,7 @@ public:
     float getPrice() const;
 };
 
+
 class User{
 protected:
 	CString _login;
@@ -70,11 +71,4 @@ public:
 	CString get_password() const;
 	void set_login(const CString& login);
 	void set_password(const CString& password);
-};
-
-
-
-class Admin : public User {
-public:
-
 };
