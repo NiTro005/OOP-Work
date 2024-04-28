@@ -23,3 +23,11 @@ const Movie& Show::getMovie() const { return *_movie; }
 const Hall& Show::getHall() const { return *_hall; }
 const CDate& Show::getDate() const { return _date; }
 const CTime& Show::getTime() const { return _time; }
+
+
+Ticket:: Ticket(Show* show, int row, int seat, float price)
+    : _show(show), _row(row), _seat(seat), _price(price) {}
+const Show& Ticket:: getShow() const { return *_show; }
+int Ticket::getRow() const { return _row; }
+int Ticket::getSeat() const { return _seat; }
+float Ticket::getPrice() const { return _price; }

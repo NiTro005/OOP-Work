@@ -47,7 +47,18 @@ public:
 
 };
 
-
+class Ticket {
+    Show* _show;
+    int _row;
+    int _seat;
+    float _price;
+public:
+    Ticket(Show* show, int row, int seat, float price);
+    const Show& getShow() const;
+    int getRow() const;
+    int getSeat() const;
+    float getPrice() const;
+};
 
 class User{
 protected:
