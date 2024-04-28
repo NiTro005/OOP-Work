@@ -1088,3 +1088,20 @@ void CString::ToString(int number) {
     strcat_s(_data, _capacity, buffer);
     _size += len;
 }
+
+
+/// <summary>
+/// Перегрузка присваивания
+/// </summary>
+/// <param name="other"></param>
+/// <returns></returns>
+CString& CString::operator=(const CString& other) {
+    if (this != &other) {
+        delete[] _data;
+        _size = other._size;
+        _capacity = other._capacity;
+        _data = new char[_capacity];
+        memcpy(_data, other._data, _size);
+    }
+    return *this;
+}
