@@ -29,8 +29,22 @@ public:
     int get_rows() const;
     int get_seats() const;
     bool isSeatAvailable(int rows, int seats) const;
-    void reserveSeat(int rows, int seats);
-    void freeSeat(int rows, int seats);
+    void reserveSeat(int rows, int seats); // Бронирование всех мест
+    void freeSeat(int rows, int seats); // Освобождение всех мест
+};
+
+class Show {
+    CTime _time;
+    CDate _date;
+    Movie* _movie;
+    Hall* _hall;
+public:
+    Show(const CTime& time, const CDate& date, Movie* movie, Hall* hall);
+    const Movie& getMovie() const;
+    const Hall& getHall() const;
+    const CDate& getDate() const;
+    const CTime& getTime() const;
+
 };
 
 
@@ -46,6 +60,8 @@ public:
 	void set_login(const CString& login);
 	void set_password(const CString& password);
 };
+
+
 
 class Admin : public User {
 public:

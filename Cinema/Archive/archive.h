@@ -130,7 +130,7 @@ TArchive<T>::TArchive(size_t n, T value) {
 
     for (size_t i = 0; i < _size; i++) {
         _data[i] = value;
-        _states[i] = State::occupied;
+        _states[i] = State::busy;
     }
 }
 
