@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="cinema.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="users.cpp" />
   </ItemGroup>

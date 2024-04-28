@@ -67,6 +67,10 @@ public:
     size_t find_first(T value) const;
     size_t find_last(T value) const;
 
+    T& operator[](size_t index);
+
+    const T& operator[](size_t index) const;
+
 private:
     size_t count_value(T value)  const noexcept;
     void repacking();
@@ -500,4 +504,14 @@ size_t TArchive<T>::count_value(T value) const noexcept {
         }
     }
     return count;
+}
+
+template <typename T>
+T& TArchive<T>::operator[](size_t index) {
+    return _data[index];
+}
+
+template <typename T>
+const T& TArchive<T>::operator[](size_t index) const {
+    return _data[index];
 }
