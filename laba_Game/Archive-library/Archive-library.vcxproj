@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{db2fbd7a-d448-4d15-9abe-ce8d6302f99d}</ProjectGuid>
-    <RootNamespace>Game</RootNamespace>
+    <ProjectGuid>{8756631e-a22f-4cbe-bfcf-4b457f244489}</ProjectGuid>
+    <RootNamespace>Archivelibrary</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -40,7 +40,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -104,12 +104,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Sourse\github\OOP-Work\laba_Game\Archive-library;C:\Sourse\github\OOP-Work\laba_Game\String-library;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Sourse\github\OOP-Work\laba_Game\Archive-library;C:\Sourse\github\OOP-Work\laba_Game\String-library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -129,22 +127,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="archer.cpp" />
-    <ClCompile Include="character.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="vizzard.cpp" />
-    <ClCompile Include="warrior.cpp" />
+    <ClInclude Include="archive.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="character.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Archive-library\Archive-library.vcxproj">
-      <Project>{8756631e-a22f-4cbe-bfcf-4b457f244489}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\String-library\String-library.vcxproj">
-      <Project>{b1338fbc-3aae-4af1-be37-699181a2649f}</Project>
-    </ProjectReference>
+    <ClCompile Include="archive.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

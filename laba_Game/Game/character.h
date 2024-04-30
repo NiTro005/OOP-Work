@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <ñstring.h>
+#include <archive.h>
 
 class Character {
 protected:
