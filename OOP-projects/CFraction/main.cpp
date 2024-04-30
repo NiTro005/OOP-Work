@@ -7,7 +7,7 @@ int main() {
     std::cin >> fr_5;
     fr_5 /= 3;
     fr_1 = fr_1 + 4;
-    fr_1 = 4 + fr_1;
+    fr_1 = 4 * fr_1;
     std::cout << fr_5 << std::endl;
     if (fr_2 == fr_4) {
         std::cout << "TRUE" << std::endl;

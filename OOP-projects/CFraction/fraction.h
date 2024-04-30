@@ -31,14 +31,14 @@ public:
     bool operator<(const Fraction& frac) const;
     bool operator!=(const Fraction& frac) const;
 
-    friend Fraction operator+(Fraction& frac, int value);
-    friend Fraction operator-(Fraction& frac, int value);
-    friend Fraction operator*(Fraction& frac, int value);
-    friend Fraction operator/(Fraction& frac, int value);
-    friend Fraction operator+(int value, Fraction& frac);
-    friend Fraction operator-(int value, Fraction& frac);
-    friend Fraction operator*(int value, Fraction& frac);
-    friend Fraction operator/(int value, Fraction& frac);
+    friend Fraction operator+(const Fraction& frac, int value);
+    friend Fraction operator-(const Fraction& frac, int value);
+    friend Fraction operator*(const Fraction& frac, int value);
+    friend Fraction operator/(const Fraction& frac, int value);
+    friend Fraction operator+(int value, const Fraction& frac);
+    friend Fraction operator-(int value, const Fraction& frac);
+    friend Fraction operator*(int value, const Fraction& frac);
+    friend Fraction operator/(int value, const Fraction& frac);
 
     friend bool operator==(const Fraction& frac, int value);
     friend bool operator==(int value, const Fraction& frac);
