@@ -92,8 +92,10 @@ CString::CString(const CString& str, size_t pos, size_t len) {
 /// Деструктор.
 /// </summary>
 CString::~CString() {
-    delete[] _data;
-    _data = nullptr;
+    if (_data != nullptr) {
+        delete[] _data;
+        _data = nullptr;
+    }
 }
 
 
@@ -1087,4 +1089,15 @@ void CString::ToString(int number) {
     }
     strcat_s(_data, _capacity, buffer);
     _size += len;
+}
+
+CString& CString::operator=(const CString& other) {
+    if (this != &other) {
+        delete[] _data;
+        _size = other._size;
+        _capacity = other._capacity;
+        _data = new char[_capacity];
+        memcpy(_data, other._data, _size);
+    }
+    return *this;
 }
