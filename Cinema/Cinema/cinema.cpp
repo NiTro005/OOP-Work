@@ -17,17 +17,17 @@ void Hall:: freeSeat(int rows, int seats) { _freeSeats[rows][seats] = true; }
 
 
 
-Show:: Show(const CTime& time, const CDate& date, Movie* movie, Hall* hall)
-	: _movie(movie), _hall(hall), _date(date), _time(time) {}
-const Movie& Show::getMovie() const { return *_movie; }
-const Hall& Show::getHall() const { return *_hall; }
+Show:: Show(const CTime& time, const CDate& date, const Movie& movie, Hall* hall, int price)
+	: _movie(movie), _hall(hall), _date(date), _time(time), _price(price) {}
+const Movie& Show::getMovie() const { return _movie; }
+Hall& Show::getHall() const { return *_hall; }
 const CDate& Show::getDate() const { return _date; }
 const CTime& Show::getTime() const { return _time; }
+int Show::getPrice() const { return _price; }
 
 
-Ticket:: Ticket(Show* show, int row, int seat, float price)
-    : _show(show), _row(row), _seat(seat), _price(price) {}
-const Show& Ticket:: getShow() const { return *_show; }
+Ticket:: Ticket(const Show& show, int row, int seat)
+    : _show(show), _row(row), _seat(seat) {}
+const Show& Ticket:: getShow() const { return _show; }
 int Ticket::getRow() const { return _row; }
 int Ticket::getSeat() const { return _seat; }
-float Ticket::getPrice() const { return _price; }

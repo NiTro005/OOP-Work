@@ -29,35 +29,35 @@ public:
     int get_rows() const;
     int get_seats() const;
     bool isSeatAvailable(int rows, int seats) const;
-    void reserveSeat(int rows, int seats); // Бронирование всех мест
-    void freeSeat(int rows, int seats); // Освобождение всех мест
+    void reserveSeat(int rows, int seats); // Бронирование местa
+    void freeSeat(int rows, int seats); // Освобождение местa
 };
 
 class Show {
     CTime _time;
     CDate _date;
-    Movie* _movie;
+    Movie _movie;
     Hall* _hall;
+    int _price;
 public:
-    Show(const CTime& time, const CDate& date, Movie* movie, Hall* hall);
+    Show(const CTime& time, const CDate& date,const Movie& movie, Hall* hall, int price);
     const Movie& getMovie() const;
-    const Hall& getHall() const;
+    Hall& getHall() const;
     const CDate& getDate() const;
     const CTime& getTime() const;
+    int getPrice() const;
 
 };
 
 class Ticket {
-    Show* _show;
+    Show _show;
     int _row;
     int _seat;
-    float _price;
 public:
-    Ticket(Show* show, int row, int seat, float price);
+    Ticket(const Show& show, int row, int seat);
     const Show& getShow() const;
     int getRow() const;
     int getSeat() const;
-    float getPrice() const;
 };
 
 
@@ -71,4 +71,12 @@ public:
 	CString get_password() const;
 	void set_login(const CString& login);
 	void set_password(const CString& password);
+};
+
+class Guest : public User {
+    CString _phone;
+    CString _email;
+public:
+    Guest(const CString& username, const CString& password, const CString& phone, const CString& email);
+    void bookTicket(Show& show, int row, int seat); //бронь места
 };
