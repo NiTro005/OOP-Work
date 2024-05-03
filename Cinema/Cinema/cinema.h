@@ -5,7 +5,6 @@
 #include <cdate.h>
 #include <ctime.h>
 
-
 class Movie {
 private:
     CString _title;
@@ -21,11 +20,12 @@ public:
 };
 
 class Hall {
+    int _number;
     int _rows;
     int _seats;
     TArchive <TArchive <bool>> _freeSeats;
 public:
-    Hall(int rows, int seats);
+    Hall(int rows, int seats, int number);
     int get_rows() const;
     int get_seats() const;
     bool isSeatAvailable(int rows, int seats) const;
@@ -33,6 +33,13 @@ public:
     void freeSeat(int rows, int seats); // Освобождение местa
 };
 
+class Cinema {
+private:
+    TArchive <Hall> _halls;
+public:
+    void addHall(int rows, int seats, int number);
+    const TArchive<Hall>& getHalls() const;
+};
 class Show {
     CTime _time;
     CDate _date;
@@ -48,6 +55,7 @@ public:
     int getPrice() const;
 
 };
+
 
 class Ticket {
     Show _show;
@@ -79,4 +87,15 @@ class Guest : public User {
 public:
     Guest(const CString& username, const CString& password, const CString& phone, const CString& email);
     void bookTicket(Show& show, int row, int seat); //бронь места
+    void TicketInfo(const Ticket& ticket);
+};
+
+class Admin : public User {
+    TArchive<Movie> _movies;
+    TArchive<Show> _shows;
+public:
+    Admin(const CString& username, const CString& password);
+    void addMovie(const CString& title, const CString& description, int duration, float rating);
+    void removeMovie(const CString& title);
+    void createShow(const Movie& movie, Hall* hall, const CTime& first_time, const CDate& first_date);
 };

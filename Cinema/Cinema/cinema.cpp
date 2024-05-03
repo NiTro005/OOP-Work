@@ -1,5 +1,15 @@
 #include "cinema.h"
 
+void Cinema::addHall(int rows, int seats, int number) {
+    Hall hall(rows, seats, number);
+    _halls.push_back(hall);
+}
+const TArchive<Hall>& Cinema::getHalls() const {
+    return _halls;
+}
+
+
+
 Movie:: Movie(const CString& title, const CString& description, int duration, float rating)
 	: _title(title),_description(description), _duration(duration), _rating(rating) {}
 const CString& Movie::getTitle() const { return _title; }
@@ -8,12 +18,13 @@ float Movie::getDuration() const { return _duration; }
 float Movie::getRating() const { return _rating; }
 
 
-Hall:: Hall(int rows, int seats) : _rows(rows), _seats(seats), _freeSeats(rows, TArchive<bool>(seats, true)) {}
+Hall:: Hall(int rows, int seats, int number) : _rows(rows), _seats(seats), _number(number), _freeSeats(rows, TArchive<bool>(seats, true)) {}
 int Hall:: get_rows() const { return _rows; }
 int Hall::get_seats() const { return _seats; }
 bool Hall::isSeatAvailable(int rows, int seats) const { return _freeSeats[rows][seats]; }
 void Hall:: reserveSeat(int rows, int seats) { _freeSeats[rows][seats] = false; }
 void Hall:: freeSeat(int rows, int seats) { _freeSeats[rows][seats] = true; }
+
 
 
 

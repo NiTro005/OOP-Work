@@ -1105,3 +1105,17 @@ CString& CString::operator=(const CString& other) {
     }
     return *this;
 }
+
+
+
+bool CString::operator==(const CString& other) const {
+    if (_size != other._size) {
+        return false;
+    }
+    for (size_t i = 0; i < _size; i++) {
+        if (_data[i] != other._data[i]) {
+            return false;
+        }
+    }
+    return true;
+}

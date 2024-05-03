@@ -117,4 +117,5 @@ public:
     size_t find_first_not_of(char c, size_t pos = 0) const;
 
     CString& operator=(const CString& other);
+    bool operator==(const CString& other) const;
 };
