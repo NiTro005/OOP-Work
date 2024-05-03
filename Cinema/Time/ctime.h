@@ -23,4 +23,8 @@ public:
 	Status sub_seconds(int minutes_);
 	int compare(const CTime& time);
 	~CTime();
+	bool operator<=(const CTime& other) const;
+	CTime operator+(float value) const;
+	bool operator>(const CTime& other) const;
 };
+

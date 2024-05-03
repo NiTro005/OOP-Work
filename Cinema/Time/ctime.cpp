@@ -166,4 +166,56 @@ int CTime::compare(const CTime& time) {
 	if (time.seconds > seconds && minutes <= time.minutes && hours <= time.hours) return -1;
 }
 
+bool CTime:: operator<=(const CTime& other) const {
+	if (hours < other.hours) {
+		return true;
+	}
+	else if (hours > other.hours) {
+		return false;
+	}
+	else {
+		if (minutes < other.minutes) {
+			return true;
+		}
+		else if (minutes > other.minutes) {
+			return false;
+		}
+		else {
+			return seconds <= other.seconds;
+		}
+	}
+}
+
+// перегрузка оператора +
+CTime CTime::operator+(float value) const {
+	int totalSeconds = static_cast<int>(value) + seconds;
+	int totalMinutes = totalSeconds / 60 + minutes;
+	int totalHours = totalMinutes / 60 + hours;
+
+	totalSeconds %= 60;
+	totalMinutes %= 60;
+
+	return CTime(totalHours, totalMinutes, totalSeconds);
+}
+
+bool CTime::operator>(const CTime& other) const {
+	if (hours > other.hours) {
+		return true;
+	}
+	else if (hours < other.hours) {
+		return false;
+	}
+	else {
+		if (minutes > other.minutes) {
+			return true;
+		}
+		else if (minutes < other.minutes) {
+			return false;
+		}
+		else {
+			return seconds > other.seconds;
+		}
+	}
+}
+
 CTime::~CTime() {}

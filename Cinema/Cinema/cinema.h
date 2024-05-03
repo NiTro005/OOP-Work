@@ -12,6 +12,7 @@ private:
     float _duration;
     float _rating;
 public:
+    Movie();
     Movie(const CString& title, const CString& description, int duration, float rating);
     const CString& getTitle() const;
     const CString& getDescription() const;
@@ -19,27 +20,24 @@ public:
     float getRating() const;
 };
 
+
 class Hall {
     int _number;
     int _rows;
     int _seats;
     TArchive <TArchive <bool>> _freeSeats;
 public:
+    Hall();
     Hall(int rows, int seats, int number);
     int get_rows() const;
     int get_seats() const;
+    int get_number() const;
     bool isSeatAvailable(int rows, int seats) const;
     void reserveSeat(int rows, int seats); // Бронирование местa
     void freeSeat(int rows, int seats); // Освобождение местa
+    bool isTimeAvailable(const CTime& time, const CDate& date, TArchive <Show> shows) const; //проверка занятости зала
 };
 
-class Cinema {
-private:
-    TArchive <Hall> _halls;
-public:
-    void addHall(int rows, int seats, int number);
-    const TArchive<Hall>& getHalls() const;
-};
 class Show {
     CTime _time;
     CDate _date;
@@ -47,7 +45,8 @@ class Show {
     Hall* _hall;
     int _price;
 public:
-    Show(const CTime& time, const CDate& date,const Movie& movie, Hall* hall, int price);
+    Show();
+    Show(const CTime& time, const CDate& date, const Movie& movie, Hall* hall, int price);
     const Movie& getMovie() const;
     Hall& getHall() const;
     const CDate& getDate() const;
@@ -56,6 +55,14 @@ public:
 
 };
 
+
+class Cinema {
+private:
+    TArchive <Hall> _halls;
+public:
+    void addHall(const Hall& hall);
+    const TArchive<Hall>& getHalls() const;
+};
 
 class Ticket {
     Show _show;
@@ -95,7 +102,8 @@ class Admin : public User {
     TArchive<Show> _shows;
 public:
     Admin(const CString& username, const CString& password);
-    void addMovie(const CString& title, const CString& description, int duration, float rating);
+    void addMovie(const CString& title, const CString& description, float duration, float rating);
     void removeMovie(const CString& title);
-    void createShow(const Movie& movie, Hall* hall, const CTime& first_time, const CDate& first_date);
+    void createShow(const Movie& movie, const Cinema& halls, const CTime& first_time, const CDate& first_date);
 };
+

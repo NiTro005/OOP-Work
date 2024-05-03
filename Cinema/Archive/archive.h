@@ -71,6 +71,8 @@ public:
 
     const T& operator[](size_t index) const;
 
+    TArchive<T>& operator=(const TArchive<T>& other);
+
 private:
     size_t count_value(T value)  const noexcept;
     void repacking();
@@ -514,4 +516,31 @@ T& TArchive<T>::operator[](size_t index) {
 template <typename T>
 const T& TArchive<T>::operator[](size_t index) const {
     return _data[index];
+}
+
+template <typename T>
+TArchive<T>& TArchive<T>::operator=(const TArchive<T>& other) {
+    if (this != &other) { // защита от самоприсваивани€
+        // освобождаем пам€ть, выделенную под текущий массив данных
+        delete[] _data;
+        delete[] _states;
+
+        // выдел€ем новый массив данных и копируем в него данные из исходного объекта
+        _capacity = other._capacity;
+        _data = new T[_capacity];
+        for (size_t i = 0; i < _capacity; i++) {
+            _data[i] = other._data[i];
+        }
+
+        // выдел€ем новый массив состо€ний €чеек и копируем в него данные из исходного объекта
+        _states = new State[_capacity];
+        for (size_t i = 0; i < _capacity; i++) {
+            _states[i] = other._states[i];
+        }
+
+        // обновл€ем значени€ полей _size и _deleted
+        _size = other._size;
+        _deleted = other._deleted;
+    }
+    return *this;
 }

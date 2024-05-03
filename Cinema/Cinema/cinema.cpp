@@ -1,13 +1,11 @@
 #include "cinema.h"
 
-void Cinema::addHall(int rows, int seats, int number) {
-    Hall hall(rows, seats, number);
+void Cinema::addHall(const Hall& hall) {
     _halls.push_back(hall);
 }
 const TArchive<Hall>& Cinema::getHalls() const {
     return _halls;
 }
-
 
 
 Movie:: Movie(const CString& title, const CString& description, int duration, float rating)
@@ -21,10 +19,20 @@ float Movie::getRating() const { return _rating; }
 Hall:: Hall(int rows, int seats, int number) : _rows(rows), _seats(seats), _number(number), _freeSeats(rows, TArchive<bool>(seats, true)) {}
 int Hall:: get_rows() const { return _rows; }
 int Hall::get_seats() const { return _seats; }
+int Hall:: get_number() const { return _number; }
 bool Hall::isSeatAvailable(int rows, int seats) const { return _freeSeats[rows][seats]; }
 void Hall:: reserveSeat(int rows, int seats) { _freeSeats[rows][seats] = false; }
 void Hall:: freeSeat(int rows, int seats) { _freeSeats[rows][seats] = true; }
-
+bool Hall::isTimeAvailable(const CTime& time, const CDate& date, TArchive<Show> shows) const {
+    for (size_t i = 0; i < shows.size(); i++) {
+        if (shows[i].getHall().get_number() == _number &&
+            shows[i].getDate() == date &&
+            (shows[i].getTime() <= time && shows[i].getTime() + shows[i].getMovie().getDuration() > time)) {
+            return false;
+        }
+    }
+    return true;
+}
 
 
 
@@ -42,3 +50,14 @@ Ticket:: Ticket(const Show& show, int row, int seat)
 const Show& Ticket:: getShow() const { return _show; }
 int Ticket::getRow() const { return _row; }
 int Ticket::getSeat() const { return _seat; }
+
+
+
+// Конструктор по умолчанию для класса Show
+Show::Show() : _time(), _date(), _movie(), _hall(nullptr), _price(0) {}
+
+// Конструктор по умолчанию для класса Movie
+Movie::Movie() : _title(), _description(), _duration(0), _rating(0) {}
+
+// Конструктор по умолчанию для класса Hall
+Hall::Hall() : _number(0), _rows(0), _seats(0), _freeSeats() {}

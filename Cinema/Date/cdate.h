@@ -24,4 +24,7 @@ public:
 	Stat sub_month(int month_);
 	Stat sub_day(int day_);
 	int compare(const CDate& data);
+	bool operator==(const CDate& other) const {
+		return (day == other.day && month == other.month && year == other.year);
+	}
 };

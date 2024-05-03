@@ -20,7 +20,7 @@ void Guest::TicketInfo(const Ticket& ticket) {
 }
 
 Admin::Admin(const CString& username, const CString& password): User(username, password){}
-void Admin::addMovie(const CString& title, const CString& description, int duration, float rating) {
+void Admin::addMovie(const CString& title, const CString& description, float duration, float rating) {
     Movie movie(title, description, duration, rating);
     _movies.push_back(movie);
 }
@@ -32,7 +32,4 @@ void Admin::removeMovie(const CString& title) {
         }
     }
     throw std::runtime_error("Movie not found");
-}
-void Admin::createShow(const Movie& movie, Hall* hall, const CTime& first_time, const CDate& first_date) {
-
 }
