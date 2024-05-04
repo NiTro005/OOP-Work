@@ -35,7 +35,6 @@ public:
     bool isSeatAvailable(int rows, int seats) const;
     void reserveSeat(int rows, int seats); // Бронирование местa
     void freeSeat(int rows, int seats); // Освобождение местa
-    bool isTimeAvailable(const CTime& time, const CDate& date, TArchive <Show> shows) const; //проверка занятости зала
 };
 
 class Show {
@@ -69,6 +68,7 @@ class Ticket {
     int _row;
     int _seat;
 public:
+    Ticket() = default;
     Ticket(const Show& show, int row, int seat);
     const Show& getShow() const;
     int getRow() const;
@@ -91,6 +91,7 @@ public:
 class Guest : public User {
     CString _phone;
     CString _email;
+    Ticket _ticket;
 public:
     Guest(const CString& username, const CString& password, const CString& phone, const CString& email);
     void bookTicket(Show& show, int row, int seat); //бронь места
@@ -104,6 +105,8 @@ public:
     Admin(const CString& username, const CString& password);
     void addMovie(const CString& title, const CString& description, float duration, float rating);
     void removeMovie(const CString& title);
-    void createShow(const Movie& movie, const Cinema& halls, const CTime& first_time, const CDate& first_date);
+    void createShow(const Movie& movie, const Cinema& halls, const CTime& first_time, const CDate& first_date, int price);
+private:
+    bool isTimeAvailable(int hallnumber, const CTime& time, const CDate& date);
 };
 

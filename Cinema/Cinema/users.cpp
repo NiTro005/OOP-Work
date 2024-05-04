@@ -12,7 +12,7 @@ void User::set_password(const CString& password) { _password = password; }
 Guest::Guest(const CString& username, const CString& password, const CString& phone, const CString& email) : User(username, password), _phone(phone), _email(email) {}
 void Guest::bookTicket(Show& show, int row, int seat) {
     if (!show.getHall().isSeatAvailable(row, seat)) { return; }
-    Ticket(show, row, seat);
+    _ticket = Ticket(show, row, seat);
     show.getHall().reserveSeat(row, seat);
 }
 void Guest::TicketInfo(const Ticket& ticket) {
@@ -33,3 +33,36 @@ void Admin::removeMovie(const CString& title) {
     }
     throw std::runtime_error("Movie not found");
 }
+
+bool Admin::isTimeAvailable(int hallNumber, const CTime& time, const CDate& date) {
+    for (size_t i = 0; i < _shows.size(); i++) {
+        if (_shows[i].getHall().get_number() == hallNumber &&
+            _shows[i].getDate() == date && _shows[i].getTime() == time) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void Admin::createShow(const Movie& movie, const Cinema& halls, const CTime& first_time, const CDate& first_date, int price) {
+    TArchive <Hall> Halls = halls.getHalls();
+    bool isAvailable = false;
+    int hallNumber = 0;
+    Hall* hall = nullptr;
+    for (size_t i = 0; i < Halls.size(); i++) {
+        if (isTimeAvailable(Halls[i].get_number(), first_time, first_date)) {
+            isAvailable = true;
+            hallNumber = Halls[i].get_number();
+            hall = &Halls[i];
+            break;
+        }
+    }
+    if (isAvailable && hall != nullptr) {
+        Show newShow(first_time, first_date, movie, hall, price);
+        _shows.push_back(newShow);
+    }
+    else {
+        std::cout << "No available halls for this time" << std::endl;
+    }
+}
+

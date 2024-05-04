@@ -218,4 +218,8 @@ bool CTime::operator>(const CTime& other) const {
 	}
 }
 
+bool CTime::operator==(const CTime& other) const {
+	return (hours == other.hours && minutes == other.minutes && seconds == other.seconds);
+}
+
 CTime::~CTime() {}

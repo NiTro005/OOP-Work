@@ -26,5 +26,6 @@ public:
 	bool operator<=(const CTime& other) const;
 	CTime operator+(float value) const;
 	bool operator>(const CTime& other) const;
+	bool operator==(const CTime& other) const;
 };
 

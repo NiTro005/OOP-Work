@@ -23,17 +23,6 @@ int Hall:: get_number() const { return _number; }
 bool Hall::isSeatAvailable(int rows, int seats) const { return _freeSeats[rows][seats]; }
 void Hall:: reserveSeat(int rows, int seats) { _freeSeats[rows][seats] = false; }
 void Hall:: freeSeat(int rows, int seats) { _freeSeats[rows][seats] = true; }
-bool Hall::isTimeAvailable(const CTime& time, const CDate& date, TArchive<Show> shows) const {
-    for (size_t i = 0; i < shows.size(); i++) {
-        if (shows[i].getHall().get_number() == _number &&
-            shows[i].getDate() == date &&
-            (shows[i].getTime() <= time && shows[i].getTime() + shows[i].getMovie().getDuration() > time)) {
-            return false;
-        }
-    }
-    return true;
-}
-
 
 
 Show:: Show(const CTime& time, const CDate& date, const Movie& movie, Hall* hall, int price)
