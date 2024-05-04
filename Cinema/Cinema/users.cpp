@@ -20,9 +20,10 @@ void Guest::TicketInfo(const Ticket& ticket) {
 }
 
 Admin::Admin(const CString& username, const CString& password): User(username, password){}
-void Admin::addMovie(const CString& title, const CString& description, float duration, float rating) {
-    Movie movie(title, description, duration, rating);
-    _movies.push_back(movie);
+const Movie& Admin::addMovie(const CString& title, const CString& description, float duration, float rating) {
+    Movie* movie = new Movie(title, description, duration, rating);
+    _movies.push_back(*movie);
+    return *movie;
 }
 void Admin::removeMovie(const CString& title) {
     for (size_t i = 0; i < _movies.size(); i++) {

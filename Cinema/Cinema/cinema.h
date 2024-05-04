@@ -18,6 +18,7 @@ public:
     const CString& getDescription() const;
     float getDuration() const;
     float getRating() const;
+    Movie& operator=(const Movie& other);
 };
 
 
@@ -103,7 +104,7 @@ class Admin : public User {
     TArchive<Show> _shows;
 public:
     Admin(const CString& username, const CString& password);
-    void addMovie(const CString& title, const CString& description, float duration, float rating);
+    const Movie& addMovie(const CString& title, const CString& description, float duration, float rating);
     void removeMovie(const CString& title);
     void createShow(const Movie& movie, const Cinema& halls, const CTime& first_time, const CDate& first_date, int price);
 private:

@@ -50,3 +50,13 @@ Movie::Movie() : _title(), _description(), _duration(0), _rating(0) {}
 
 // Конструктор по умолчанию для класса Hall
 Hall::Hall() : _number(0), _rows(0), _seats(0), _freeSeats() {}
+
+Movie& Movie::operator=(const Movie& other) {
+    if (this != &other) {
+        _title = other._title;
+        _description = other._description;
+        _duration = other._duration;
+        _rating = other._rating;
+    }
+    return *this;
+}
