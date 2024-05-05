@@ -1,6 +1,6 @@
 #include "character.h"
 
-Character:: Character(CString name, int hp , int power , int armor) : _hp(hp), _power(power), _armor(armor) {
+Character:: Character(CString name, int hp , int power , int armor) : _hp(hp), _power(power), _armor(armor), Game_element(0, 0) {
 	CString n;
 	if (name.empty()) { 
 		_name = "Character";
@@ -12,7 +12,7 @@ Character:: Character(CString name, int hp , int power , int armor) : _hp(hp), _
 }
 
 Character::Character (const Character& c) : _hp(c._hp),
-_armor(c._armor), _power(c._power) {
+_armor(c._armor), _power(c._power), Game_element(0, 0) {
 	history_count++; count++;
 }
 

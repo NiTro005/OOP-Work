@@ -3,7 +3,19 @@
 #include <ñstring.h>
 #include <archive.h>
 
-class Character {
+
+class Game_element {
+protected:
+	int x, y;
+public:
+	Game_element(int x, int y) : x(x), y(y) {}
+	virtual void change_position(int new_x, int new_y) = 0;
+	int get_x() const { return x; }
+	int get_y() const { return y; }
+};
+
+
+class Character: public Game_element {
 protected:
 	CString _name;
 	int _hp;
@@ -25,6 +37,11 @@ public:
 	Character(const Character& c);
 	virtual int attack(Character& c) = 0;
 	virtual void defence(Character& c, int damage) = 0;
+	void change_position(int new_x, int new_y) override {
+		std::cout << "Character moved from (" << get_x() << ", " << get_y() << ") to (" << new_x << ", " << new_y << ")" << std::endl;
+		x = new_x;
+		y = new_y;
+	}
 	~Character();
 };
 
