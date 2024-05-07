@@ -15,13 +15,7 @@ public:
 	int get_y() const { return y; }
 };
 
-class Playing_field {
-	TArchive <TArchive<Game_element>> field;
-public:
-
-};
-
-class Character: public Game_element {
+class Character : public Game_element {
 protected:
 	CString _name;
 	int _hp;
@@ -46,6 +40,16 @@ public:
 	void change_position(int new_x, int new_y);
 	~Character();
 };
+
+class Playing_field {
+	TArchive<TArchive<Game_element*>> field;
+public:
+	Playing_field(int width, int height);
+	void restore_character(Character* character);
+	Game_element* get_object_at(int x, int y);
+	TArchive<Game_element*> get_neighbors(int x, int y);
+};
+
 
 class Warrior : public Character {
 	bool _shield;
