@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="сstring.h" />
+    <ClInclude Include="mystring.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cstring.cpp" />

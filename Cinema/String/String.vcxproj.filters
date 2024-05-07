@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="сstring.h">
+    <ClInclude Include="mystring.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

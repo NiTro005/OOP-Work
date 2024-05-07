@@ -1,4 +1,4 @@
-﻿#include "сstring.h"
+﻿#include "mystring.h"
 
 /// <summary>
 /// Конструктор по умолчанию.

@@ -111,6 +111,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Sourse\github\OOP-Work\Cinema\Time;C:\Sourse\github\OOP-Work\Cinema\Date;C:\Sourse\github\OOP-Work\Cinema\String;C:\Sourse\github\OOP-Work\Cinema\Archive;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>C:\Sourse\github\OOP-Work\Cinema\Time;C:\Sourse\github\OOP-Work\Cinema\String;C:\Sourse\github\OOP-Work\Cinema\Date;C:\Sourse\github\OOP-Work\Cinema\Archive;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>

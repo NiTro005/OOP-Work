@@ -1,9 +1,9 @@
 #pragma once
 #include <iostream>
-#include <ñstring.h>
-#include <archive.h>
-#include <cdate.h>
-#include <ctime.h>
+#include "../String/mystring.h"
+#include "../Archive/archive.h"
+#include "../Time/ctime.h"
+#include "../Date/cdate.h"
 
 class Movie {
 private:
