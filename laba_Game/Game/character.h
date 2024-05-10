@@ -48,6 +48,7 @@ public:
 	void restore_character(Character* character);
 	Game_element* get_object_at(int x, int y);
 	TArchive<Game_element*> get_neighbors(int x, int y);
+	void set_character(const Character& character);
 };
 
 

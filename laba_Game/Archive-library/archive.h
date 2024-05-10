@@ -44,7 +44,7 @@ public:
     TArchive& assign(const TArchive& archive);
 
     void clear();
-    void resize(size_t n, T value);
+    void resize(size_t n, T* value = nullptr);
     void reserve(size_t n = 15);
 
     void push_back(T value);             // вставка элемента (в конец)
@@ -200,7 +200,7 @@ void TArchive<T>::clear() {
 }
 
 template <typename T>
-void TArchive <T>::resize(size_t n, T value) {
+void TArchive <T>::resize(size_t n, T* value) {
     if (n <= _size) {
         for (size_t i = _size; i >= n; i--) {
             _states[i] = State::empty;
@@ -210,7 +210,7 @@ void TArchive <T>::resize(size_t n, T value) {
     else {
         reserve(n);
         for (size_t i = _size; i < n; ++i) {
-            _data[i] = value;
+            _data[i] = *value;
             _states[i] = State::busy;
         }
         _size = n;
