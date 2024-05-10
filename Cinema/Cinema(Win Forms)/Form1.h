@@ -48,7 +48,7 @@ namespace CppCLRWinFormsProject {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -74,6 +74,7 @@ namespace CppCLRWinFormsProject {
 			this->button1->TabIndex = 0;
 			this->button1->Text = L"Войти, как гость";
 			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &Form1::button1_Click);
 			// 
 			// button2
 			// 
@@ -83,6 +84,7 @@ namespace CppCLRWinFormsProject {
 			this->button2->TabIndex = 1;
 			this->button2->Text = L"Войти, как админ";
 			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &Form1::button2_Click);
 			// 
 			// checkBox1
 			// 
@@ -162,5 +164,10 @@ namespace CppCLRWinFormsProject {
 	private: System::Void textBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 
 	}
-};
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		Guest guest(textBox1->Text, textBox2->Text);
+	}
+	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+	};
 }
