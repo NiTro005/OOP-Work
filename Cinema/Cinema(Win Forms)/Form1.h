@@ -1,5 +1,5 @@
 #pragma once
-#include <cinema.h>
+#include "cinema.h"
 namespace CppCLRWinFormsProject {
 
 	using namespace System;
@@ -34,6 +34,8 @@ namespace CppCLRWinFormsProject {
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::Button^ button1;
+	protected:
 
 	private:
 		/// <summary>
@@ -48,11 +50,32 @@ namespace CppCLRWinFormsProject {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->components = gcnew System::ComponentModel::Container();
-			this->Size = System::Drawing::Size(300,300);
-			this->Text = L"Form1";
-			this->Padding = System::Windows::Forms::Padding(0);
+			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->SuspendLayout();
+			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(110, 279);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(153, 32);
+			this->button1->TabIndex = 0;
+			this->button1->Text = L"Войти, как гость";
+			this->button1->UseVisualStyleBackColor = true;
+			// 
+			// Form1
+			// 
+			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::SystemColors::ControlDark;
+			this->ClientSize = System::Drawing::Size(599, 424);
+			this->Controls->Add(this->button1);
+			this->ForeColor = System::Drawing::SystemColors::ActiveCaptionText;
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
+			this->ImeMode = System::Windows::Forms::ImeMode::Off;
+			this->Name = L"Form1";
+			this->Text = L"Авторизация";
+			this->ResumeLayout(false);
+
 		}
 #pragma endregion
 	};

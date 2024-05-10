@@ -20,10 +20,10 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
-    <ProjectGuid>{52f3181f-8c73-46f7-bb19-e640cfabd20e}</ProjectGuid>
+    <ProjectGuid>{58e2b675-5927-4cb0-b9a3-8a12e40494b7}</ProjectGuid>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
-    <RootNamespace>Cinema_Windows_forms_</RootNamespace>
+    <RootNamespace>Cinema_Win_Forms_</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -163,6 +163,11 @@
     <ProjectReference Include="..\Cinema\Cinema.vcxproj">
       <Project>{22163028-4918-4f4f-bd4e-1013d76e3ebc}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.h</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
