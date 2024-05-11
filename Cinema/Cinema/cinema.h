@@ -94,6 +94,7 @@ class Guest : public User {
     CString _email;
     Ticket _ticket;
 public:
+    Guest() = default;
     Guest(const CString& username, const CString& password, const CString& phone = "+7(900)000-00-00", const CString& email = "nitro2005002@gmail.com");
     void bookTicket(Show& show, int row, int seat); //бронь места
     void TicketInfo(const Ticket& ticket);

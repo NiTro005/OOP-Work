@@ -48,6 +48,7 @@ namespace CppCLRWinFormsProject {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
+		
 		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
@@ -141,7 +142,7 @@ namespace CppCLRWinFormsProject {
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 17);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::InactiveCaption;
-			this->ClientSize = System::Drawing::Size(507, 395);
+			this->ClientSize = System::Drawing::Size(493, 390);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->textBox2);
@@ -165,7 +166,8 @@ namespace CppCLRWinFormsProject {
 
 	}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		Guest guest(textBox1->Text, textBox2->Text);
+		
+
 	}
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
