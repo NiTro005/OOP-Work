@@ -1,6 +1,6 @@
 #pragma once
 #include "cinema.h"
-namespace CppCLRWinFormsProject {
+namespace GuestForm {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -12,10 +12,10 @@ namespace CppCLRWinFormsProject {
 	/// <summary>
 	/// Summary for Form1
 	/// </summary>
-	public ref class Form1 : public System::Windows::Forms::Form
+	public ref class Form2 : public System::Windows::Forms::Form
 	{
 	public:
-		Form1(void)
+		Form2(void)
 		{
 			InitializeComponent();
 			textBox2->PasswordChar = '*';
@@ -28,7 +28,7 @@ namespace CppCLRWinFormsProject {
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		~Form1()
+		~Form2()
 		{
 			if (components)
 			{
@@ -75,7 +75,6 @@ namespace CppCLRWinFormsProject {
 			this->button1->TabIndex = 0;
 			this->button1->Text = L"Войти, как гость";
 			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &Form1::button1_Click);
 			// 
 			// button2
 			// 
@@ -85,7 +84,6 @@ namespace CppCLRWinFormsProject {
 			this->button2->TabIndex = 1;
 			this->button2->Text = L"Войти, как админ";
 			this->button2->UseVisualStyleBackColor = true;
-			this->button2->Click += gcnew System::EventHandler(this, &Form1::button2_Click);
 			// 
 			// checkBox1
 			// 
@@ -107,35 +105,7 @@ namespace CppCLRWinFormsProject {
 			// 
 			// textBox2
 			// 
-			this->textBox2->Location = System::Drawing::Point(157, 166);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(208, 25);
-			this->textBox2->TabIndex = 4;
-			this->textBox2->TextChanged += gcnew System::EventHandler(this, &Form1::textBox2_TextChanged);
-			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->label1->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
-			this->label1->Location = System::Drawing::Point(92, 103);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(59, 20);
-			this->label1->TabIndex = 5;
-			this->label1->Text = L"Логин";
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->label2->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
-			this->label2->Location = System::Drawing::Point(88, 166);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(72, 20);
-			this->label2->TabIndex = 6;
-			this->label2->Text = L"Пароль";
+
 			// 
 			// Form1
 			// 
@@ -155,21 +125,12 @@ namespace CppCLRWinFormsProject {
 			this->ForeColor = System::Drawing::SystemColors::ActiveCaptionText;
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
 			this->ImeMode = System::Windows::Forms::ImeMode::Off;
-			this->Name = L"Form1";
+			this->Name = L"Form2";
 			this->Text = L"Авторизация";
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	private: System::Void textBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-
-	}
-	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-
-
-	}
-	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
-	}
 	};
 }
