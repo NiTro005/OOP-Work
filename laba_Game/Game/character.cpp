@@ -42,7 +42,6 @@ void Character::set_armor(int newarmor) {
 }
 
 void Character:: change_position(int new_x, int new_y) {
-	std::cout << "Character moved from (" << get_x() << ", " << get_y() << ") to (" << new_x << ", " << new_y << ")" << std::endl;
 	x = new_x;
 	y = new_y;
 }

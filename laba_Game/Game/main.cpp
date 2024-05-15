@@ -5,15 +5,7 @@ int Character::history_count = 1;
 
 int main(){
 	Warrior p2("Bob"); Archer p1("Stiv"); Vizzard p3("Cevin");
-	p1.defence(p3, p3.attack(p1));
-	p1.defence(p3, p3.attack(p1));
-	p1.defence(p3, p3.attack(p1));
-	p1.defence(p3, p3.attack(p1));
-	p1.defence(p3, p3.attack(p1));
-	p1.defence(p3, p3.attack(p1));
-
-	p3.defence(p1, p1.attack(p3));
-	p3.defence(p1, p1.attack(p3));
-	p3.defence(p1, p1.attack(p3));
+	Playing_field field(10, 10, &p1, &p2);
+	int x = p1.get_x();
 	return 0;
 }
