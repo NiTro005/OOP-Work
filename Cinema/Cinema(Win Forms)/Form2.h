@@ -40,8 +40,8 @@ namespace GuestForm {
 	private: System::Windows::Forms::CheckBox^ checkBox1;
 	private: System::Windows::Forms::TextBox^ textBox1;
 	private: System::Windows::Forms::TextBox^ textBox2;
-	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::Label^ label2;
+
+
 	protected:
 
 	private:
@@ -63,8 +63,6 @@ namespace GuestForm {
 			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// button1
@@ -105,16 +103,18 @@ namespace GuestForm {
 			// 
 			// textBox2
 			// 
-
+			this->textBox2->Location = System::Drawing::Point(157, 152);
+			this->textBox2->Name = L"textBox2";
+			this->textBox2->Size = System::Drawing::Size(100, 25);
+			this->textBox2->TabIndex = 2;
+			this->textBox2->TextChanged += gcnew System::EventHandler(this, &Form2::textBox2_TextChanged);
 			// 
-			// Form1
+			// Form2
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 17);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::InactiveCaption;
 			this->ClientSize = System::Drawing::Size(493, 390);
-			this->Controls->Add(this->label2);
-			this->Controls->Add(this->label1);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->checkBox1);
@@ -132,5 +132,6 @@ namespace GuestForm {
 
 		}
 #pragma endregion
-	};
+
+};
 }
