@@ -8,11 +8,13 @@ void Playing_field::shuffle(int width, int height) {
         Game_element* temp = field[i / height][i % height];
         field[i / height][i % height] = field[j / height][j % height];
         field[j / height][j % height] = temp;
+        if (field[i / height][i % height] != nullptr) {field[i / height][i % height]->change_position(i / height, i % height);}
+        if (field[j / height][j % height] != nullptr) { field[j / height][j % height]->change_position(j / height, j % height); }
     }
 }
 
 
-Playing_field::Playing_field(int width, int height, Game_element* player1, Game_element* player2) {
+Playing_field::Playing_field(Game_element* player1, Game_element* player2, int width, int height) {
     field.resize(height);
     for (int i = 0; i < height; i++) {
         field[i].resize(width);

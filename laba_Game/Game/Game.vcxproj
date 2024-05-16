@@ -131,6 +131,7 @@
   <ItemGroup>
     <ClCompile Include="archer.cpp" />
     <ClCompile Include="character.cpp" />
+    <ClCompile Include="Gameplay.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Playing_field.cpp" />
     <ClCompile Include="vizzard.cpp" />
@@ -138,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h" />
+    <ClInclude Include="Gameplay.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Archive-library\Archive-library.vcxproj">
