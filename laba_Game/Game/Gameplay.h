@@ -1,8 +1,14 @@
 #pragma once
 #include "character.h"
 
-class Gameplay {
+void MainMenu();
+void CharacterCreationMenu();
+void updateCharacterDesccript();
+
+
+
+class Gameplay{
 	Playing_field _field;
 public:
-	Gameplay(Character* player1, Character* player2, int width = 15, int height = 15);
+	Gameplay(Character* player1 = nullptr, Character* player2 = nullptr, int width = 15, int height = 15);
 };
