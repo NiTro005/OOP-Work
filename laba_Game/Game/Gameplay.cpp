@@ -25,6 +25,7 @@ void Gameplay::launch(){
 
 void Gameplay::start() {
     field = new Playing_field(player1, player2);
+    ShowGameMenu();
     while (1) {}
 }
 
@@ -127,7 +128,59 @@ void Gameplay::ShowCreateCharacter() {
     }
 }
 
+void Gameplay::ShowGameMenu(){
+    system("cls");
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(console, &csbi);
 
+    // Сохраняем текущие настройки консоли
+    COORD saved_cursor_pos = csbi.dwCursorPosition;
+    WORD saved_attributes = csbi.wAttributes;
+
+    // Устанавливаем курсор в левый верхний угол поля
+    COORD cursor_pos = { static_cast<SHORT>(2), static_cast<SHORT>(2) };
+    SetConsoleCursorPosition(console, cursor_pos);
+
+    // Выводим рамку поля
+    for (int i = 0; i < 15 + 2; i++) {
+        std::cout << (i == 0 || i == 15 + 1 ? '+' : '-');
+    }
+    std::cout << std::endl;
+
+    for (int y = 0; y < 15; y++) {
+        std::cout << '|';
+
+        for (int x = 0; x < 15; x++) {
+            Game_element* obj = field->get_object_at(y, x);
+            if (obj == nullptr) {
+                std::cout << ' ';
+            }
+            else if (dynamic_cast<Character*>(obj)) {
+                // Устанавливаем цвет для персонажей
+                SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+                std::cout << 'C';
+                // Возвращаем прежние настройки цвета
+                SetConsoleTextAttribute(console, saved_attributes);
+            }
+            else {
+                std::cout << 'O';
+            }
+        }
+
+        std::cout << '|' << std::endl;
+    }
+
+    // Выводим нижнюю часть рамки поля
+    for (int i = 0; i < 15 + 2; i++) {
+        std::cout << (i == 0 || i == 15 + 1 ? '+' : '-');
+    }
+    std::cout << std::endl;
+
+    // Возвращаем курсор в прежнее положение и восстанавливаем прежние настройки консоли
+    SetConsoleCursorPosition(console, saved_cursor_pos);
+    SetConsoleTextAttribute(console, saved_attributes);
+}
 
 
 void Gameplay::ShowMainMenu() {

@@ -12,6 +12,7 @@ private:
 	void start();
 	void ShowCreateCharacter();
 	void ShowMainMenu();
+	void ShowGameMenu();
 	void updateStatus();
 	void descriptCharacter();
 	void PlayerMove(Character* character);
