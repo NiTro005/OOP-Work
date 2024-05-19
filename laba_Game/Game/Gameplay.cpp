@@ -24,12 +24,12 @@ void Gameplay::launch(){
 }
 
 void Gameplay::start() {
-
+    field = new Playing_field(player1, player2);
     while (1) {}
 }
 
 void Gameplay::ShowCreateCharacter() {
-    enum CharacterTipe { Warrior, Archer, Vizzard };
+
     int player1Choice = -1;
     int player2Choice = -1;
 
@@ -71,44 +71,60 @@ void Gameplay::ShowCreateCharacter() {
         SetConsoleCursorPosition(console, cursorPos);
         std::cout << "Игрок 1, ваш выбор: ";
         std::cin >> player1Choice;
-        player1Choice--;
 
         cursorPos = { 70, 11 };
         SetConsoleCursorPosition(console, cursorPos);
         std::cout << "Игрок 2, ваш выбор: ";
         std::cin >> player2Choice;
-        player2Choice--;
+        std::cin.ignore();
 
-        if (player1Choice == -1) {
+        if (player1Choice == -1 || player1Choice > 3) {
             cursorPos = { 5, 13 };
             SetConsoleCursorPosition(console, cursorPos);
             std::cout << "Игрок 1, неверный выбор, попробуйте снова";
             system("pause");
         }
-        if (player2Choice == -1) {
+        if (player2Choice == -1 || player2Choice > 3) {
             cursorPos = { 40, 13 };
             SetConsoleCursorPosition(console, cursorPos);
             std::cout << "Игрок 2, неверный выбор, попробуйте снова";
             system("pause");
         }
-        if (player1Choice != -1 && player1Choice == player2Choice) {
-            cursorPos = { 5, 13 };
-            SetConsoleCursorPosition(console, cursorPos);
-            std::cout << "Игрок 1, выбранный персонаж уже занят, попробуйте снова";
-            player1Choice = -1;
-            system("pause");
-        }
-        if (player2Choice != -1 && player1Choice == player2Choice) {
-            cursorPos = { 40, 13 };
-            SetConsoleCursorPosition(console, cursorPos);
-            std::cout << "Игрок 2, выбранный персонаж уже занят, попробуйте снова";
-            player2Choice = -1;
-            system("pause");
-        }
     }
 
-    CharacterTipe player1;
-    CharacterTipe player2;
+
+    CString player1Name, player2Name;
+    cursorPos = { 5, 15 };
+    SetConsoleCursorPosition(console, cursorPos);
+    std::cout << "Игрок 1, введите имя персонажа: ";
+    std::cin >> player1Name;
+    cursorPos = { 70, 15 };
+    SetConsoleCursorPosition(console, cursorPos);
+    std::cout << "Игрок 2, введите имя персонажа: ";
+    std::cin >> player2Name;
+    switch (player1Choice) {
+    case 1:
+        player1 = new Warrior(player1Name);
+        break;
+    case 2:
+        player1 = new Archer(player1Name);
+        break;
+    case 3:
+        player1 = new Vizzard(player1Name);
+        break;
+    }
+
+    switch (player2Choice) {
+    case 1:
+        player2 = new Warrior(player2Name);
+        break;
+    case 2:
+        player2 = new Archer(player2Name);
+        break;
+    case 3:
+        player2 = new Vizzard(player2Name);
+        break;
+    }
 }
 
 
