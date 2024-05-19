@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 class Fraction {
-    int numerator;       // числитель
-    int denominator;     // заменатель
+    int numerator;       // Г·ГЁГ±Г«ГЁГІГҐГ«Гј
+    int denominator;     // Г§Г Г¬ГҐГ­Г ГІГҐГ«Гј
 public:
     Fraction() : numerator(0), denominator(1) {}
     Fraction(int num, int dem) : numerator(num), denominator(dem) {}
@@ -12,6 +12,7 @@ public:
     Fraction operator-(const Fraction& frac);
     Fraction operator*(const Fraction& frac);
     Fraction operator/(const Fraction& frac);
+
     Fraction& operator+=(const Fraction& frac);
     Fraction& operator-=(const Fraction& frac);
     Fraction& operator*=(const Fraction& frac);
@@ -31,6 +32,7 @@ public:
     bool operator<(const Fraction& frac) const;
     bool operator!=(const Fraction& frac) const;
 
+
     friend Fraction operator+(const Fraction& frac, int value);
     friend Fraction operator-(const Fraction& frac, int value);
     friend Fraction operator*(const Fraction& frac, int value);
@@ -39,6 +41,7 @@ public:
     friend Fraction operator-(int value, const Fraction& frac);
     friend Fraction operator*(int value, const Fraction& frac);
     friend Fraction operator/(int value, const Fraction& frac);
+
 
     friend bool operator==(const Fraction& frac, int value);
     friend bool operator==(int value, const Fraction& frac);
