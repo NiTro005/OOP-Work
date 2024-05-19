@@ -1,14 +1,18 @@
 #pragma once
 #include "character.h"
 
-void MainMenu();
-void CharacterCreationMenu();
-void updateCharacterDesccript();
-
-
-
 class Gameplay{
-	Playing_field _field;
+private:
+	Playing_field* field;
+	Character* player1;
+	Character* player2;
 public:
-	Gameplay(Character* player1 = nullptr, Character* player2 = nullptr, int width = 15, int height = 15);
+	void launch();
+private:
+	void start();
+	void ShowCreateCharacter();
+	void ShowMainMenu();
+	void updateStatus();
+	void descriptCharacter();
+	void PlayerMove(Character* character);
 };
