@@ -11,7 +11,6 @@ CString::CString() {
 }
 
 
-
 /// <summary>
 /// Конструктор копирования.
 /// </summary>
@@ -439,4 +438,642 @@ void CString::print(size_t pos, size_t len) const noexcept {
     for (int i = pos; i < _size - pos + len; i++) {
         std::cout << _data[i];
     }
+}
+
+
+/// <summary>
+/// Метод добавления подстроки str, начиная с позиции subpos и длиной sublen
+/// </summary>
+/// <param name="str"> - строка</param>
+/// <param name="subpos"> - начальная позиция</param>
+/// <param name="sublen"> - длина</param>
+/// <returns> строку</returns>
+CString& CString::append(const CString& str, size_t subpos, size_t sublen) {
+    if (subpos >= str._size) return *this;
+
+    size_t new_size = _size + sublen;
+    reserve(new_size);
+
+    for (size_t i = 0; i < sublen; ++i) {
+        _data[_size++] = str._data[subpos + i];
+    }
+
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+/// Метод добавления строки s
+/// </summary>
+/// <param name="s"> - строка</param>
+/// <returns> измененная строка</returns>
+CString& CString::append(const char* s) {
+    if (s == nullptr) return *this;
+
+    size_t len = strlen(s);
+    size_t new_size = _size + len;
+    reserve(new_size);
+
+    for (size_t i = 0; i < len; ++i) {
+        _data[_size++] = s[i];
+    }
+
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+///  Метод добавления первых n символов из строки s
+/// </summary>
+/// <param name="s"> - строка</param>
+/// <param name="n"> - первые символы из этой строки</param>
+/// <returns> измененная строка</returns>
+CString& CString::append(const char* s, size_t n) {
+    if (s == nullptr) return *this;
+
+    size_t len = strlen(s);
+    size_t actual_len = std::min(len, n);
+    size_t new_size = _size + actual_len;
+    reserve(new_size);
+
+    for (size_t i = 0; i < actual_len; ++i) {
+        _data[_size++] = s[i];
+    }
+
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+/// Метод добавления символа c n раз
+/// </summary>
+/// <param name="n"> - число повторений</param>
+/// <param name="c"> - символ</param>
+/// <returns> измененная строка</returns>
+CString& CString::append(size_t n, char c) {
+    size_t new_size = _size + n;
+    reserve(new_size);
+
+    for (size_t i = 0; i < n; ++i) {
+        _data[_size++] = c;
+    }
+
+    _data[_size] = '\0';
+    return *this;
+}
+
+
+/// <summary>
+///  Метод вставки подстроки str, начиная с позиции subpos и длиной sublen, в позицию pos
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="str"></param>
+/// <param name="subpos"></param>
+/// <param name="sublen"></param>
+/// <returns></returns>
+CString& CString::insert(size_t pos, const CString& str, size_t subpos, size_t sublen) {
+    if (pos > _size || subpos >= str._size) return *this;
+
+    size_t new_size = _size + sublen;
+    reserve(new_size);
+
+    // Сдвигаем часть строки после позиции вставки
+    for (size_t i = _size; i > pos; --i) {
+        _data[i + sublen - 1] = _data[i - 1];
+    }
+
+    // Вставляем подстроку
+    for (size_t i = 0; i < sublen; ++i) {
+        _data[pos + i] = str._data[subpos + i];
+    }
+
+    _size = new_size;
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+/// Метод вставки строки s в позицию pos
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="s"></param>
+/// <returns></returns>
+CString& CString::insert(size_t pos, const char* s) {
+    if (pos > _size || s == nullptr) return *this;
+
+    size_t len = strlen(s);
+    size_t new_size = _size + len;
+    reserve(new_size);
+
+    // Сдвигаем часть строки после позиции вставки
+    for (size_t i = _size; i > pos; --i) {
+        _data[i + len - 1] = _data[i - 1];
+    }
+
+    // Вставляем строку s
+    for (size_t i = 0; i < len; ++i) {
+        _data[pos + i] = s[i];
+    }
+
+    _size = new_size;
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+/// Метод вставки первых n символов из строки s в позицию pos
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="s"></param>
+/// <param name="n"></param>
+/// <returns></returns>
+CString& CString::insert(size_t pos, const char* s, size_t n) {
+    if (pos > _size || s == nullptr) return *this;
+
+    size_t len = strlen(s);
+    size_t actual_len = std::min(len, n);
+    size_t new_size = _size + actual_len;
+    reserve(new_size);
+
+    // Сдвигаем часть строки после позиции вставки
+    for (size_t i = _size; i > pos; --i) {
+        _data[i + actual_len - 1] = _data[i - 1];
+    }
+
+    // Вставляем первые n символов из строки s
+    for (size_t i = 0; i < actual_len; ++i) {
+        _data[pos + i] = s[i];
+    }
+
+    _size = new_size;
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+///Метод вставки символа c n раз в позицию pos
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="n"></param>
+/// <param name="c"></param>
+/// <returns></returns>
+CString& CString::insert(size_t pos, size_t n, char c) {
+    if (pos > _size) return *this;
+
+    size_t new_size = _size + n;
+    reserve(new_size);
+
+    // Сдвигаем часть строки после позиции вставки
+    for (size_t i = _size; i > pos; --i) {
+        _data[i + n - 1] = _data[i - 1];
+    }
+
+    // Вставляем символ c n раз
+    for (size_t i = 0; i < n; ++i) {
+        _data[pos + i] = c;
+    }
+
+    _size = new_size;
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+/// Метод замены len символов, начиная с позиции pos, на подстроку str, начиная с позиции subpos и длиной sublen
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="len"></param>
+/// <param name="str"></param>
+/// <param name="subpos"></param>
+/// <param name="sublen"></param>
+/// <returns></returns>
+CString& CString::replace(size_t pos, size_t len, const CString& str, size_t subpos, size_t sublen) {
+    if (pos >= _size) return *this;
+
+    size_t new_size = _size - len + sublen;
+    reserve(new_size);
+
+    // Сдвигаем часть строки после позиции замены
+    for (size_t i = pos + len; i < _size; ++i) {
+        _data[i + sublen - len] = _data[i];
+    }
+
+    // Вставляем подстроку str
+    for (size_t i = 0; i < sublen; ++i) {
+        _data[pos + i] = str._data[subpos + i];
+    }
+
+    _size = new_size;
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+/// Метод замены len символов, начиная с позиции pos, на строку s длиной n
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="len"></param>
+/// <param name="s"></param>
+/// <param name="n"></param>
+/// <returns></returns>
+CString& CString::replace(size_t pos, size_t len, const char* s, size_t n) {
+    if (pos >= _size) return *this;
+
+    size_t new_size = _size - len + n;
+    reserve(new_size);
+
+    // Сдвигаем часть строки после позиции замены
+    for (size_t i = pos + len; i < _size; ++i) {
+        _data[i + n - len] = _data[i];
+    }
+
+    // Вставляем строку s
+    for (size_t i = 0; i < n; ++i) {
+        _data[pos + i] = s[i];
+    }
+
+    _size = new_size;
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+/// Метод замены len символов, начиная с позиции pos, на символ c повторенный n раз
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="len"></param>
+/// <param name="n"></param>
+/// <param name="c"></param>
+/// <returns></returns>
+CString& CString::replace(size_t pos, size_t len, size_t n, char c) {
+    if (pos >= _size) return *this;
+
+    size_t new_size = _size - len + n;
+    reserve(new_size);
+
+    // Сдвигаем часть строки после позиции замены
+    for (size_t i = pos + len; i < _size; ++i) {
+        _data[i + n - len] = _data[i];
+    }
+
+    // Вставляем символ c повторенный n раз
+    for (size_t i = 0; i < n; ++i) {
+        _data[pos + i] = c;
+    }
+
+    _size = new_size;
+    _data[_size] = '\0';
+    return *this;
+}
+
+/// <summary>
+/// Метод поиска подстроки s, начиная с позиции pos
+/// </summary>
+/// <param name="s"></param>
+/// <param name="pos"></param>
+/// <returns></returns>
+size_t CString::find(const char* s, size_t pos) const {
+    if (s == nullptr || pos >= _size) return std::string::npos;
+
+    char* found = strstr(_data + pos, s);
+    if (found == nullptr) return std::string::npos;
+
+    return found - _data;
+}
+
+/// <summary>
+/// Метод поиска подстроки s длиной n, начиная с позиции pos
+/// </summary>
+/// <param name="s"></param>
+/// <param name="pos"></param>
+/// <param name="n"></param>
+/// <returns></returns>
+size_t CString::find(const char* s, size_t pos, size_t n) const {
+    if (s == nullptr || pos >= _size) return std::string::npos;
+
+    char* found = nullptr;
+    for (size_t i = pos; i <= _size - n; ++i) {
+        if (strncmp(_data + i, s, n) == 0) {
+            found = _data + i;
+            break;
+        }
+    }
+
+    if (found == nullptr) return std::string::npos;
+    return found - _data;
+}
+
+/// <summary>
+/// Метод поиска символа c, начиная с позиции pos
+/// </summary>
+/// <param name="c"></param>
+/// <param name="pos"></param>
+/// <returns></returns>
+size_t CString::find(char c, size_t pos) const {
+    if (pos >= _size) return std::string::npos;
+
+    char* found = strchr(_data + pos, c);
+    if (found == nullptr) return std::string::npos;
+
+    return found - _data;
+}
+
+
+/// <summary>
+/// Метод поиска первого вхождения любого символа из строки s, начиная с позиции pos
+/// </summary>
+/// <param name="s"></param>
+/// <param name="pos"></param>
+/// <returns></returns>
+size_t CString::find_first_of(const char* s, size_t pos) const {
+    if (s == nullptr || pos >= _size) return std::string::npos;
+
+    char* found = strpbrk(_data + pos, s);
+    if (found == nullptr) return std::string::npos;
+
+    return found - _data;
+}
+
+/// <summary>
+/// Метод поиска первого вхождения любого символа из строки s длиной n, начиная с позиции pos
+/// </summary>
+/// <param name="s"></param>
+/// <param name="pos"></param>
+/// <param name="n"></param>
+/// <returns></returns>
+size_t CString::find_first_of(const char* s, size_t pos, size_t n) const {
+    if (s == nullptr || pos >= _size) return std::string::npos;
+
+    for (size_t i = pos; i < _size; ++i) {
+        for (size_t j = 0; j < n; ++j) {
+            if (_data[i] == s[j]) {
+                return i;
+            }
+        }
+    }
+
+    return std::string::npos;
+}
+
+/// <summary>
+/// Метод поиска первого вхождения символа c, начиная с позиции pos
+/// </summary>
+/// <param name="c"></param>
+/// <param name="pos"></param>
+/// <returns></returns>
+size_t CString::find_first_of(char c, size_t pos) const {
+    if (pos >= _size) return std::string::npos;
+
+    char* found = strchr(_data + pos, c);
+    if (found == nullptr) return std::string::npos;
+
+    return found - _data;
+}
+
+/// <summary>
+/// Метод поиска первого вхождения символов не из строки s, начиная с позиции pos
+/// </summary>
+/// <param name="s"></param>
+/// <param name="pos"></param>
+/// <returns></returns>
+size_t CString::find_first_not_of(const char* s, size_t pos) const {
+    if (s == nullptr || pos >= _size) return std::string::npos;
+
+    for (size_t i = pos; i < _size; ++i) {
+        if (strchr(s, _data[i]) == nullptr) {
+            return i;
+        }
+    }
+
+    return std::string::npos;
+}
+
+/// <summary>
+/// Метод поиска первого вхождения символов не из строки s длиной n, начиная с позиции pos
+/// </summary>
+/// <param name="s"></param>
+/// <param name="pos"></param>
+/// <param name="n"></param>
+/// <returns></returns>
+size_t CString::find_first_not_of(const char* s, size_t pos, size_t n) const {
+    if (s == nullptr || pos >= _size) return std::string::npos;
+
+    for (size_t i = pos; i < _size; ++i) {
+        bool found = false;
+        for (size_t j = 0; j < n; ++j) {
+            if (_data[i] == s[j]) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) return i;
+    }
+
+    return std::string::npos;
+}
+
+/// <summary>
+/// Метод поиска первого вхождения символа не равного c, начиная с позиции pos
+/// </summary>
+/// <param name="c"></param>
+/// <param name="pos"></param>
+/// <returns></returns>
+size_t CString::find_first_not_of(char c, size_t pos) const {
+    if (pos >= _size) return std::string::npos;
+
+    for (size_t i = pos; i < _size; ++i) {
+        if (_data[i] != c) {
+            return i;
+        }
+    }
+
+    return std::string::npos;
+}
+
+/// <summary>
+/// Присваивает подстроку len символов из строки str, начиная с позиции pos, текущей строке
+/// </summary>
+/// <param name="str"></param>
+/// <param name="pos"></param>
+/// <param name="len"></param>
+/// <returns></returns>
+CString& CString::assign(const CString& str, size_t pos, size_t len) {
+    if (pos >= str.size()) {
+        throw std::out_of_range("Position out of range");
+    }
+
+    if (len == 0) {
+        clear();
+        return *this;
+    }
+
+    if (pos + len > str.size()) {
+        len = str.size() - pos;
+    }
+
+    if (len > _max_capacity) {
+        throw std::length_error("Length exceeds maximum capacity");
+    }
+
+    if (_data) {
+        delete[] _data;
+    }
+
+    _size = len;
+    _capacity = len + 1;
+    _data = new char[_capacity];
+
+    std::memcpy(_data, str._data + pos, len);
+    _data[len] = '\0';
+
+    return *this;
+}
+
+/// <summary>
+/// Присваивает значение s текущей строке
+/// </summary>
+/// <param name="s"></param>
+/// <returns></returns>
+CString& CString::assign(const char* s) {
+    size_t len = std::strlen(s);
+
+    if (len > _max_capacity) {
+        throw std::length_error("Length exceeds maximum capacity");
+    }
+
+    if (_data) {
+        delete[] _data;
+    }
+
+    _size = len;
+    _capacity = len + 1;
+    _data = new char[_capacity];
+
+    std::memcpy(_data, s, len);
+    _data[len] = '\0';
+
+    return *this;
+}
+
+/// <summary>
+/// присваивает первые n символов из строки s текущей строке.
+/// </summary>
+/// <param name="s"></param>
+/// <param name="n"></param>
+/// <returns></returns>
+CString& CString::assign(const char* s, size_t n) {
+    if (n > _max_capacity) {
+        throw std::length_error("Length exceeds maximum capacity");
+    }
+
+    if (_data) {
+        delete[] _data;
+    }
+
+    _size = n;
+    _capacity = n + 1;
+    _data = new char[_capacity];
+
+    std::memcpy(_data, s, n);
+    _data[n] = '\0';
+
+    return *this;
+}
+
+/// <summary>
+/// присваивает строку, состоящую из n повторений символа c
+/// </summary>
+/// <param name="n"></param>
+/// <param name="c"></param>
+/// <returns></returns>
+CString& CString::assign(size_t n, char c) {
+    if (n > _max_capacity) {
+        throw std::length_error("Length exceeds maximum capacity");
+    }
+
+    if (_data) {
+        delete[] _data;
+    }
+
+    _size = n;
+    _capacity = n + 1;
+    _data = new char[_capacity];
+
+    std::memset(_data, c, n);
+    _data[n] = '\0';
+
+    return *this;
+}
+
+
+/// <summary>
+/// Сравнение части строки с другой строкой str, начиная с позиции pos и длиной len
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="len"></param>
+/// <param name="str"></param>
+/// <returns></returns>
+int CString::compare(size_t pos, size_t len, const CString& str) const {
+    if (pos >= _size || pos + len > _size) {
+        throw std::out_of_range("Position and length are out of range");
+    }
+
+    return std::strncmp(_data + pos, str._data, len);
+}
+
+/// <summary>
+/// Сравнение части строки с другой строкой str, начиная с позиции pos и длиной len, и с частью строки str, начиная с позиции subpos и длиной sublen
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="len"></param>
+/// <param name="str"></param>
+/// <param name="subpos"></param>
+/// <param name="sublen"></param>
+/// <returns></returns>
+int CString::compare(size_t pos, size_t len, const CString& str, size_t subpos, size_t sublen) const {
+    if (pos >= _size || pos + len > _size || subpos >= str._size || subpos + sublen > str._size) {
+        throw std::out_of_range("Position and length are out of range");
+    }
+
+    return std::strncmp(_data + pos, str._data + subpos, std::min(len, sublen));
+}
+
+/// <summary>
+///  Сравнение строки с нуль-терминированной строкой s
+/// </summary>
+/// <param name="s"></param>
+/// <returns></returns>
+int CString::compare(const char* s) const {
+    return std::strcmp(_data, s);
+}
+
+/// <summary>
+/// Сравнение части строки с нуль-терминированной строкой s, начиная с позиции pos и длиной len
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="len"></param>
+/// <param name="s"></param>
+/// <returns></returns>
+int CString::compare(size_t pos, size_t len, const char* s) const {
+    if (pos >= _size || pos + len > _size) {
+        throw std::out_of_range("Position and length are out of range");
+    }
+
+    return std::strncmp(_data + pos, s, len);
+}
+
+/// <summary>
+/// Сравнение части строки с первыми n символами нуль-терминированной строки s,начиная с позиции pos и длиной len
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="len"></param>
+/// <param name="s"></param>
+/// <param name="n"></param>
+/// <returns></returns>
+int CString::compare(size_t pos, size_t len, const char* s, size_t n) const {
+    if (pos >= _size || pos + len > _size) {
+        throw std::out_of_range("Position and length are out of range");
+    }
+
+    return std::strncmp(_data + pos, s, std::min(len, n));
 }

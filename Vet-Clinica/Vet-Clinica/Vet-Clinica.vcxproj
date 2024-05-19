@@ -104,13 +104,17 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Sourse\github\OOP-Work\Vet-Clinica\String_lib;C:\Sourse\github\OOP-Work\Vet-Clinica\Date_lib;C:\Sourse\github\OOP-Work\Vet-Clinica\Time_lib;C:\Sourse\github\OOP-Work\DZ_2\Archive;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+
+      <AdditionalIncludeDirectories>C:\Sourse\github\OOP-Work\OOP-projects\CData;C:\Sourse\github\OOP-Work\DZ_2\Archive;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Sourse\github\OOP-Work\Vet-Clinica\String_lib;C:\Sourse\github\OOP-Work\Vet-Clinica\Date_lib;C:\Sourse\github\OOP-Work\Vet-Clinica\Time_lib;C:\Sourse\github\OOP-Work\DZ_2\Archive;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+
+      <AdditionalLibraryDirectories>C:\Sourse\github\OOP-Work\OOP-projects\CData;C:\Sourse\github\OOP-Work\DZ_2\Archive;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,17 +139,7 @@
   <ItemGroup>
     <ClCompile Include="clinic.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Date_lib\Date_lib.vcxproj">
-      <Project>{83be3733-a631-4906-9b98-3ef05e002d4d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\String_lib\String_lib.vcxproj">
-      <Project>{fe1db4de-16e2-4ef0-9839-e370e30748da}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Time_lib\Time_lib.vcxproj">
-      <Project>{7bd61531-5d54-48e6-9daf-cbd1fd1d501a}</Project>
-    </ProjectReference>
-  </ItemGroup>
+
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
