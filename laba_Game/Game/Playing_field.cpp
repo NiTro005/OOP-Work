@@ -1,10 +1,17 @@
 #include "character.h"
 
 void Playing_field::shuffle(int width, int height) {
+    srand(time(NULL));
     if (width <= 0 || height <= 0) { throw std::logic_error("Некоректный размер поля"); }
     int total_elements = width * height;
-    for (int i = total_elements - 1; i > 0; i--) {
+    for (int i = total_elements - 1; i >= 0; i--) {
+        if (i / height >= height || i % height >= width) {
+            continue;
+        }
         int j = rand() % (i + 1);
+        if (j / height >= height || j % height >= width) {
+            continue;
+        }
         Game_element* temp = field[i / height][i % height];
         field[i / height][i % height] = field[j / height][j % height];
         field[j / height][j % height] = temp;

@@ -4,6 +4,7 @@
 #include <archive.h>
 #include <windows.h>
 #include <conio.h>
+#include <time.h>
 
 #define MAIN_MENU_SIZE 2
 #define NOT_KEY 67
@@ -56,12 +57,12 @@ public:
 class Playing_field {
 	TArchive<TArchive<Game_element*>> field;
 public:
-	Playing_field(Game_element* player1, Game_element* player2, int width = 15, int height = 15);
+	Playing_field(Game_element* player1, Game_element* player2, int width = 50, int height = 15);
 	void restore_character(Character* character);
 	Game_element* get_object_at(int x, int y);
 	TArchive<Game_element*> get_neighbors(int x, int y);
 private:
-	void shuffle(int width, int height);
+	void shuffle(int width, int height); 
 };
 
 

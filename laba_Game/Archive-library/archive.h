@@ -220,7 +220,7 @@ void TArchive <T>::resize(size_t n) {
 template <typename T>
 void TArchive <T>::reserve(size_t n) {
     repacking();
-    if (n < _capacity || _size < _capacity) {
+    if (n < _capacity ||( _size < _capacity && n < _capacity)) {
         return;
     }
     _capacity = (n / STEP_CAPACITY) * STEP_CAPACITY + STEP_CAPACITY;
