@@ -62,7 +62,7 @@ public:
 	Game_element* get_object_at(int x, int y);
 	TArchive<Game_element*> get_neighbors(int x, int y);
 private:
-	void shuffle(int width, int height); 
+	void shuffle(int width, int height, int element_count); 
 };
 
 

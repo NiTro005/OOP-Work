@@ -137,7 +137,7 @@ void Gameplay::ShowGameMenu(){
     COORD saved_cursor_pos = csbi.dwCursorPosition;
     WORD saved_attributes = csbi.wAttributes;
     //cursorPos = { 50, 12 };
-   // SetConsoleCursorPosition(console, cursorPos);
+    //SetConsoleCursorPosition(console, cursorPos);
     // Выводим рамку поля
     for (int i = 0; i < 50 + 2; i++) {
         std::cout << "-";
@@ -150,7 +150,7 @@ void Gameplay::ShowGameMenu(){
         for (int x = 0; x < 50; x++) {
             Game_element* obj = field->get_object_at(y, x);
             if (obj == nullptr) {
-                std::cout << 'H';
+                std::cout << ' ';
             }
             else if (dynamic_cast<Character*>(obj)) {
                 // Устанавливаем цвет для персонажей

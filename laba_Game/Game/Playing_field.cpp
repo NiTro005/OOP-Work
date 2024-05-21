@@ -1,22 +1,24 @@
 #include "character.h"
 
-void Playing_field::shuffle(int width, int height) {
+
+//помен€ть систему перемешивани€
+void Playing_field::shuffle(int width, int height, int element_count) {
     srand(time(NULL));
+    element_count+=2;
     if (width <= 0 || height <= 0) { throw std::logic_error("Ќекоректный размер пол€"); }
-    int total_elements = width * height;
-    for (int i = total_elements - 1; i >= 0; i--) {
-        if (i / height >= height || i % height >= width) {
-            continue;
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            if (element_count == 0) {  break; }
+            int randX = rand() % width;
+            int randY = rand() % height;
+            Game_element* temp = field[i][j];
+            field[i][j] = field[randY][randX];
+            field[randY][randX] = temp;
+            if (field[i][j] != nullptr) { field[i][j]->change_position(i, j); }
+            if (field[randY][randX] != nullptr) { field[randY][randX]->change_position(randY, randX); }
+            element_count--;
         }
-        int j = rand() % (i + 1);
-        if (j / height >= height || j % height >= width) {
-            continue;
-        }
-        Game_element* temp = field[i / height][i % height];
-        field[i / height][i % height] = field[j / height][j % height];
-        field[j / height][j % height] = temp;
-        if (field[i / height][i % height] != nullptr) {field[i / height][i % height]->change_position(i / height, i % height);}
-        if (field[j / height][j % height] != nullptr) { field[j / height][j % height]->change_position(j / height, j % height); }
+        if (element_count == 0) { break; }
     }
 }
 
@@ -31,11 +33,12 @@ Playing_field::Playing_field(Game_element* player1, Game_element* player2, int w
     }
     int i = 0, j = 0;
     int element_count = (width * height) * 0.10;
-    for (int i = 0; i < height ; i++) {
+    for (i = 0; i < height ; i++) {
         bool flag = false;
         if (i * width >= element_count) { break; }
-        for (int j = 0; j < width; j++) {
-            if (i * width + j >= element_count) { flag = true; break; }
+        for (j = 0; j < width; j++) {
+            if (i * width + j >= element_count) { 
+                flag = true; break; }
             field[i][j] = nullptr;  //заменить на рандомный элемент
         }
         if (flag) { break; }
@@ -43,7 +46,7 @@ Playing_field::Playing_field(Game_element* player1, Game_element* player2, int w
     field[i][j] = player1;
     if (j + 1 < width) { field[i][j + 1] = player2; }
     else { field[i + 1][0] = player2; }
-    shuffle(width, height);
+    shuffle(width, height, element_count);
 }
 
 Game_element* Playing_field::get_object_at(int x, int y) {
