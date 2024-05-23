@@ -5,17 +5,13 @@ void Playing_field::shuffle(int width, int height, int element_count) {
     srand(time(NULL));
     element_count+=2;
     if (width <= 0 || height <= 0) { throw std::logic_error("Некоректный размер поля"); }
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
             if (element_count == 0) {  
                 break;
             }
-            int randY = rand() % width;
-            int randX = rand() % height;
-            if ((i == 6 && j == 0) || (randY == 6 && randX == 1) || (randY == 6 && randX == 0)) {
-                element_count++;
-                element_count--;
-            }
+            int randX = rand() % width;
+            int randY = rand() % height;
             Game_element *temp= field[i][j];
             field[i][j] = field[randY][randX];
             field[randY][randX] = temp;
@@ -29,30 +25,29 @@ void Playing_field::shuffle(int width, int height, int element_count) {
 
 
 Playing_field::Playing_field(Game_element* player1, Game_element* player2, int width, int height) {
-    int i = 0, j = 0;
-    field.resize(width);
-    for (int i = 0; i < width; i++) {
-        field[i].resize(height);
-        for (int j = 0; j < height; j++) {
+    field.resize(height);
+    for (int i = 0; i < height; i++) {
+        field[i].resize(width);
+        for (int j = 0; j < width; j++) {
             field[i][j] = nullptr;
         }
     }
-    int element_count = (width * height) * 0.1;
-    for (i = 0; i < width ; i++) {
+    int i = 0, j = 0;
+    int element_count = (width * height) * 0.10;
+    for (i = 0; i < height; i++) {
         bool flag = false;
-        for (j = 0; j < height; j++) {
-            if (i * height + j >= element_count) { 
-                flag = true; break; }
-            field[i][j] = nullptr;  //заменить на рандомный элемент
-        }
-        if (i * height >= element_count) {
-            break;
+        if (i * width >= element_count) { break; }
+        for (j = 0; j < width; j++) {
+            if (i * width + j >= element_count) {
+                flag = true; break;
+            }
+            field[i][j] = nullptr;  //поменять
         }
         if (flag) { break; }
     }
-    if (j == height) { i++; j = 0; }
+    if (j == width) { i++; j = 0; }
     field[i][j] = player1;
-    if (j + 1 < height) { field[i][j + 1] = player2; }
+    if (j + 1 < width) { field[i][j + 1] = player2; }
     else { field[i + 1][0] = player2; }
     shuffle(width, height, element_count);
 }

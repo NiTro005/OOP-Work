@@ -148,9 +148,9 @@ void Gameplay::ShowGameMenu(){
         std::cout << '|';
 
         for (int x = 0; x < 50; x++) {
-            Game_element* obj = field->get_object_at(y, x);
+            Game_element* obj = field->get_object_at(x, y);
             if (obj == nullptr) {
-                std::cout << 'H';
+                std::cout << ' ';
             }
             else if (dynamic_cast<Character*>(obj)) {
                 // Устанавливаем цвет для персонажей
