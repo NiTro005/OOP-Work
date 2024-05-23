@@ -136,8 +136,8 @@ void Gameplay::ShowGameMenu(){
     // Сохраняем текущие настройки консоли
     COORD saved_cursor_pos = csbi.dwCursorPosition;
     WORD saved_attributes = csbi.wAttributes;
-    //cursorPos = { 50, 12 };
-    //SetConsoleCursorPosition(console, cursorPos);
+    cursorPos = { 35, 14 };
+    SetConsoleCursorPosition(console, cursorPos);
     // Выводим рамку поля
     for (int i = 0; i < 50 + 2; i++) {
         std::cout << "-";
@@ -145,6 +145,8 @@ void Gameplay::ShowGameMenu(){
     std::cout << std::endl;
 
     for (int y = 0; y < 15; y++) {
+        cursorPos = { 35, static_cast<SHORT>(y + 15)};
+        SetConsoleCursorPosition(console, cursorPos);
         std::cout << '|';
 
         for (int x = 0; x < 50; x++) {
@@ -167,7 +169,8 @@ void Gameplay::ShowGameMenu(){
         std::cout << '|' << std::endl;
     }
 
-    // Выводим нижнюю часть рамки поля
+    cursorPos = { 35, 29};
+    SetConsoleCursorPosition(console, cursorPos);
     for (int i = 0; i < 50 + 2; i++) {
         std::cout << "-";
     }
