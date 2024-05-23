@@ -23,6 +23,7 @@ protected:
 	int x, y;
 public:
 	Game_element(int x, int y) : x(x), y(y) {}
+	Game_element(const Game_element& el) : x(el.x), y(el.y){}
 	virtual void change_position(int new_x, int new_y) = 0;
 	int get_x() const { return x; }
 	int get_y() const { return y; }
