@@ -52,6 +52,7 @@ public:
 	Character(const Character& c);
 	virtual int attack(Character& c) = 0;
 	virtual void defence(Character& c, int damage) = 0;
+	virtual const CString& get_class() const = 0;
 	void change_position(int new_x, int new_y);
 	~Character();
 };
@@ -76,6 +77,7 @@ public:
 	Warrior(CString name, int hp = 100, int power = 5, int armor = 50, bool shield = true);
 	int attack(Character& c);
 	void defence(Character& c, int damage);
+	const CString& get_class() const;
 private:
 	void spikes(Character& c);
 };
@@ -90,6 +92,8 @@ public:
 	Archer(CString name, int hp = 75, int power = 25, int armor = 35, bool _bow = true);
 	int attack(Character& c);
 	void defence(Character& c, int damage);
+	const CString& get_class() const;
+
 private:
 	int _bow_magic(Character& c);
 };
@@ -103,6 +107,7 @@ public:
 	Vizzard(CString name, int hp = 75, int power = 25, int armor = 30, int amount_of_mana = 100);
 	int attack(Character& c);
 	void defence(Character& c, int damage);
+	const CString& get_class() const;
 private:
 	int UseMagic(Character& c, Magic magic);
 };

@@ -260,6 +260,16 @@ void Gameplay::ShowGameMenu(){
 
 void Gameplay::descriptCharacter()
 {
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(console, &csbi);
+    COORD saved_cursor_pos = csbi.dwCursorPosition;
+    WORD saved_attributes = csbi.wAttributes;
+
+    cursorPos = { 7, 14 };
+    SetConsoleCursorPosition(console, cursorPos);
+    SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_GREEN);
+    std::cout << player1->get_class();
+    SetConsoleTextAttribute(console, saved_attributes);
     cursorPos = { 4, 16 };
     SetConsoleCursorPosition(console, cursorPos);
     std::cout << "Èìÿ: " << player1->get_name();
@@ -273,6 +283,12 @@ void Gameplay::descriptCharacter()
     SetConsoleCursorPosition(console, cursorPos);
     std::cout << "Armor: " << player1->get_armor();
 
+
+    cursorPos = { 100, 14 };
+    SetConsoleCursorPosition(console, cursorPos);
+    SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_GREEN);
+    std::cout << player2->get_class();
+    SetConsoleTextAttribute(console, saved_attributes);
     cursorPos = { 97, 16 };
     SetConsoleCursorPosition(console, cursorPos);
     std::cout << "Èìÿ: " << player2->get_name();

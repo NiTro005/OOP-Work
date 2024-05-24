@@ -28,6 +28,12 @@ void Archer::defence(Character& c, int damage) {
 	if (!_arrows) { _hp +=_bow_magic(c); }
 }
 
+const CString& Archer::get_class() const
+{
+	static const CString str("Archer");
+	return str;
+}
+
 int Archer::_bow_magic(Character& c) {
 	if (_arrows) {
 		return c.get_power() / 5;

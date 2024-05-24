@@ -29,6 +29,12 @@ void Warrior::defence(Character& c, int damage) {
 	spikes(c);
 }
 
+const CString& Warrior::get_class() const
+{
+	static const CString str("Warrior");
+	return str;
+}
+
 void Warrior::spikes(Character& c) {
 	c.set_hp(c.get_hp() - c.get_power() / 10);
 }

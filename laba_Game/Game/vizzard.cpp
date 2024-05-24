@@ -26,6 +26,12 @@ void Vizzard::defence(Character& c, int damage) {
 	else { _hp -= damage; }
 }
 
+const CString& Vizzard::get_class() const
+{
+	static const CString str("Vizzard");
+	return str;
+}
+
 int Vizzard::UseMagic(Character& c, Magic magic) {
 	int damage = 0;
 	if (amount_of_mana > 25) {
