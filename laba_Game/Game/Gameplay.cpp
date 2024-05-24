@@ -130,52 +130,92 @@ void Gameplay::ShowCreateCharacter() {
 
 void Gameplay::ShowGameMenu(){
     system("cls");
+    bool color = true;
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(console, &csbi);
-
-    // Сохраняем текущие настройки консоли
     COORD saved_cursor_pos = csbi.dwCursorPosition;
     WORD saved_attributes = csbi.wAttributes;
-    cursorPos = { 35, 14 };
+    cursorPos = { 2, 1 };
     SetConsoleCursorPosition(console, cursorPos);
-    // Выводим рамку поля
-    for (int i = 0; i < 50 + 2; i++) {
+    for (int i = 0; i < 116; i++) {
+        std::cout << "-";
+        if (i == 0) {
+            for (int j = 0; j < 26; j++) {
+                cursorPos.Y = j + 2;
+                SetConsoleCursorPosition(console, cursorPos);
+                std::cout << "|";
+            }
+            cursorPos.Y = 1;
+            SetConsoleCursorPosition(console, cursorPos);
+        }
+            
+        
+    }
+    cursorPos.X = 116;
+    for (int j = 0; j < 26; j++) {
+        cursorPos.Y = j + 2;
+        SetConsoleCursorPosition(console, cursorPos);
+        std::cout << "|";
+    }
+    for(int k = 0; k < 5; k++) {
+        cursorPos.Y = k + 2;
+        cursorPos.X = 23;
+        SetConsoleCursorPosition(console, cursorPos);
+        std::cout << "|";
+        cursorPos.X = 94;
+        SetConsoleCursorPosition(console, cursorPos);
+        std::cout << "|";
+    }
+    cursorPos = { 23, 6 };
+    SetConsoleCursorPosition(console, cursorPos);
+    for (int i = 0; i < 70 + 2; i++) {
+        if (i == 0 || i == 71) { std::cout << "+"; }
+        else { std::cout << "-"; }
+    }
+    cursorPos = { 2, 27 };
+    SetConsoleCursorPosition(console, cursorPos);
+    for (int i = 0; i < 115; i++) {
         std::cout << "-";
     }
-    std::cout << std::endl;
-
-    for (int y = 0; y < 15; y++) {
-        cursorPos = { 35, static_cast<SHORT>(y + 15)};
+    for (int y = 0; y < 20; y++) {
+        if (y == 19) {
+            cursorPos = { 23, static_cast<SHORT>(y + 8) };
+            SetConsoleCursorPosition(console, cursorPos);
+            std::cout << "+";
+        }
+        cursorPos = { 23, static_cast<SHORT>(y + 7)};
         SetConsoleCursorPosition(console, cursorPos);
-        std::cout << '|';
+        std::cout << "|";
 
-        for (int x = 0; x < 50; x++) {
+        for (int x = 0; x < 70; x++) {
             Game_element* obj = field->get_object_at(x, y);
             if (obj == nullptr) {
                 std::cout << ' ';
             }
             else if (dynamic_cast<Character*>(obj)) {
-                // Устанавливаем цвет для персонажей
-                SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_GREEN);
-                std::cout << 'C';
-                // Возвращаем прежние настройки цвета
-                SetConsoleTextAttribute(console, saved_attributes);
+                if (color) {
+                    SetConsoleTextAttribute(console, FOREGROUND_BLUE);
+                    std::cout << 'C';
+                    SetConsoleTextAttribute(console, saved_attributes);
+                    color = false;
+                }
+                else {
+                    SetConsoleTextAttribute(console, FOREGROUND_RED);
+                    std::cout << 'C';
+                    SetConsoleTextAttribute(console, saved_attributes);
+                }
             }
             else {
                 std::cout << 'O';
             }
         }
-
-        std::cout << '|' << std::endl;
+        std::cout << "|"; 
+        if (y == 19) {
+            cursorPos = { 94, static_cast<SHORT>(y + 8) };
+            SetConsoleCursorPosition(console, cursorPos);
+            std::cout << "+";
+        }
     }
-
-    cursorPos = { 35, 29};
-    SetConsoleCursorPosition(console, cursorPos);
-    for (int i = 0; i < 50 + 2; i++) {
-        std::cout << "-";
-    }
-    std::cout << std::endl;
-
     // Возвращаем курсор в прежнее положение и восстанавливаем прежние настройки консоли
     SetConsoleCursorPosition(console, saved_cursor_pos);
     SetConsoleTextAttribute(console, saved_attributes);

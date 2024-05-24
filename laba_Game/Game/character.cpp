@@ -41,7 +41,7 @@ void Character::set_armor(int newarmor) {
 	_armor = newarmor;
 }
 
-void Character:: change_position(int new_x, int new_y) {
+void Character:: change_position(int new_y, int new_x) {
 	x = new_x;
 	y = new_y;
 }

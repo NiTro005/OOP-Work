@@ -3,7 +3,7 @@
 //поменять систему перемешивания
 void Playing_field::shuffle(int width, int height, int element_count) {
     srand(time(NULL));
-    element_count+=2;
+    element_count+= 2;
     if (width <= 0 || height <= 0) { throw std::logic_error("Некоректный размер поля"); }
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
@@ -36,13 +36,13 @@ Playing_field::Playing_field(Game_element* player1, Game_element* player2, int w
     int element_count = (width * height) * 0.10;
     for (i = 0; i < height; i++) {
         bool flag = false;
-        if (i * width >= element_count) { break; }
         for (j = 0; j < width; j++) {
             if (i * width + j >= element_count) {
                 flag = true; break;
             }
             field[i][j] = nullptr;  //поменять
         }
+        if (i * width >= element_count) { break; }
         if (flag) { break; }
     }
     if (j == width) { i++; j = 0; }

@@ -58,7 +58,7 @@ public:
 class Playing_field {
 	TArchive<TArchive<Game_element*>> field;
 public:
-	Playing_field(Game_element* player1, Game_element* player2, int width = 50, int height = 15);
+	Playing_field(Game_element* player1, Game_element* player2, int width = 70, int height = 20);
 	void restore_character(Character* character);
 	Game_element* get_object_at(int x, int y);
 	TArchive<Game_element*> get_neighbors(int x, int y);
