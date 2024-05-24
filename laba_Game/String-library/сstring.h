@@ -118,4 +118,5 @@ public:
 
     CString& operator=(const CString& other);
     friend std::istream& operator>>(std::istream& is, CString& str);
+    friend std::ostream& operator<<(std::ostream& os, const CString& str);
 };

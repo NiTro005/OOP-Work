@@ -10,3 +10,12 @@ std::istream& operator>>(std::istream& is, CString& str)
     return is;
 
 }
+
+std::ostream& operator<<(std::ostream& os, const CString& str) {
+    // Выводим на экран содержимое строки _data до символа конца строки
+    os.write(str._data, str._size);
+
+    // Возвращаем ссылку на поток вывода
+    return os;
+}
+

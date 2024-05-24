@@ -216,9 +216,75 @@ void Gameplay::ShowGameMenu(){
             std::cout << "+";
         }
     }
+    cursorPos = { 3, 12 };
+    SetConsoleCursorPosition(console, cursorPos);
+    for (int i = 0; i < 20; i++) {
+        cursorPos.X = i + 3;
+        cursorPos.Y = 12;
+        SetConsoleCursorPosition(console, cursorPos);
+        std::cout << "-";
+        cursorPos.Y = 24;
+        SetConsoleCursorPosition(console, cursorPos);
+        std::cout << "-";
+
+    }
+    cursorPos = { 95, 12 };
+    SetConsoleCursorPosition(console, cursorPos);
+    for (int i = 0; i < 21; i++) {
+        cursorPos.X = i + 95;
+        cursorPos.Y = 12;
+        SetConsoleCursorPosition(console, cursorPos);
+        std::cout << "-";
+        cursorPos.Y = 24;
+        SetConsoleCursorPosition(console, cursorPos);
+        std::cout << "-";
+    }
+    cursorPos = { 4, 25 };
+    SetConsoleCursorPosition(console, cursorPos);
+    std::cout << "Управление:";
+    cursorPos.X = 97;
+    SetConsoleCursorPosition(console, cursorPos);
+    std::cout << "Управление:";
+    cursorPos = { 6, 26 };
+    SetConsoleCursorPosition(console, cursorPos);
+    std::cout << "WASD";
+    cursorPos.X = 99;
+    SetConsoleCursorPosition(console, cursorPos);
+    std::cout << "IJKL";
+
+    descriptCharacter();
     // Возвращаем курсор в прежнее положение и восстанавливаем прежние настройки консоли
     SetConsoleCursorPosition(console, saved_cursor_pos);
     SetConsoleTextAttribute(console, saved_attributes);
+}
+
+void Gameplay::descriptCharacter()
+{
+    cursorPos = { 4, 16 };
+    SetConsoleCursorPosition(console, cursorPos);
+    std::cout << "Имя: " << player1->get_name();
+    cursorPos = { 4, 17 };
+    SetConsoleCursorPosition(console, cursorPos);
+    std::cout << "Hp: " << player1->get_hp();
+    cursorPos = { 4, 18 };
+    SetConsoleCursorPosition(console, cursorPos);
+    std::cout << "Power: " << player1->get_power();
+    cursorPos = { 4, 19 };
+    SetConsoleCursorPosition(console, cursorPos);
+    std::cout << "Armor: " << player1->get_armor();
+
+    cursorPos = { 97, 16 };
+    SetConsoleCursorPosition(console, cursorPos);
+    std::cout << "Имя: " << player2->get_name();
+    cursorPos = { 97, 17 };
+    SetConsoleCursorPosition(console, cursorPos);
+    std::cout << "Hp: " << player2->get_hp();
+    cursorPos = { 97, 18 };
+    SetConsoleCursorPosition(console, cursorPos);
+    std::cout << "Power: " << player2->get_power();
+    cursorPos = { 97, 19 };
+    SetConsoleCursorPosition(console, cursorPos);
+    std::cout << "Armor: " << player2->get_armor();
 }
 
 

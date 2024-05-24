@@ -46,6 +46,7 @@ public:
 	void set_power(int newpower);
 	int get_armor();
 	void set_armor(int newarmor);
+	const CString& get_name() const;
 
 	Character(CString name, int hp = 100, int power = 10, int armor = 20);
 	Character(const Character& c);

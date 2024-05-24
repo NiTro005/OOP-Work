@@ -3,9 +3,9 @@
 Character:: Character(CString name, int hp , int power , int armor) : _hp(hp), _power(power), _armor(armor), Game_element(0, 0) {
 	CString n;
 	if (name.empty()) { 
-		_name = "Character";
+		_name = "Character ";
 		n.ToString(history_count);
-		name.append(n); }
+		_name.append(n); }
 	else { _name = name; }
 	count++;
 	history_count++;
@@ -41,9 +41,13 @@ void Character::set_armor(int newarmor) {
 	_armor = newarmor;
 }
 
+
 void Character:: change_position(int new_y, int new_x) {
 	x = new_x;
 	y = new_y;
+}
+const CString& Character::get_name() const {
+	return _name;
 }
 
 Character::~Character() { count--; }
