@@ -1,5 +1,5 @@
 #include "Gameplay.h"
-#define Xcoord 23
+#define Xcoord 24
 #define Ycoord 7
 
 const char* main_menu[MAIN_MENU_SIZE] = { "Играть", "Выход" };
@@ -29,7 +29,7 @@ void Gameplay::start() {
     field = new Playing_field(player1, player2);
     ShowGameMenu();
     while (player1life > 0 || player2life > 0) {
-        
+        PlayerMove();
     }
 }
 
@@ -183,11 +183,11 @@ void Gameplay::ShowGameMenu(){
     }
     for (int y = 0; y < 20; y++) {
         if (y == 19) {
-            cursorPos = { Xcoord, static_cast<SHORT>(y + Ycoord + 1) };
+            cursorPos = { 23, static_cast<SHORT>(y + Ycoord + 1) };
             SetConsoleCursorPosition(console, cursorPos);
             std::cout << "+";
         }
-        cursorPos = { Xcoord, static_cast<SHORT>(y + Ycoord)};
+        cursorPos = { 23, static_cast<SHORT>(y + Ycoord)};
         SetConsoleCursorPosition(console, cursorPos);
         std::cout << "|";
 
@@ -197,7 +197,7 @@ void Gameplay::ShowGameMenu(){
                 std::cout << ' ';
             }
             else if (dynamic_cast<Character*>(obj)) {
-                if (color) {
+                if (obj == player1) {
                     SetConsoleTextAttribute(console, FOREGROUND_BLUE);
                     std::cout << 'C';
                     SetConsoleTextAttribute(console, saved_attributes);
@@ -291,9 +291,20 @@ void Gameplay::descriptCharacter()
     GetConsoleScreenBufferInfo(console, &csbi);
     WORD saved_attributes = csbi.wAttributes;
 
+    cursorPos = { 97, 23 };
+    SetConsoleCursorPosition(console, cursorPos);
+    for (int i = 0; i < 3; i++) {
+        std::cout << "    ";
+    }
+    cursorPos = { 4, 23 };
+    SetConsoleCursorPosition(console, cursorPos);
+    for (int i = 0; i < 3; i++) {
+        std::cout << "    ";
+    }
+
     cursorPos = { 7, 16 };
     SetConsoleCursorPosition(console, cursorPos);
-    SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_GREEN);
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE);
     std::cout << player1->get_class();
     SetConsoleTextAttribute(console, saved_attributes);
     cursorPos = { 4, 18 };
@@ -318,7 +329,7 @@ void Gameplay::descriptCharacter()
 
     cursorPos = { 100, 16 };
     SetConsoleCursorPosition(console, cursorPos);
-    SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_GREEN);
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
     std::cout << player2->get_class();
     SetConsoleTextAttribute(console, saved_attributes);
     cursorPos = { 97, 18 };
@@ -344,86 +355,107 @@ void Gameplay::descriptCharacter()
 
 void Gameplay::PlayerMove()
 {
-    // Очищаем буфер клавиатуры
-    FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
-
-    // Объявляем переменные для хранения нажатой клавиши и новой позиции персонажа
-    char key;
-    int newX, newY;
-
-    // Цикл обработки движения персонажей
-    while (true)
-    {
-        // Проверяем, нажата ли какая-либо клавиша
-        if (_kbhit())
+    Sleep(100);
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(console, &csbi);
+    WORD saved_attributes = csbi.wAttributes;
+    int X1 = player1->get_x();
+    int Y1 = player1->get_y();
+    int X2 = player2->get_x();
+    int Y2 = player2->get_y();
+    CString str = player1->get_name();
+    CString str2 = player2->get_name();
+    TArchive<Game_element*> neighbors_player1 = field->get_neighbors(player1->get_x(), player1->get_y());
+    TArchive<Game_element*> neighbors_player2 = field->get_neighbors(player2->get_x(), player2->get_y());
+    if (_kbhit()) {
+        char iKey = _getch();
+        switch (iKey)
         {
-            // Считываем нажатую клавишу
-            key = _getch();
-
-            // Определяем, какой персонаж двигается в зависимости от нажатой клавиши
-            Character* currentCharacter = nullptr;
-            if (key == 'w' || key == 'a' || key == 's' || key == 'd')
-            {
-                currentCharacter = player1;
+        case 'W': case 'w':
+            if (neighbors_player1[1] == player2) { 
+                player2->defence(*player1, player1->attack(*player2)); descriptCharacter();
+                str.append(" атаковал ").append(str2);
+                updateStatus(str);
             }
-            else if (key == 'i' || key == 'j' || key == 'k' || key == 'l')
-            {
-                currentCharacter = player2;
+            else {
+                field->set_element(X1, Y1, nullptr);
+                field->set_element(X1, Y1 - 1, player1);
+                cursorPos = { static_cast<SHORT>(X1 + Xcoord),static_cast<SHORT>(Y1 + Ycoord - 1) };
+                SetConsoleCursorPosition(console, cursorPos);
+                SetConsoleTextAttribute(console, FOREGROUND_BLUE);
+                std::cout << "C";
+                SetConsoleTextAttribute(console, saved_attributes);
+                cursorPos = { static_cast<SHORT>(X1 + Xcoord),static_cast<SHORT>(Y1 + Ycoord) };
+                SetConsoleCursorPosition(console, cursorPos);
+                std::cout << " ";
+                player1->change_position(Y1 - 1, X1);
             }
-            else
-            {
-                // Если нажата неверная клавиша, продолжаем цикл
-                continue;
+            break;
+
+        case 'A': case 'a':
+            if (neighbors_player1[3] == player2) { player2->defence(*player1, player1->attack(*player2)); descriptCharacter(); }
+            else {
+                field->set_element(X1, Y1, nullptr);
+                field->set_element(X1 - 1, Y1, player1);
+                cursorPos = { static_cast<SHORT>(X1 + Xcoord - 1),static_cast<SHORT>(Y1 + Ycoord) };
+                SetConsoleCursorPosition(console, cursorPos);
+                SetConsoleTextAttribute(console, FOREGROUND_BLUE);
+                std::cout << "C";
+                SetConsoleTextAttribute(console, saved_attributes);
+                cursorPos = { static_cast<SHORT>(X1 + Xcoord),static_cast<SHORT>(Y1 + Ycoord) };
+                SetConsoleCursorPosition(console, cursorPos);
+                std::cout << " ";
+                player1->change_position(Y1, X1 - 1);
             }
+            break;
 
-            // Определяем новую позицию персонажа в зависимости от нажатой клавиши
-            switch (key)
-            {
-            case 'w':
-            case 'i':
-                newY = currentCharacter->get_y() - 1;
-                newX = currentCharacter->get_x();
-                break;
-            case 'a':
-            case 'j':
-                newX = currentCharacter->get_x() - 1;
-                newY = currentCharacter->get_y();
-                break;
-            case 's':
-            case 'k':
-                newY = currentCharacter->get_y() + 1;
-                newX = currentCharacter->get_x();
-                break;
-            case 'd':
-            case 'l':
-                newX = currentCharacter->get_x() + 1;
-                newY = currentCharacter->get_y();
-                break;
-            default:
-                // Если нажата неверная клавиша, продолжаем цикл
-                continue;
+        case 'S': case 's':
+            if (neighbors_player1[6] == player2) { player2->defence(*player1, player1->attack(*player2)); descriptCharacter(); }
+            else {
+                field->set_element(X1, Y1, nullptr);
+                field->set_element(X1, Y1 + 1, player1);
+                cursorPos = { static_cast<SHORT>(X1 + Xcoord),static_cast<SHORT>(Y1 + Ycoord + 1) };
+                SetConsoleCursorPosition(console, cursorPos);
+                SetConsoleTextAttribute(console, FOREGROUND_BLUE);
+                std::cout << "C";
+                SetConsoleTextAttribute(console, saved_attributes);
+                cursorPos = { static_cast<SHORT>(X1 + Xcoord),static_cast<SHORT>(Y1 + Ycoord) };
+                SetConsoleCursorPosition(console, cursorPos);
+                std::cout << " ";
+                player1->change_position(Y1 + 1, X1);
             }
+            break;
 
-
-            // Проверяем, нет ли на новой позиции препятствия
-            Game_element* obj = field->get_object_at(newX, newY);
-            if (obj != nullptr && !dynamic_cast<Character*>(obj))
-            {
-                // Если есть препятствие, продолжаем цикл
-                continue;
+        case 'D': case 'd':
+            if (neighbors_player1[4] == player2) { player2->defence(*player1, player1->attack(*player2)); descriptCharacter(); }
+            else {
+                field->set_element(X1, Y1, nullptr);
+                field->set_element(X1 + 1, Y1, player1);
+                cursorPos = { static_cast<SHORT>(X1 + Xcoord + 1),static_cast<SHORT>(Y1 + Ycoord) };
+                SetConsoleCursorPosition(console, cursorPos);
+                SetConsoleTextAttribute(console, FOREGROUND_BLUE);
+                std::cout << "C";
+                SetConsoleTextAttribute(console, saved_attributes);
+                cursorPos = { static_cast<SHORT>(X1 + Xcoord),static_cast<SHORT>(Y1 + Ycoord) };
+                SetConsoleCursorPosition(console, cursorPos);
+                std::cout << " ";
+                player1->change_position(Y1, X1 + 1);
             }
-
-            // Перемещаем персонажа на новую позицию
-            currentCharacter->change_position(newX, newY);
-
-            // Выводим на экран новую позицию персонажа
-            cursorPos = { static_cast<SHORT>(newX + 23),static_cast<SHORT>(newY + 7) };
-            SetConsoleCursorPosition(console, cursorPos);
-            std::cout << 'C';
-
-            // Выводим на экран информацию о персонажах
-            ShowGameMenu();
+            break;
         }
+    }
+    if (player1->get_hp() < 0) { player1life--; field->restore_character(player1); }
+    if (player2->get_hp() < 0) { 
+        cursorPos = { static_cast<SHORT>(X2 + Xcoord),static_cast<SHORT>(Y2 + Ycoord) };
+        SetConsoleCursorPosition(console, cursorPos);
+        std::cout << " ";
+        player2life--; 
+        field->restore_character(player2); player2->set_hp(100); 
+        cursorPos = { static_cast<SHORT>(player2->get_x() + Xcoord),static_cast<SHORT>(player2->get_y() + Ycoord) };
+        SetConsoleCursorPosition(console, cursorPos);
+        SetConsoleTextAttribute(console, FOREGROUND_RED);
+        std::cout << "C";
+        SetConsoleTextAttribute(console, saved_attributes);
     }
 }
 

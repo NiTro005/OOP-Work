@@ -88,6 +88,10 @@ void Playing_field::restore_character(Character* character) {
     int x = rand() % field[y].size();
     if (field[y][x] == nullptr) {
         field[y][x] = character;
+        character->change_position(y, x);
     }
     else { restore_character(character); }
+}
+void Playing_field::set_element(int x, int y, Game_element* element) {
+    field[y][x] = element;
 }
