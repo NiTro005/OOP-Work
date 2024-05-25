@@ -8,6 +8,12 @@ HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD cursorPos;
 int player1life = 3;
 int player2life = 3;
+int Hp1 = 0;
+int Hp2 = 0;
+int armor1 = 0;
+int armor2 = 0;
+int power1 = 0;
+int power2 = 0;
 
 void Gameplay::launch(){
     CONSOLE_CURSOR_INFO structCursorInfo;
@@ -28,8 +34,11 @@ void Gameplay::launch(){
 void Gameplay::start() {
     field = new Playing_field(player1, player2);
     ShowGameMenu();
-    while (player1life > 0 || player2life > 0) {
+    while (1) {
         PlayerMove();
+        if (player1life == 0 || player2life == 0) {
+            break;
+        }
     }
 }
 
@@ -139,6 +148,12 @@ void Gameplay::ShowGameMenu(){
     GetConsoleScreenBufferInfo(console, &csbi);
     COORD saved_cursor_pos = csbi.dwCursorPosition;
     WORD saved_attributes = csbi.wAttributes;
+    Hp1 = player1->get_hp();
+    Hp2 = player2->get_hp();
+    armor1 = player1->get_armor();
+    armor2 = player2->get_armor();
+    power1 = player1->get_power();
+    power2 = player2->get_power();
     cursorPos = { 2, 1 };
     SetConsoleCursorPosition(console, cursorPos);
     for (int i = 0; i < 116; i++) {
@@ -291,17 +306,14 @@ void Gameplay::descriptCharacter()
     GetConsoleScreenBufferInfo(console, &csbi);
     WORD saved_attributes = csbi.wAttributes;
 
-    cursorPos = { 97, 23 };
-    SetConsoleCursorPosition(console, cursorPos);
-    for (int i = 0; i < 3; i++) {
-        std::cout << "    ";
+    cursorPos.X = 97;
+    for (int i = 0; i < 9; i++) {
+        cursorPos.Y = i + 15;
+        SetConsoleCursorPosition(console, cursorPos);
+        for (int j = 0; j < 15; j++) {
+            std::cout << " ";
+        }
     }
-    cursorPos = { 4, 23 };
-    SetConsoleCursorPosition(console, cursorPos);
-    for (int i = 0; i < 3; i++) {
-        std::cout << "    ";
-    }
-
     cursorPos = { 7, 16 };
     SetConsoleCursorPosition(console, cursorPos);
     SetConsoleTextAttribute(console, FOREGROUND_BLUE);
@@ -446,16 +458,19 @@ void Gameplay::PlayerMove()
     }
     if (player1->get_hp() < 0) { player1life--; field->restore_character(player1); }
     if (player2->get_hp() < 0) { 
+        player2life--;
+        if (player2life == 0) { return; }
         cursorPos = { static_cast<SHORT>(X2 + Xcoord),static_cast<SHORT>(Y2 + Ycoord) };
         SetConsoleCursorPosition(console, cursorPos);
         std::cout << " ";
-        player2life--; 
-        field->restore_character(player2); player2->set_hp(100); 
+        field->restore_character(player2); player2->set_hp(Hp2); player2->set_armor(armor2); player2->set_power(power2);
         cursorPos = { static_cast<SHORT>(player2->get_x() + Xcoord),static_cast<SHORT>(player2->get_y() + Ycoord) };
         SetConsoleCursorPosition(console, cursorPos);
         SetConsoleTextAttribute(console, FOREGROUND_RED);
         std::cout << "C";
         SetConsoleTextAttribute(console, saved_attributes);
+        field->set_element(X2, Y2, nullptr);
+        descriptCharacter();
     }
 }
 
