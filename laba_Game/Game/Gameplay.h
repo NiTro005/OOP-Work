@@ -6,6 +6,7 @@ private:
 	Playing_field* field;
 	Character* player1;
 	Character* player2;
+	TArchive<CString> states;
 public:
 	void launch();
 private:
@@ -13,7 +14,7 @@ private:
 	void ShowCreateCharacter();
 	void ShowMainMenu();
 	void ShowGameMenu();
-	void updateStatus();
+	void updateStatus(const CString& str);
 	void descriptCharacter();
 	void PlayerMove(Character* character);
 };

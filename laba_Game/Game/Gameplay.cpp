@@ -1,11 +1,13 @@
 #include "Gameplay.h"
-
+#define Xcoord 23
+#define Ycoord 8
 
 const char* main_menu[MAIN_MENU_SIZE] = { "Играть", "Выход" };
 int choose_pos;
 HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD cursorPos;
-
+int player1life = 3;
+int player2life = 3;
 
 void Gameplay::launch(){
     CONSOLE_CURSOR_INFO structCursorInfo;
@@ -179,7 +181,7 @@ void Gameplay::ShowGameMenu(){
     }
     for (int y = 0; y < 20; y++) {
         if (y == 19) {
-            cursorPos = { 23, static_cast<SHORT>(y + 8) };
+            cursorPos = { 23, static_cast<SHORT>(y + 7) };
             SetConsoleCursorPosition(console, cursorPos);
             std::cout << "+";
         }
@@ -216,11 +218,11 @@ void Gameplay::ShowGameMenu(){
             std::cout << "+";
         }
     }
-    cursorPos = { 3, 12 };
+    cursorPos = { 3, 14 };
     SetConsoleCursorPosition(console, cursorPos);
     for (int i = 0; i < 20; i++) {
         cursorPos.X = i + 3;
-        cursorPos.Y = 12;
+        cursorPos.Y = 14;
         SetConsoleCursorPosition(console, cursorPos);
         std::cout << "-";
         cursorPos.Y = 24;
@@ -228,11 +230,11 @@ void Gameplay::ShowGameMenu(){
         std::cout << "-";
 
     }
-    cursorPos = { 95, 12 };
+    cursorPos = { 95, 14 };
     SetConsoleCursorPosition(console, cursorPos);
     for (int i = 0; i < 21; i++) {
         cursorPos.X = i + 95;
-        cursorPos.Y = 12;
+        cursorPos.Y = 14;
         SetConsoleCursorPosition(console, cursorPos);
         std::cout << "-";
         cursorPos.Y = 24;
@@ -253,8 +255,31 @@ void Gameplay::ShowGameMenu(){
     std::cout << "IJKL";
 
     descriptCharacter();
+
     // Возвращаем курсор в прежнее положение и восстанавливаем прежние настройки консоли
     SetConsoleCursorPosition(console, saved_cursor_pos);
+    SetConsoleTextAttribute(console, saved_attributes);
+    updateStatus("* Игровое поле создано");
+    updateStatus("* Персонажи сгенерированы");
+}
+
+void Gameplay::updateStatus(const CString& str)
+{
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(console, &csbi);
+    WORD saved_attributes = csbi.wAttributes;
+    if (states.size() == 4) {
+        states.pop_front();
+    }
+    states.push_back(str);
+    cursorPos = { 40, 1 };
+    SetConsoleCursorPosition(console, cursorPos);
+    for (int i = 0; i < states.size(); i++) {
+        cursorPos.Y++;
+        SetConsoleCursorPosition(console, cursorPos);
+        SetConsoleTextAttribute(console, FOREGROUND_INTENSITY);
+        std::cout << states[i];
+    }
     SetConsoleTextAttribute(console, saved_attributes);
 }
 
@@ -262,45 +287,57 @@ void Gameplay::descriptCharacter()
 {
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(console, &csbi);
-    COORD saved_cursor_pos = csbi.dwCursorPosition;
     WORD saved_attributes = csbi.wAttributes;
 
-    cursorPos = { 7, 14 };
+    cursorPos = { 7, 16 };
     SetConsoleCursorPosition(console, cursorPos);
     SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_GREEN);
     std::cout << player1->get_class();
     SetConsoleTextAttribute(console, saved_attributes);
-    cursorPos = { 4, 16 };
-    SetConsoleCursorPosition(console, cursorPos);
-    std::cout << "Имя: " << player1->get_name();
-    cursorPos = { 4, 17 };
-    SetConsoleCursorPosition(console, cursorPos);
-    std::cout << "Hp: " << player1->get_hp();
     cursorPos = { 4, 18 };
     SetConsoleCursorPosition(console, cursorPos);
-    std::cout << "Power: " << player1->get_power();
+    std::cout << "Имя: " << player1->get_name();
     cursorPos = { 4, 19 };
     SetConsoleCursorPosition(console, cursorPos);
+    std::cout << "Hp: " << player1->get_hp();
+    cursorPos = { 4, 20 };
+    SetConsoleCursorPosition(console, cursorPos);
+    std::cout << "Power: " << player1->get_power();
+    cursorPos = { 4, 21 };
+    SetConsoleCursorPosition(console, cursorPos);
     std::cout << "Armor: " << player1->get_armor();
+    cursorPos = { 4, 23 };
+    SetConsoleCursorPosition(console, cursorPos);
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
+    for (int i = 0; i < player1life; i++) {
+        std::cout << "||| ";
+    }
+    SetConsoleTextAttribute(console, saved_attributes);
 
-
-    cursorPos = { 100, 14 };
+    cursorPos = { 100, 16 };
     SetConsoleCursorPosition(console, cursorPos);
     SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_GREEN);
     std::cout << player2->get_class();
     SetConsoleTextAttribute(console, saved_attributes);
-    cursorPos = { 97, 16 };
-    SetConsoleCursorPosition(console, cursorPos);
-    std::cout << "Имя: " << player2->get_name();
-    cursorPos = { 97, 17 };
-    SetConsoleCursorPosition(console, cursorPos);
-    std::cout << "Hp: " << player2->get_hp();
     cursorPos = { 97, 18 };
     SetConsoleCursorPosition(console, cursorPos);
-    std::cout << "Power: " << player2->get_power();
+    std::cout << "Имя: " << player2->get_name();
     cursorPos = { 97, 19 };
     SetConsoleCursorPosition(console, cursorPos);
+    std::cout << "Hp: " << player2->get_hp();
+    cursorPos = { 97, 20 };
+    SetConsoleCursorPosition(console, cursorPos);
+    std::cout << "Power: " << player2->get_power();
+    cursorPos = { 97, 21 };
+    SetConsoleCursorPosition(console, cursorPos);
     std::cout << "Armor: " << player2->get_armor();
+    cursorPos = { 97, 23 };
+    SetConsoleCursorPosition(console, cursorPos);
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
+    for (int i = 0; i < player2life; i++) {
+        std::cout << "||| ";
+    }
+    SetConsoleTextAttribute(console, saved_attributes);
 }
 
 
