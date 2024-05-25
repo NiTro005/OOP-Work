@@ -20,13 +20,16 @@ void Gameplay::launch(){
     GetConsoleCursorInfo(console, &structCursorInfo);
     structCursorInfo.bVisible = FALSE;
     SetConsoleCursorInfo(console, &structCursorInfo);
-    bool exit = true;
+    bool exit = false;
     do {
         ShowMainMenu();
         if (choose_pos == 0) {
             ShowCreateCharacter();
             start();
-            exit = false;
+            exit = true;
+        }
+        else {
+            return;
         }
     } while (!exit);
 }
@@ -314,6 +317,14 @@ void Gameplay::descriptCharacter()
             std::cout << " ";
         }
     }
+    cursorPos.X = 4;
+    for (int i = 0; i < 9; i++) {
+        cursorPos.Y = i + 15;
+        SetConsoleCursorPosition(console, cursorPos);
+        for (int j = 0; j < 15; j++) {
+            std::cout << " ";
+        }
+    }
     cursorPos = { 7, 16 };
     SetConsoleCursorPosition(console, cursorPos);
     SetConsoleTextAttribute(console, FOREGROUND_BLUE);
@@ -405,7 +416,10 @@ void Gameplay::PlayerMove()
             break;
 
         case 'A': case 'a':
-            if (neighbors_player1[3] == player2) { player2->defence(*player1, player1->attack(*player2)); descriptCharacter(); }
+            if (neighbors_player1[3] == player2) { player2->defence(*player1, player1->attack(*player2)); descriptCharacter(); 
+            str.append(" атаковал ").append(str2);
+            updateStatus(str);
+            }
             else {
                 field->set_element(X1, Y1, nullptr);
                 field->set_element(X1 - 1, Y1, player1);
@@ -422,7 +436,10 @@ void Gameplay::PlayerMove()
             break;
 
         case 'S': case 's':
-            if (neighbors_player1[6] == player2) { player2->defence(*player1, player1->attack(*player2)); descriptCharacter(); }
+            if (neighbors_player1[6] == player2) { player2->defence(*player1, player1->attack(*player2)); descriptCharacter(); 
+            str.append(" атаковал ").append(str2);
+            updateStatus(str);
+            }
             else {
                 field->set_element(X1, Y1, nullptr);
                 field->set_element(X1, Y1 + 1, player1);
@@ -439,7 +456,10 @@ void Gameplay::PlayerMove()
             break;
 
         case 'D': case 'd':
-            if (neighbors_player1[4] == player2) { player2->defence(*player1, player1->attack(*player2)); descriptCharacter(); }
+            if (neighbors_player1[4] == player2) { player2->defence(*player1, player1->attack(*player2)); descriptCharacter(); 
+            str.append(" атаковал ").append(str2);
+            updateStatus(str);
+            }
             else {
                 field->set_element(X1, Y1, nullptr);
                 field->set_element(X1 + 1, Y1, player1);
@@ -454,12 +474,104 @@ void Gameplay::PlayerMove()
                 player1->change_position(Y1, X1 + 1);
             }
             break;
+        case 'I': case 'i':
+            if (neighbors_player2[1] == player1) {
+                player1->defence(*player2, player2->attack(*player1)); descriptCharacter();
+                (str2.append(" атаковал ")).append(str);
+                updateStatus(str2);
+            }
+            else {
+                field->set_element(X2, Y2, nullptr);
+                field->set_element(X2, Y2 - 1, player2);
+                cursorPos = { static_cast<SHORT>(X2 + Xcoord),static_cast<SHORT>(Y2 + Ycoord - 1) };
+                SetConsoleCursorPosition(console, cursorPos);
+                SetConsoleTextAttribute(console, FOREGROUND_RED);
+                std::cout << "C";
+                SetConsoleTextAttribute(console, saved_attributes);
+                cursorPos = { static_cast<SHORT>(X2 + Xcoord),static_cast<SHORT>(Y2 + Ycoord) };
+                SetConsoleCursorPosition(console, cursorPos);
+                std::cout << " ";
+                player2->change_position(Y2 - 1, X2);
+            }
+            break;
+        case 'J': case 'j':
+            if (neighbors_player2[3] == player1) {
+                player1->defence(*player2, player2->attack(*player1)); descriptCharacter();
+                (str2.append(" атаковал ")).append(str);
+                updateStatus(str2);
+            }
+            else {
+                field->set_element(X2, Y2, nullptr);
+                field->set_element(X2 - 1, Y2, player2);
+                cursorPos = { static_cast<SHORT>(X2 + Xcoord - 1),static_cast<SHORT>(Y2 + Ycoord) };
+                SetConsoleCursorPosition(console, cursorPos);
+                SetConsoleTextAttribute(console, FOREGROUND_RED);
+                std::cout << "C";
+                SetConsoleTextAttribute(console, saved_attributes);
+                cursorPos = { static_cast<SHORT>(X2 + Xcoord),static_cast<SHORT>(Y2 + Ycoord) };
+                SetConsoleCursorPosition(console, cursorPos);
+                std::cout << " ";
+                player2->change_position(Y2, X2 - 1);
+            }
+            break;
+        case 'K': case 'k':
+            if (neighbors_player2[6] == player1) {
+                player1->defence(*player2, player2->attack(*player1)); descriptCharacter();
+                (str2.append(" атаковал ")).append(str);
+                updateStatus(str2);
+            }
+            else {
+                field->set_element(X2, Y2, nullptr);
+                field->set_element(X2, Y2 + 1, player2);
+                cursorPos = { static_cast<SHORT>(X2 + Xcoord),static_cast<SHORT>(Y2 + Ycoord + 1) };
+                SetConsoleCursorPosition(console, cursorPos);
+                SetConsoleTextAttribute(console, FOREGROUND_RED);
+                std::cout << "C";
+                SetConsoleTextAttribute(console, saved_attributes);
+                cursorPos = { static_cast<SHORT>(X2 + Xcoord),static_cast<SHORT>(Y2 + Ycoord) };
+                SetConsoleCursorPosition(console, cursorPos);
+                std::cout << " ";
+                player2->change_position(Y2 + 1, X2);
+            }
+            break;
+        case 'L': case 'l':
+            if (neighbors_player2[4] == player1) {
+                player1->defence(*player2, player2->attack(*player1)); descriptCharacter();
+                (str2.append(" атаковал ")).append(str);
+                updateStatus(str2);
+            }
+            else {
+                field->set_element(X2, Y2, nullptr);
+                field->set_element(X2 + 1, Y2, player2);
+                cursorPos = { static_cast<SHORT>(X2 + Xcoord + 1),static_cast<SHORT>(Y2 + Ycoord) };
+                SetConsoleCursorPosition(console, cursorPos);
+                SetConsoleTextAttribute(console, FOREGROUND_RED);
+                std::cout << "C";
+                SetConsoleTextAttribute(console, saved_attributes);
+                cursorPos = { static_cast<SHORT>(X2 + Xcoord),static_cast<SHORT>(Y2 + Ycoord) };
+                SetConsoleCursorPosition(console, cursorPos);
+                std::cout << " ";
+                player2->change_position(Y2, X2 + 1);
+            }
+            break;
         }
     }
-    if (player1->get_hp() < 0) { player1life--; field->restore_character(player1); }
+    if (player1->get_hp() < 0) { 
+        player1life--;
+        cursorPos = { static_cast<SHORT>(X1 + Xcoord),static_cast<SHORT>(Y1 + Ycoord) };
+        SetConsoleCursorPosition(console, cursorPos);
+        std::cout << " ";
+        field->restore_character(player1); player1->set_hp(Hp1); player1->set_armor(armor1); player1->set_power(power1);
+        cursorPos = { static_cast<SHORT>(player1->get_x() + Xcoord),static_cast<SHORT>(player1->get_y() + Ycoord) };
+        SetConsoleCursorPosition(console, cursorPos);
+        SetConsoleTextAttribute(console, FOREGROUND_BLUE);
+        std::cout << "C";
+        SetConsoleTextAttribute(console, saved_attributes);
+        field->set_element(X1, Y1, nullptr);
+        descriptCharacter();
+    }
     if (player2->get_hp() < 0) { 
         player2life--;
-        if (player2life == 0) { return; }
         cursorPos = { static_cast<SHORT>(X2 + Xcoord),static_cast<SHORT>(Y2 + Ycoord) };
         SetConsoleCursorPosition(console, cursorPos);
         std::cout << " ";
@@ -476,6 +588,7 @@ void Gameplay::PlayerMove()
 
 
 void Gameplay::ShowMainMenu() {
+    system("cls");
     char iKey = 0;
     while (iKey != KEY_ENTER) {
         switch (iKey) {
