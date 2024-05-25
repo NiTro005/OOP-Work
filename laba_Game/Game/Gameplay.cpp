@@ -395,6 +395,7 @@ void Gameplay::PlayerMove()
         switch (iKey)
         {
         case 'W': case 'w':
+            if (Y1 - 1 + Ycoord < Ycoord) { return; }
             if (neighbors_player1[1] == player2) { 
                 player2->defence(*player1, player1->attack(*player2)); descriptCharacter();
                 str.append(" атаковал ").append(str2);
@@ -416,6 +417,7 @@ void Gameplay::PlayerMove()
             break;
 
         case 'A': case 'a':
+            if (X1 + Xcoord < Xcoord + 1) { return; }
             if (neighbors_player1[3] == player2) { player2->defence(*player1, player1->attack(*player2)); descriptCharacter(); 
             str.append(" атаковал ").append(str2);
             updateStatus(str);
@@ -436,6 +438,7 @@ void Gameplay::PlayerMove()
             break;
 
         case 'S': case 's':
+            if (Y1 + Ycoord > 25) { return; }
             if (neighbors_player1[6] == player2) { player2->defence(*player1, player1->attack(*player2)); descriptCharacter(); 
             str.append(" атаковал ").append(str2);
             updateStatus(str);
@@ -456,6 +459,7 @@ void Gameplay::PlayerMove()
             break;
 
         case 'D': case 'd':
+            if (X1 + Xcoord > 93) { return; }
             if (neighbors_player1[4] == player2) { player2->defence(*player1, player1->attack(*player2)); descriptCharacter(); 
             str.append(" атаковал ").append(str2);
             updateStatus(str);
@@ -475,6 +479,7 @@ void Gameplay::PlayerMove()
             }
             break;
         case 'I': case 'i':
+            if (Y2 - 1 + Ycoord < Ycoord) { return; }
             if (neighbors_player2[1] == player1) {
                 player1->defence(*player2, player2->attack(*player1)); descriptCharacter();
                 (str2.append(" атаковал ")).append(str);
@@ -495,6 +500,7 @@ void Gameplay::PlayerMove()
             }
             break;
         case 'J': case 'j':
+            if (X2 + Xcoord < Xcoord + 1) { return; }
             if (neighbors_player2[3] == player1) {
                 player1->defence(*player2, player2->attack(*player1)); descriptCharacter();
                 (str2.append(" атаковал ")).append(str);
@@ -515,6 +521,7 @@ void Gameplay::PlayerMove()
             }
             break;
         case 'K': case 'k':
+            if (Y2 + Ycoord > 25) { return; }
             if (neighbors_player2[6] == player1) {
                 player1->defence(*player2, player2->attack(*player1)); descriptCharacter();
                 (str2.append(" атаковал ")).append(str);
