@@ -16,5 +16,5 @@ private:
 	void ShowGameMenu();
 	void updateStatus(const CString& str);
 	void descriptCharacter();
-	void PlayerMove(Character* character);
+	void PlayerMove();
 };

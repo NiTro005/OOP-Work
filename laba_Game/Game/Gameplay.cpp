@@ -1,6 +1,6 @@
 #include "Gameplay.h"
 #define Xcoord 23
-#define Ycoord 8
+#define Ycoord 7
 
 const char* main_menu[MAIN_MENU_SIZE] = { "Играть", "Выход" };
 int choose_pos;
@@ -28,7 +28,9 @@ void Gameplay::launch(){
 void Gameplay::start() {
     field = new Playing_field(player1, player2);
     ShowGameMenu();
-    while (1) {}
+    while (player1life > 0 || player2life > 0) {
+        
+    }
 }
 
 void Gameplay::ShowCreateCharacter() {
@@ -181,11 +183,11 @@ void Gameplay::ShowGameMenu(){
     }
     for (int y = 0; y < 20; y++) {
         if (y == 19) {
-            cursorPos = { 23, static_cast<SHORT>(y + 7) };
+            cursorPos = { Xcoord, static_cast<SHORT>(y + Ycoord + 1) };
             SetConsoleCursorPosition(console, cursorPos);
             std::cout << "+";
         }
-        cursorPos = { 23, static_cast<SHORT>(y + 7)};
+        cursorPos = { Xcoord, static_cast<SHORT>(y + Ycoord)};
         SetConsoleCursorPosition(console, cursorPos);
         std::cout << "|";
 
@@ -259,8 +261,8 @@ void Gameplay::ShowGameMenu(){
     // Возвращаем курсор в прежнее положение и восстанавливаем прежние настройки консоли
     SetConsoleCursorPosition(console, saved_cursor_pos);
     SetConsoleTextAttribute(console, saved_attributes);
-    updateStatus("* Игровое поле создано");
-    updateStatus("* Персонажи сгенерированы");
+    updateStatus("<-Игровое поле создано->");
+    updateStatus("<-Персонажи сгенерированы->");
 }
 
 void Gameplay::updateStatus(const CString& str)
@@ -338,6 +340,91 @@ void Gameplay::descriptCharacter()
         std::cout << "||| ";
     }
     SetConsoleTextAttribute(console, saved_attributes);
+}
+
+void Gameplay::PlayerMove()
+{
+    // Очищаем буфер клавиатуры
+    FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+
+    // Объявляем переменные для хранения нажатой клавиши и новой позиции персонажа
+    char key;
+    int newX, newY;
+
+    // Цикл обработки движения персонажей
+    while (true)
+    {
+        // Проверяем, нажата ли какая-либо клавиша
+        if (_kbhit())
+        {
+            // Считываем нажатую клавишу
+            key = _getch();
+
+            // Определяем, какой персонаж двигается в зависимости от нажатой клавиши
+            Character* currentCharacter = nullptr;
+            if (key == 'w' || key == 'a' || key == 's' || key == 'd')
+            {
+                currentCharacter = player1;
+            }
+            else if (key == 'i' || key == 'j' || key == 'k' || key == 'l')
+            {
+                currentCharacter = player2;
+            }
+            else
+            {
+                // Если нажата неверная клавиша, продолжаем цикл
+                continue;
+            }
+
+            // Определяем новую позицию персонажа в зависимости от нажатой клавиши
+            switch (key)
+            {
+            case 'w':
+            case 'i':
+                newY = currentCharacter->get_y() - 1;
+                newX = currentCharacter->get_x();
+                break;
+            case 'a':
+            case 'j':
+                newX = currentCharacter->get_x() - 1;
+                newY = currentCharacter->get_y();
+                break;
+            case 's':
+            case 'k':
+                newY = currentCharacter->get_y() + 1;
+                newX = currentCharacter->get_x();
+                break;
+            case 'd':
+            case 'l':
+                newX = currentCharacter->get_x() + 1;
+                newY = currentCharacter->get_y();
+                break;
+            default:
+                // Если нажата неверная клавиша, продолжаем цикл
+                continue;
+            }
+
+
+            // Проверяем, нет ли на новой позиции препятствия
+            Game_element* obj = field->get_object_at(newX, newY);
+            if (obj != nullptr && !dynamic_cast<Character*>(obj))
+            {
+                // Если есть препятствие, продолжаем цикл
+                continue;
+            }
+
+            // Перемещаем персонажа на новую позицию
+            currentCharacter->change_position(newX, newY);
+
+            // Выводим на экран новую позицию персонажа
+            cursorPos = { static_cast<SHORT>(newX + 23),static_cast<SHORT>(newY + 7) };
+            SetConsoleCursorPosition(console, cursorPos);
+            std::cout << 'C';
+
+            // Выводим на экран информацию о персонажах
+            ShowGameMenu();
+        }
+    }
 }
 
 
