@@ -75,7 +75,7 @@ class Warrior : public Character {
 	int _protection_shield;
 public:
 	Warrior(const Warrior& c);
-	Warrior(CString name, int hp = 100, int power = 5, int armor = 50, bool shield = true);
+	Warrior(CString name, int hp = 100, int power = 20, int armor = 50, bool shield = true);
 	int attack(Character& c);
 	void defence(Character& c, int damage);
 	const CString& get_class() const;

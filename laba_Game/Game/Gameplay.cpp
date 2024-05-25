@@ -459,7 +459,7 @@ void Gameplay::PlayerMove()
             break;
 
         case 'D': case 'd':
-            if (X1 + Xcoord > 93) { return; }
+            if (X1 + Xcoord > 92) { return; }
             if (neighbors_player1[4] == player2) { player2->defence(*player1, player1->attack(*player2)); descriptCharacter(); 
             str.append(" атаковал ").append(str2);
             updateStatus(str);
@@ -542,6 +542,7 @@ void Gameplay::PlayerMove()
             }
             break;
         case 'L': case 'l':
+            if (X2 + Xcoord > 92) { return; }
             if (neighbors_player2[4] == player1) {
                 player1->defence(*player2, player2->attack(*player1)); descriptCharacter();
                 (str2.append(" атаковал ")).append(str);
