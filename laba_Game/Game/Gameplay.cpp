@@ -565,6 +565,7 @@ void Gameplay::PlayerMove()
         }
     }
     if (player1->get_hp() < 0) { 
+        updateStatus("<-Player1 погиб: - 1 жизнь->         ");
         player1life--;
         cursorPos = { static_cast<SHORT>(X1 + Xcoord),static_cast<SHORT>(Y1 + Ycoord) };
         SetConsoleCursorPosition(console, cursorPos);
@@ -577,8 +578,10 @@ void Gameplay::PlayerMove()
         SetConsoleTextAttribute(console, saved_attributes);
         field->set_element(X1, Y1, nullptr);
         descriptCharacter();
+        updateStatus("<-Player1 возрожден->            ");
     }
     if (player2->get_hp() < 0) { 
+        updateStatus("<-Player2 погиб: - 1 жизнь->         ");
         player2life--;
         cursorPos = { static_cast<SHORT>(X2 + Xcoord),static_cast<SHORT>(Y2 + Ycoord) };
         SetConsoleCursorPosition(console, cursorPos);
@@ -591,6 +594,7 @@ void Gameplay::PlayerMove()
         SetConsoleTextAttribute(console, saved_attributes);
         field->set_element(X2, Y2, nullptr);
         descriptCharacter();
+        updateStatus("<-Player2 возрожден->          ");
     }
 }
 
