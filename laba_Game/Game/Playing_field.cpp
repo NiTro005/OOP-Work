@@ -33,14 +33,14 @@ Playing_field::Playing_field(Game_element* player1, Game_element* player2, int w
         }
     }
     int i = 0, j = 0;
-    int element_count = (width * height) * 0.10;
+    int element_count = (width * height) * 0.03;
     for (i = 0; i < height; i++) {
         bool flag = false;
         for (j = 0; j < width; j++) {
             if (i * width + j >= element_count) {
                 flag = true; break;
             }
-            field[i][j] = nullptr;  //поменять
+            field[i][j] = create_random_element();  //поменять
         }
         if (i * width >= element_count) { break; }
         if (flag) { break; }
@@ -94,4 +94,30 @@ void Playing_field::restore_character(Character* character) {
 }
 void Playing_field::set_element(int x, int y, Game_element* element) {
     field[y][x] = element;
+}
+Game_element* Playing_field::create_random_element() {
+    CString n;
+    srand(time(NULL));
+    int type = rand() % 2;
+    switch (type) {
+    case 0: {
+        // Генерируем рандомные параметры для зелья (например, название, массу, тип и значение)
+        CString name_object = "Potion";
+        int mass = rand() % 5 + 1;
+        Potion::Type potion_type = static_cast<Potion::Type>(rand() % 4);
+        int value = rand() % 50 + 1;
+        Potion* potion = new Potion(name_object, mass, potion_type, value);
+        return potion;
+    }
+    case 1: {
+        // Генерируем рандомные параметры для оружия (например, название, массу, бонус к силе)
+        CString name_object = "Weapon";
+        int mass = rand() % 10 + 1;
+        int bonus_power = rand() % 20 + 1;
+
+        Sword* sword = new Sword(name_object, mass, bonus_power, rand() % 10 + 1);
+        return sword;
+    }
+    }
+    return nullptr;
 }

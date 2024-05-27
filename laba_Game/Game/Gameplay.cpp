@@ -228,7 +228,7 @@ void Gameplay::ShowGameMenu(){
                 }
             }
             else {
-                std::cout << 'O';
+                std::cout << '*';
             }
         }
         std::cout << "|"; 

@@ -134,6 +134,7 @@
     <ClCompile Include="Gameplay.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Playing_field.cpp" />
+    <ClCompile Include="objects.cpp" />
     <ClCompile Include="vizzard.cpp" />
     <ClCompile Include="warrior.cpp" />
   </ItemGroup>
