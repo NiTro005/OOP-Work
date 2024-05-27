@@ -57,6 +57,15 @@ public:
 	~Character();
 };
 
+class Object : public Game_element {
+protected:
+	CString _name_object;
+	int _mass;
+public:
+	Object(const CString& name_object, int mass) :_name_object(name_object), _mass(mass), Game_element(0, 0) {}
+};
+
+
 class Playing_field {
 	TArchive<TArchive<Game_element*>> field;
 public:
@@ -87,10 +96,9 @@ class Archer : public Character {
 	bool _arrows;
 	bool _bow;
 	int _protection_bow;
-
 public:
 	Archer(const Archer& c);
-	Archer(CString name, int hp = 75, int power = 25, int armor = 35, bool _bow = true);
+	Archer(CString name, int hp = 65, int power = 25, int armor = 20, bool _bow = true);
 	int attack(Character& c);
 	void defence(Character& c, int damage);
 	const CString& get_class() const;
@@ -105,7 +113,7 @@ class Vizzard : public Character {
 	int amount_of_mana;
 public:
 	Vizzard(const Vizzard&);
-	Vizzard(CString name, int hp = 75, int power = 25, int armor = 30, int amount_of_mana = 100);
+	Vizzard(CString name, int hp = 75, int power = 30, int armor = 40, int amount_of_mana = 100);
 	int attack(Character& c);
 	void defence(Character& c, int damage);
 	const CString& get_class() const;

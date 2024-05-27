@@ -378,7 +378,7 @@ void Gameplay::descriptCharacter()
 
 void Gameplay::PlayerMove()
 {
-    Sleep(100);
+    Sleep(45);
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(console, &csbi);
     WORD saved_attributes = csbi.wAttributes;

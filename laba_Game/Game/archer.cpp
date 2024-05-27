@@ -25,7 +25,7 @@ void Archer::defence(Character& c, int damage) {
         }
     }
     else { _hp -= damage; }
-    if (!_arrows) { _hp += _bow_magic(c) / 2; }
+    if (_arrows) { _hp += _bow_magic(c) / 2; }
     _protection_bow++;
 }
 
