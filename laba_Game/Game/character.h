@@ -155,7 +155,7 @@ public:
 	bool can_use(const Character& character) const {
 		return dynamic_cast<const Archer*>(&character) != nullptr;
 	}
-	void buf_arrows(Archer& archer) { archer.set_protection_bow(arrows); archer.set_power(archer.get_power() + bonus_power); }
+	int use(Archer& archer) { archer.set_protection_bow(arrows); archer.set_power(archer.get_power() + bonus_power); }
 };
 
 class Sword : public Weapon {
@@ -165,7 +165,7 @@ public:
 	bool can_use(const Character& character) const {
 		return dynamic_cast<const Warrior*>(&character) != nullptr;
 	}
-	void bufShield(Warrior& warrior) { warrior.set_shield(protection); warrior.set_power(bonus_power); }
+	int use(Warrior& warrior) { warrior.set_shield(protection); warrior.set_power(bonus_power); }
 };
 
 class Staff : public Weapon {
@@ -175,7 +175,7 @@ public:
 	bool can_use(const Character& character) const {
 		return dynamic_cast<const Vizzard*>(&character) != nullptr;
 	}
-	void bufMana(Vizzard& vizzard) { vizzard.set_mana(mana); vizzard.set_power(bonus_power); }
+	int use(Vizzard& vizzard) { vizzard.set_mana(mana); vizzard.set_power(bonus_power); }
 };
 
 class Potion : public Object {

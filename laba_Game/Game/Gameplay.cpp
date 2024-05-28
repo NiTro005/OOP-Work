@@ -402,6 +402,12 @@ void Gameplay::PlayerMove()
                 updateStatus(str);
             }
             else {
+               /* if (dynamic_cast<Potion*>(neighbors_player1[1]) != nullptr) {
+                    Potion* potion = dynamic_cast<Potion*>(neighbors_player1[1]);
+                    int result = potion->use(*player1);
+                    player1life += result;
+                    descriptCharacter();
+                }*/
                 field->set_element(X1, Y1, nullptr);
                 field->set_element(X1, Y1 - 1, player1);
                 cursorPos = { static_cast<SHORT>(X1 + Xcoord),static_cast<SHORT>(Y1 + Ycoord - 1) };
