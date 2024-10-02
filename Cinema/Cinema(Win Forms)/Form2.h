@@ -107,7 +107,7 @@ namespace GuestForm {
 			this->textBox2->Name = L"textBox2";
 			this->textBox2->Size = System::Drawing::Size(100, 25);
 			this->textBox2->TabIndex = 2;
-			this->textBox2->TextChanged += gcnew System::EventHandler(this, &Form2::textBox2_TextChanged);
+			//this->textBox2->TextChanged += gcnew System::EventHandler(this, &Form2::textBox2_TextChanged);
 			// 
 			// Form2
 			// 
