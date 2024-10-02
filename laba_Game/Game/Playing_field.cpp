@@ -1,10 +1,10 @@
 #include "character.h"
 
-//поменять систему перемешивания
+//ГЇГ®Г¬ГҐГ­ГїГІГј Г±ГЁГ±ГІГҐГ¬Гі ГЇГҐГ°ГҐГ¬ГҐГёГЁГўГ Г­ГЁГї
 void Playing_field::shuffle(int width, int height, int element_count) {
     srand(time(NULL));
     element_count+= 2;
-    if (width <= 0 || height <= 0) { throw std::logic_error("Некоректный размер поля"); }
+    if (width <= 0 || height <= 0) { throw std::logic_error("ГЌГҐГЄГ®Г°ГҐГЄГІГ­Г»Г© Г°Г Г§Г¬ГҐГ° ГЇГ®Г«Гї"); }
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
             if (element_count == 0) {  
